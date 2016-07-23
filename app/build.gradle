@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
@@ -28,5 +28,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.1.0'
+    compile 'com.android.support:design:24.1.1'
+    compile 'com.google.android.gms:play-services-auth:9.0.0'
     compile project(':Vuforia')
 }
