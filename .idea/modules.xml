@@ -4,7 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Ignitar.iml" filepath="$PROJECT_DIR$/Ignitar.iml" />
       <module fileurl="file://$PROJECT_DIR$/Vuforia/Vuforia.iml" filepath="$PROJECT_DIR$/Vuforia/Vuforia.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Vuforia/Vuforia.iml" filepath="$PROJECT_DIR$/Vuforia/Vuforia.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ignitar.iml" filepath="$PROJECT_DIR$/ignitar.iml" />
     </modules>
   </component>
 </project>
