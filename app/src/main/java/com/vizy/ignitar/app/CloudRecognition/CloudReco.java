@@ -12,10 +12,15 @@ package com.vizy.ignitar.app.CloudRecognition;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -24,18 +29,22 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.MediaController;
 import android.widget.RelativeLayout;
+import android.widget.VideoView;
 
 import com.vizy.ignitar.R;
 import com.vizy.ignitar.SampleApplicationControl;
 import com.vizy.ignitar.SampleApplicationException;
 import com.vizy.ignitar.SampleApplicationSession;
+import com.vizy.ignitar.fragment.VideoFragment;
 import com.vizy.ignitar.ui.SampleAppMenu.SampleAppMenu;
 import com.vizy.ignitar.ui.SampleAppMenu.SampleAppMenuGroup;
 import com.vizy.ignitar.ui.SampleAppMenu.SampleAppMenuInterface;
 import com.vizy.ignitar.utils.LoadingDialogHandler;
 import com.vizy.ignitar.utils.SampleApplicationGLView;
 import com.vizy.ignitar.utils.Texture;
+import com.vizy.ignitar.video.VideoPlayerHelper;
 import com.vuforia.CameraDevice;
 import com.vuforia.ObjectTracker;
 import com.vuforia.State;
@@ -83,13 +92,18 @@ public class CloudReco extends Activity implements SampleApplicationControl,
     private boolean mExtendedTracking = false;
     boolean mFinderStarted = false;
     boolean mStopFinderIfStarted = false;
-    
+    VideoPlayerHelper mVideoPlayerHelper = new VideoPlayerHelper();
+    private int mSeekPosition                        = 0;
+    private String mMovieName                         = null;
     // The textures we will use for rendering:
     private Vector<Texture> mTextures;
     
-    private static final String kAccessKey = "869a299f9911cd84f189d69fe8d5f79f35304372";
-    private static final String kSecretKey = "ad4a7110ad50100b22474f166d7ef4f5b3887a30";
-    
+//    private static final String kAccessKey = "869a299f9911cd84f189d69fe8d5f79f35304372";
+//    private static final String kSecretKey = "ad4a7110ad50100b22474f166d7ef4f5b3887a30";
+    private static final String kAccessKey = "bd576667f8fce7e18e90e314ae4ea05d7e348d1d";
+    private static final String kSecretKey = "10cf3e480d8679a2d63709483bf230a286172af4";
+
+
     // View overlays to be displayed in the Augmented View
     private RelativeLayout mUILayout;
     
@@ -134,7 +148,8 @@ public class CloudReco extends Activity implements SampleApplicationControl,
         
         mIsDroidDevice = android.os.Build.MODEL.toLowerCase().startsWith(
             "droid");
-        
+        mVideoPlayerHelper.init();
+        mVideoPlayerHelper.setActivity(this);
     }
     
     // Process Single Tap event to trigger autofocus
@@ -660,8 +675,17 @@ public class CloudReco extends Activity implements SampleApplicationControl,
             if (finder.getResultCount() > 0)
             {
                 TargetSearchResult result = finder.getResult(0);
-                
-                // Check if this target is suitable for tracking:
+                //String filename="http://techslides.com/demos/sample-videos/small.mp4";
+                String filename="https://firebasestorage.googleapis.com/v0/b/firebase-ignitar.appspot.com/o/VID-20160221-WA0011.mp4?alt=media&token=ad49e222-3961-4ed9-81d7-cdc1c2dbccf5";
+
+                mVideoPlayerHelper.load(filename, VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN,true,-1);
+                //playVideo("");
+                mVideoPlayerHelper.play(true, -1);
+                // Check if this target is tr for tracking:
+                //playvideo(filename);
+                //VideoFragment dialog=new VideoFragment();
+                //FragmentManager manager = getFragmentManager();
+                //dialog.show(manager,"fdfd");
                 if (result.getTrackingRating() > 0)
                 {
                     Trackable trackable = finder.enableTracking(result);
@@ -672,7 +696,24 @@ public class CloudReco extends Activity implements SampleApplicationControl,
             }
         } 
     }
-    
+
+
+    public void playVideo(final String text) {
+        // We use a handler because this thread cannot change the UI
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                // The following opens a pre-defined URL based on the name of
+                // trackable detected
+
+
+
+
+
+            }
+        });
+    }
     
     @Override
     public boolean doInitTrackers()

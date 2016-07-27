@@ -1,12 +1,21 @@
 package com.vizy.ignitar.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.vizy.ignitar.R;
+import com.vizy.ignitar.app.CloudRecognition.CloudReco;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class ScannerActivity extends AppCompatActivity {
 
@@ -21,12 +30,27 @@ public class ScannerActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ScannerActivity.this, TextReco.class);
+                Intent intent = new Intent(ScannerActivity.this, CloudReco.class);
                 intent.putExtra("ACTIVITY_TO_LAUNCH",
                         "app.CloudRecognition.CloudReco");
                 intent.putExtra("ABOUT_TEXT", "CloudReco/CR_about.html");
                 startActivity(intent);
             }
         });
+
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.facebook.samples.hellofacebook",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
     }
 }

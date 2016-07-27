@@ -25,6 +25,7 @@ import com.vuforia.Tool;
 import com.vuforia.TrackableResult;
 import com.vuforia.VIDEO_BACKGROUND_REFLECTION;
 import com.vuforia.Vuforia;
+
 import java.util.Vector;
 
 import javax.microedition.khronos.egl.EGLConfig;

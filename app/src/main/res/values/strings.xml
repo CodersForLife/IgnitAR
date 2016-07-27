@@ -1,11 +1,12 @@
 <resources>
-    <string name="app_name">Ignitar</string>
+    <string name="app_name">IgnitAR</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">c4c7ffe88ffd9dc82f678fc4f7eecb25</string>
+    <string name="facebook_app_id">1751582278464783</string>
+
     <string name="button_start">Start</string>
     <string name="activities_list_title_string">Vuforia Samples</string>
     <string name="activities_list_empty">No activities</string>
-
     <string name="button_OK">OK</string>
-
     <string name="UPDATE_ERROR_AUTHORIZATION_FAILED_TITLE">Authorization Error</string>
     <string name="UPDATE_ERROR_PROJECT_SUSPENDED_TITLE">Authorization Error</string>
     <string name="UPDATE_ERROR_NO_NETWORK_CONNECTION_TITLE">Network Unavailable</string>
@@ -38,12 +39,10 @@
     <string name="INIT_LICENSE_ERROR_UNKNOWN_ERROR">Failed to initialize Vuforia.</string>
     <string name="INIT_OBJECT_DATASET_NOT_FOUND_TITLE">Database not found</string>
     <string name="INIT_OBJECT_DATASET_NOT_FOUND">Please scan an object and load a database</string>
-
     <string name="content_desc_camera_button">Camera Button</string>
     <string name="overlay_build_target_help">Hold the device parallel to the target</string>
     <string name="target_quality_error_title">Low Quality Image</string>
     <string name="target_quality_error_desc">The image has very little detail, please try another.</string>
-
     <string name="menu_back">Vuforia Samples</string>
     <string name="menu_extended_tracking">Extended Tracking</string>
     <string name="menu_character_mode">Character Mode</string>
@@ -61,7 +60,9 @@
     <string name="menu_button_blue">Blue</string>
     <string name="menu_button_yellow">Yellow</string>
     <string name="menu_button_green">Green</string>
-
     <string name="splash_screen_description">Vuforia Splash</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
