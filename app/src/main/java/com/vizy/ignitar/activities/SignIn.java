@@ -7,6 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -25,7 +31,8 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
     private static final int RC_SIGN_IN = 9001;
     String TAG="MainActivity-Google+SignIn";
     GoogleSignInAccount acct;
-
+    LoginButton loginButton;
+    CallbackManager callbackManager;
     @Override
     protected void onStart() {
         super.onStart();
@@ -86,6 +93,36 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
         SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setScopes(gso.getScopeArray());
+
+
+        // Fb login starts from here
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+        loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton.setReadPermissions("email");
+        // If using in a fragment
+      //  loginButton.setActivi(this);
+        // Other app specific specialization
+
+        // Callback registration
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                // App code
+                startActivity(new Intent(SignIn.this,ScannerActivity.class));
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+            }
+        });
     }
 
     @Override
@@ -99,6 +136,7 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
         }
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void handleSignInResult(GoogleSignInResult result) {

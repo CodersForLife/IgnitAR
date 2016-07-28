@@ -2,7 +2,7 @@
     <string name="app_name">IgnitAR</string>
     <string name="ACCOUNT_KIT_CLIENT_TOKEN">c4c7ffe88ffd9dc82f678fc4f7eecb25</string>
     <string name="facebook_app_id">1751582278464783</string>
-
+    <string name="fb_login_protocol_scheme">fb1751582278464783</string>
     <string name="button_start">Start</string>
     <string name="activities_list_title_string">Vuforia Samples</string>
     <string name="activities_list_empty">No activities</string>

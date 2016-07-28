@@ -30,7 +30,14 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".activities.ScannerActivity">
-
+        </activity>
+        <activity android:name=".activities.SignIn">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
         </activity>
 
         <activity
