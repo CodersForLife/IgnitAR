@@ -677,15 +677,14 @@ public class CloudReco extends Activity implements SampleApplicationControl,
                 TargetSearchResult result = finder.getResult(0);
                 //String filename="http://techslides.com/demos/sample-videos/small.mp4";
                 String filename="https://firebasestorage.googleapis.com/v0/b/firebase-ignitar.appspot.com/o/VID-20160221-WA0011.mp4?alt=media&token=ad49e222-3961-4ed9-81d7-cdc1c2dbccf5";
-
-                mVideoPlayerHelper.load(filename, VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN,true,-1);
+                mVideoPlayerHelper.load(filename, VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE,true,-1);
                 //playVideo("");
                 mVideoPlayerHelper.play(true, -1);
                 // Check if this target is tr for tracking:
                 //playvideo(filename);
                 //VideoFragment dialog=new VideoFragment();
-                //FragmentManager manager = getFragmentManager();
-                //dialog.show(manager,"fdfd");
+              //  FragmentManager manager = getFragmentManager();
+               // dialog.show(manager,"fdfd");
                 if (result.getTrackingRating() > 0)
                 {
                     Trackable trackable = finder.enableTracking(result);

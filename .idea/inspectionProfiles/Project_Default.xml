@@ -20,7 +20,9 @@
     <inspection_tool class="AccessToStaticFieldLockedOnInstance" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="AmbiguousFieldAccess" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="AmbiguousMethodCall" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="AndroidLintGoogleAppIndexingApiWarning" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="AndroidLintGoogleAppIndexingApiWarning" enabled="true" level="WARNING" enabled_by_default="true">
+      <scope name="Default" level="WARNING" enabled="true" />
+    </inspection_tool>
     <inspection_tool class="AndroidLintNewApi" enabled="false" level="ERROR" enabled_by_default="false" />
     <inspection_tool class="Annotation" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="AnnotationClass" enabled="true" level="WARNING" enabled_by_default="true" />
@@ -276,7 +278,6 @@
     </inspection_tool>
     <inspection_tool class="DefaultNotLastCaseInSwitch" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="DeserializableClassInSecureContext" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="DesignForExtension" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="DisjointPackage" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="DivideByZero" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="DollarSignInName" enabled="true" level="WARNING" enabled_by_default="true" />

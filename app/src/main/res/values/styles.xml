@@ -7,5 +7,20 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="LoginThemeYellow" parent="Theme.AccountKit">
+        <item name="com_accountkit_primary_color">#f4bf56</item>
+        <item name="com_accountkit_primary_text_color">@android:color/white</item>
+        <item name="com_accountkit_secondary_text_color">#44566b</item>
+        <item name="com_accountkit_status_bar_color">#ed9d00</item>
 
+        <item name="com_accountkit_input_accent_color">?attr/com_accountkit_primary_color</item>
+        <item name="com_accountkit_input_border_color">?attr/com_accountkit_primary_color</item>
+    </style>
+    <style name="AppTheme.NoActionBar">
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    </style>
 </resources>
