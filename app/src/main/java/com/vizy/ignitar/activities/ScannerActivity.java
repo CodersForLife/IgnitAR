@@ -19,15 +19,15 @@ import java.security.NoSuchAlgorithmException;
 
 public class ScannerActivity extends AppCompatActivity {
 
-    private Button button;
+    private Button startScan,toHomeActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
 
-        button=(Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+        startScan=(Button) findViewById(R.id.start_scan);
+        startScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ScannerActivity.this, CloudReco.class);
@@ -37,7 +37,14 @@ public class ScannerActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        toHomeActivity= (Button) findViewById(R.id.home);
+        toHomeActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ScannerActivity.this,HomeActivity.class));
+                finish();
+            }
+        });
         try {
             PackageInfo info = getPackageManager().getPackageInfo(
                     "com.facebook.samples.hellofacebook",

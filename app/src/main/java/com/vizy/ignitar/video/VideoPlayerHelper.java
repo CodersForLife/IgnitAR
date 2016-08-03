@@ -38,7 +38,11 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Build;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.view.Surface;
+
+import com.vizy.ignitar.R;
 
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -416,7 +420,9 @@ public class VideoPlayerHelper implements OnPreparedListener,
             // and the name of the movie currently being played
             mPlayerHelperActivityIntent.putExtra("requestedOrientation", mParentActivity.getRequestedOrientation());
             mPlayerHelperActivityIntent.putExtra("movieName", mMovieName);
+        //    setupWindowAnimations();
             mParentActivity.startActivityForResult(mPlayerHelperActivityIntent,1);
+            mParentActivity.overridePendingTransition(R.transition.activity_fade,R.transition.activity_slide);
             return true;
         }
         else
@@ -482,7 +488,10 @@ public class VideoPlayerHelper implements OnPreparedListener,
             return true;
         }
     }
-
+    private void setupWindowAnimations() {
+        Slide slide = (Slide) TransitionInflater.from(mParentActivity).inflateTransition(R.transition.activity_slide);
+        mParentActivity.getWindow().setExitTransition(slide);
+    }
     /** Pauses the current movie being played */
     public boolean pause()
     {

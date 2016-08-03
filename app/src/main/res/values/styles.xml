@@ -3,9 +3,18 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:windowAnimationStyle">@style/AnimationTheme.Window</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!--<item name="android:windowBackground">@android:color/black</item>-->
+        <!--<item name="titleTextStyle">@style/BrainacTheme.ActionBar.TitleTextStyle</item>-->
+        <!--<item name="android:buttonStyle">@style/AppThemeButton</item>-->
+        <!-- 	Below attribute is an fix for menu item background it may affect spinner background if we use spinner component in interior application -->
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
     </style>
     <style name="LoginThemeYellow" parent="Theme.AccountKit">
         <item name="com_accountkit_primary_color">#f4bf56</item>
@@ -22,5 +31,11 @@
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="AnimationTheme.Window" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_right_to_left</item>
+        <item name="android:activityOpenExitAnimation">@anim/static_anim</item>
+        <item name="android:activityCloseEnterAnimation">@anim/static_anim</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_left_to_right</item>
     </style>
 </resources>

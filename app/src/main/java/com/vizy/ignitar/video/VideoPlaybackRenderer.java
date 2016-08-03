@@ -14,15 +14,14 @@ By retaining or using the Sample Code in any manner, you confirm your agreement
 to all the terms and conditions of the Vuforia SDK License Agreement.  If you do
 not agree to all the terms and conditions of the Vuforia SDK License Agreement,
 then you may not retain or use any of the Sample Code in any manner.
-
-
 @file
     VideoPlaybackRenderer.java
 
 @brief
     Sample for VideoPlayback
 
-==============================================================================*/
+==============================================================================*//*
+
 
 
 package com.vizy.ignitar.video;
@@ -42,7 +41,9 @@ import com.vizy.ignitar.video.VideoPlayerHelper.MEDIA_TYPE;
 
 
 
-/** The renderer class for the VideoPlayback sample. */
+*/
+/** The renderer class for the VideoPlayback sample. *//*
+
 public class VideoPlaybackRenderer implements GLSurfaceView.Renderer
 {
     public boolean mIsActive                            = false;
@@ -64,8 +65,10 @@ public class VideoPlaybackRenderer implements GLSurfaceView.Renderer
       //  mCanRequestType = new MEDIA_TYPE[VideoPlayback.NUM_TARGETS];
         mSeekPosition =-1;
         mShouldPlayImmediately = true;
-       /* mLostTrackingSince = new Integer();
-        mLoadRequested = new boolean();*/
+       */
+/* mLostTrackingSince = new Integer();
+        mLoadRequested = new boolean();*//*
+
         mTexCoordTransformationMatrix = new float[0][16];
 
         // Initialize the arrays to default values
@@ -80,7 +83,9 @@ public class VideoPlaybackRenderer implements GLSurfaceView.Renderer
 
     }
 
-    /** Store the Player Helper object passed from the main activity */
+    */
+/** Store the Player Helper object passed from the main activity *//*
+
     public void setVideoPlayerHelper(int target, VideoPlayerHelper newVideoPlayerHelper)
     {
         mVideoPlayerHelper = newVideoPlayerHelper;
@@ -94,25 +99,39 @@ public class VideoPlaybackRenderer implements GLSurfaceView.Renderer
         mLoadRequested = true;
     }
 
-    /** Native function for initializing the renderer. */
+    */
+/** Native function for initializing the renderer. *//*
+
     public native void initRendering();
 
-    /** Native function to update the renderer */
+    */
+/** Native function to update the renderer *//*
+
     public native void updateRendering(int width, int height);
 
-    /** Native function to retrieve the OpenGL texture */
+    */
+/** Native function to retrieve the OpenGL texture *//*
+
     public native int getVideoTextureID(int target);
 
-    /** Native function to pass down the dimensions of the video */
+    */
+/** Native function to pass down the dimensions of the video *//*
+
     public native void setVideoDimensions(int target, float videoWidth, float videoHeight, float[] textureCoordMatrix);
 
-    /** Native call to indicate whether the rendering should display a keyframe or the video data  */
+    */
+/** Native call to indicate whether the rendering should display a keyframe or the video data  *//*
+
     private native void setStatus(int target, int value);
 
-    /** Native function that informs whether the target is currently being tracked. */
+    */
+/** Native function that informs whether the target is currently being tracked. *//*
+
     public native boolean isTracking(int target);
 
-    /** Called when the surface is created or recreated. */
+    */
+/** Called when the surface is created or recreated. *//*
+
     public void onSurfaceCreated(GL10 gl, EGLConfig config)
     {
         // Call native function to initialize rendering:
@@ -147,7 +166,9 @@ public class VideoPlaybackRenderer implements GLSurfaceView.Renderer
     }
 
 
-    /** Called when the surface changed size. */
+    */
+/** Called when the surface changed size. *//*
+
     public void onSurfaceChanged(GL10 gl, int width, int height)
     {
         // Call native function to update rendering when render surface parameters have changed:
@@ -169,10 +190,14 @@ public class VideoPlaybackRenderer implements GLSurfaceView.Renderer
     }
 
 
-    /** The native render function. */
+    */
+/** The native render function. *//*
+
     public native void renderFrame();
 
-    /** Called to draw the current frame. */
+    */
+/** Called to draw the current frame. *//*
+
     public void onDrawFrame(GL10 gl)
     {
         if (!mIsActive)
@@ -218,7 +243,7 @@ public class VideoPlaybackRenderer implements GLSurfaceView.Renderer
                 else
                 {
                     // If it's been more than 2 seconds then pause the player
-                    if ((SystemClock.uptimeMillis()-mLostTrackingSince[i]) > 2000)
+                    if ((SystemClock.uptimeMillis()-mLostTrackingSince) > 2000)
                     {
                         if (mVideoPlayerHelper != null)
                             mVideoPlayerHelper.pause();
@@ -236,3 +261,4 @@ public class VideoPlaybackRenderer implements GLSurfaceView.Renderer
 
     }
 }
+*/

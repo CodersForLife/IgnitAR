@@ -23,6 +23,8 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -132,7 +134,7 @@ public class CloudReco extends Activity implements SampleApplicationControl,
     {
         Log.d(LOGTAG, "onCreate");
         super.onCreate(savedInstanceState);
-        
+     //   setupWindowAnimations();
         vuforiaAppSession = new SampleApplicationSession(this);
         
         startLoadingAnimation();
@@ -677,9 +679,10 @@ public class CloudReco extends Activity implements SampleApplicationControl,
                 TargetSearchResult result = finder.getResult(0);
                 //String filename="http://techslides.com/demos/sample-videos/small.mp4";
                 String filename="https://firebasestorage.googleapis.com/v0/b/firebase-ignitar.appspot.com/o/VID-20160221-WA0011.mp4?alt=media&token=ad49e222-3961-4ed9-81d7-cdc1c2dbccf5";
-                mVideoPlayerHelper.load(filename, VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE,true,-1);
+                mVideoPlayerHelper.load(filename, VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN,true,-1);
                 //playVideo("");
                 mVideoPlayerHelper.play(true, -1);
+                String data = result.getMetaData();
                 // Check if this target is tr for tracking:
                 //playvideo(filename);
                 //VideoFragment dialog=new VideoFragment();
@@ -820,7 +823,10 @@ public class CloudReco extends Activity implements SampleApplicationControl,
         
         mSampleAppMenu.attachMenu();
     }
-    
+    private void setupWindowAnimations() {
+        Slide slide = (Slide) TransitionInflater.from(this).inflateTransition(R.transition.activity_slide);
+        getWindow().setExitTransition(slide);
+    }
     
     @Override
     public boolean menuProcess(int command)

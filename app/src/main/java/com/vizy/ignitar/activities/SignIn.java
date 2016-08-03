@@ -2,6 +2,7 @@ package com.vizy.ignitar.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,6 +14,9 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
 import com.facebook.accountkit.AccessToken;
 import com.facebook.accountkit.AccountKit;
 import com.facebook.accountkit.AccountKitLoginResult;
@@ -32,6 +36,12 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.vizy.ignitar.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.sql.Array;
+import java.util.Arrays;
+
 public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,View.OnClickListener{
 
     GoogleApiClient mGoogleApiClient;
@@ -39,9 +49,10 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
     private static final int RC_SIGN_IN = 9001;
     String TAG="MainActivity-Google+SignIn";
     GoogleSignInAccount acct;
-    LoginButton loginButton;
-    CallbackManager callbackManager;
-    Button button;
+    private LoginButton loginButton;
+    private CallbackManager callbackManager;
+    private Button mobileNumLogin;
+    private SharedPreferences preferences;
     public static int APP_REQUEST_CODE = 99;
     @Override
     protected void onStart() {
@@ -90,7 +101,7 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-
+        preferences =getSharedPreferences("ignitar",MODE_PRIVATE);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
 
@@ -107,19 +118,20 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
 
         // Fb login starts from here
 
-        button= (Button) findViewById(R.id.button2);
+        mobileNumLogin= (Button) findViewById(R.id.mobile_number_login);
         AccountKit.initialize(getApplicationContext());
         FacebookSdk.sdkInitialize(getApplicationContext());
-       button.setOnClickListener(new View.OnClickListener() {
+        mobileNumLogin.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               onLoginPhone(button);
+               onLoginPhone(mobileNumLogin);
            }
        });
 
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("email");
+        loginButton.setReadPermissions("public_profile");
         // If using in a fragment
       //  loginButton.setActivi(this);
         // Other app specific specialization
@@ -135,7 +147,25 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
             @Override
             public void onSuccess(LoginResult loginResult) {
                 // App code
+                GraphRequest request=GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        SharedPreferences.Editor editor = preferences.edit();
+                        try {
+                            editor.putBoolean("signin",true);
+                            editor.putString("email", object.getString("email"));
+                            editor.putString("name",object.getString("first_name"));
+                            editor.apply();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                });
+
                 startActivity(new Intent(SignIn.this,ScannerActivity.class));
+                finish();
             }
 
             @Override
@@ -157,7 +187,7 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == RC_SIGN_IN && data!=null) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
         }
@@ -169,10 +199,10 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
                 toastMessage = loginResult.getError().getErrorType().getMessage();
                // showErrorActivity(loginResult.getError());
             } else if (loginResult.wasCancelled()) {
-                toastMessage = "Login Cancelled";
+                //toastMessage = "Login Cancelled";
             } else {
                 if (loginResult.getAccessToken() != null) {
-                    toastMessage = "Success:" + loginResult.getAccessToken().getAccountId();
+                   // toastMessage = "Success:" + loginResult.getAccessToken().getAccountId();
                 } else {
                     toastMessage = String.format(
                             "Success:%s...",
@@ -185,14 +215,11 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
 
                 // Success! Start your next activity...
                 startActivity(new Intent(SignIn.this,ScannerActivity.class));
+                finish();
             }
 
             // Surface the result to your user in an appropriate way.
-            Toast.makeText(
-                    this,
-                    toastMessage,
-                    Toast.LENGTH_LONG)
-                    .show();
+
         }
     }
 
@@ -203,6 +230,11 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
             // Signed in successfully, show authenticated UI.
             acct = result.getSignInAccount();
             // mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("signin",true);
+            editor.putString("email",acct.getEmail());
+            editor.putString("name",acct.getDisplayName());
+            editor.apply();
             updateUI(true);
         } else {
             // Signed out, show unauthenticated UI.
@@ -213,7 +245,8 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
     private void updateUI(boolean b) {
         if(b){
             Log.e("Sucessfull","Login");
-
+            startActivity(new Intent(SignIn.this,ScannerActivity.class));
+            finish();
         }
         else {
             Log.e("Unsucessful","error");

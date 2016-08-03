@@ -42,16 +42,22 @@ import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.media.MediaPlayer.OnVideoSizeChangedListener;
 import android.os.Bundle;
+import android.os.Handler;
+import android.transition.Fade;
+import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnDoubleTapListener;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
 import com.vizy.ignitar.R;
+import com.vizy.ignitar.activities.HomeActivity;
 
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -75,6 +81,7 @@ public class FullscreenPlayback extends Activity implements
     private ReentrantLock           mMediaPlayerLock                = null;
     private ReentrantLock           mMediaControllerLock            = null;
 
+    private Handler handler = new Handler();
     /** This is called when we need to prepare the view for the media player */
     protected void prepareViewForMediaPlayer()
     {
@@ -82,7 +89,7 @@ public class FullscreenPlayback extends Activity implements
         mVideoView = (VideoView) findViewById(R.id.surface_view);
 
         // The orientation was passed as an extra by the launching activity:
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mHolder = mVideoView.getHolder();
         mHolder.addCallback(this);
@@ -93,8 +100,9 @@ public class FullscreenPlayback extends Activity implements
         // DebugLog.LOGD("Fullscreen::onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fullscreen_layout);
-
+      //  setupWindowAnimations();
         // Create the locks:
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         mMediaControllerLock = new ReentrantLock();
         mMediaPlayerLock = new ReentrantLock();
 
@@ -148,6 +156,22 @@ public class FullscreenPlayback extends Activity implements
         });
 
     }
+    public Runnable isOver=new Runnable() {
+
+        @Override
+        public void run() {
+            // TODO Auto-generated method stub
+            if(!mMediaPlayer.isPlaying()){
+                Log.e("sr","sgr");
+                prepareForTermination();
+                startActivity(new Intent(FullscreenPlayback.this, HomeActivity.class));
+                finish();
+            }
+            else
+                handler.post(isOver);
+
+        }
+    };
 
     /** This is the call that actually creates the media player */
     private void createMediaPlayer()
@@ -199,6 +223,10 @@ public class FullscreenPlayback extends Activity implements
 
         mMediaControllerLock.unlock();
         mMediaPlayerLock.unlock();
+    }
+    private void setupWindowAnimations() {
+        Fade fade = (Fade) TransitionInflater.from(this).inflateTransition(R.transition.activity_fade);
+        getWindow().setEnterTransition(fade);
     }
 
     /** Handle the touch event */
@@ -253,6 +281,7 @@ public class FullscreenPlayback extends Activity implements
                         {
                             mMediaPlayer.start();
                             mShouldPlayImmediately = false;
+
                         }
                         catch (Exception e)
                         {
@@ -269,6 +298,7 @@ public class FullscreenPlayback extends Activity implements
 
         mMediaPlayerLock.unlock();
         mMediaControllerLock.unlock();
+        handler.post(isOver);
     }
 
     /** Called when we wish to release the resources of the media player */
@@ -299,6 +329,7 @@ public class FullscreenPlayback extends Activity implements
                 mMediaPlayer = null;
             }
         mMediaPlayerLock.unlock();
+        Log.e("end","end");
     }
 
     /** Called when we wish to destroy the view used by the Media player */
@@ -348,6 +379,7 @@ public class FullscreenPlayback extends Activity implements
     private void prepareForTermination()
     {
         // First we prepare the controller:
+        Log.e("l,o","jnjn");
         mMediaControllerLock.lock();
             if (mMediaController != null)
             {
@@ -385,6 +417,7 @@ public class FullscreenPlayback extends Activity implements
                 i.putExtra("currentSeekPosition", mSeekPosition);
                 i.putExtra("playing", wasPlaying);
                 setResult(Activity.RESULT_OK, i);
+
             }
         mMediaPlayerLock.unlock();
     }
@@ -417,6 +450,7 @@ public class FullscreenPlayback extends Activity implements
     {
         // Request the creation of a media player:
         createMediaPlayer();
+
     }
 
     /** Called when the surface is changed */
