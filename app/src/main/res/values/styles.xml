@@ -38,4 +38,8 @@
         <item name="android:activityCloseEnterAnimation">@anim/static_anim</item>
         <item name="android:activityCloseExitAnimation">@anim/slide_left_to_right</item>
     </style>
+    <style name="Toolbar" parent="Widget.AppCompat.Light.ActionBar">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+    </style>
 </resources>
