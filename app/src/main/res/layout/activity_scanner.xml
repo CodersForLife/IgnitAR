@@ -6,6 +6,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
+    android:background="@drawable/background_blur"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".activities.ScannerActivity">
 
@@ -17,6 +18,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:id="@+id/textView2" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,6 +41,7 @@
     android:textSize="20sp"
     android:textStyle="bold"
     android:id="@+id/textView3" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,6 +79,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:background="#11000000"
+        android:textColor="@color/white"
         android:layout_alignParentStart="true"
         android:text="Start scanning now " />
     <Button
@@ -83,9 +88,9 @@
         android:layout_alignParentStart="true"
         android:layout_width="match_parent"
         android:id="@+id/home"
+        android:background="#11000000"
+        android:textColor="@color/white"
         android:text="Go to home screen "
         android:layout_above="@+id/start_scan"
         android:layout_height="wrap_content" />
-
-
 </RelativeLayout>

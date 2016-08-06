@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
-            android:theme="@style/Toolbar" />
+            android:theme="@style/Tabs" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
@@ -45,6 +45,7 @@
         android:layout_marginLeft="11dp"
         android:layout_marginRight="11dp"
         android:layout_gravity="bottom|end"
+        android:tint="#ee7474"
         app:fabSize="normal"
         app:pressedTranslationZ="12dp" />
 </android.support.design.widget.CoordinatorLayout>

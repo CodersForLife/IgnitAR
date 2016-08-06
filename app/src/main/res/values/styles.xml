@@ -42,4 +42,9 @@
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColorPrimary">@android:color/white</item>
     </style>
+    <style name="Tabs" parent="Widget.AppCompat.Light.ActionBar">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">#ee7474</item>
+        <item name="android:textColorSecondary">#c7c6c6</item>
+    </style>
 </resources>
