@@ -131,7 +131,7 @@ public class VideoPlayerHelper implements OnPreparedListener,
 
     /** Loads a movie from a file in the assets folder */
     @SuppressLint("NewApi")
-    public boolean load(String filename, MEDIA_TYPE requestedType,
+    public boolean load(String filename,String videoName, MEDIA_TYPE requestedType,
         boolean playOnTextureImmediately, int seekPosition)
     {
         // If the client requests that we should be able to play ON_TEXTURE,
@@ -209,6 +209,7 @@ public class VideoPlayerHelper implements OnPreparedListener,
                 {
                     mPlayerHelperActivityIntent = new Intent(mParentActivity, FullscreenPlayback.class);
                     mPlayerHelperActivityIntent.setAction(Intent.ACTION_VIEW);
+                    mPlayerHelperActivityIntent.putExtra("videoname",videoName);
                     canBeFullscreen = true;
                 }
 

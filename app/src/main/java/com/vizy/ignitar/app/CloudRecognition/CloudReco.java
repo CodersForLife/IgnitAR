@@ -677,14 +677,17 @@ public class CloudReco extends Activity implements SampleApplicationControl,
             if (finder.getResultCount() > 0)
             {
                 TargetSearchResult result = finder.getResult(0);
+                String data = result.getMetaData();
+                String videoName="Video name 1";
                 //String filename="http://techslides.com/demos/sample-videos/small.mp4";
-                String filename="https://firebasestorage.googleapis.com/v0/b/firebase-ignitar.appspot.com/o/VID-20160221-WA0011.mp4?alt=media&token=ad49e222-3961-4ed9-81d7-cdc1c2dbccf5";
-                mVideoPlayerHelper.load(filename, VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN,true,-1);
+               // String filename="https://firebasestorage.googleapis.com/v0/b/firebase-ignitar.appspot.com/o/VID-20160221-WA0011.mp4?alt=media&token=ad49e222-3961-4ed9-81d7-cdc1c2dbccf5";
+                  String filename="https://firebasestorage.googleapis.com/v0/b/firebase-ignitar.appspot.com/o/NEW%20Technology%20documentary%20Renewable%20Energy%20NEW%20Science%20Documentary%2035.mp4?alt=media&token=4ab73115-cd58-4b61-a3fa-53d34527f4b1";
+                mVideoPlayerHelper.load(filename,videoName, VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN,true,-1);
                 //playVideo("");
                 mVideoPlayerHelper.play(true, -1);
-                String data = result.getMetaData();
+
                 // Check if this target is tr for tracking:
-                //playvideo(filename);
+                 //playvideo(filename);
                 //VideoFragment dialog=new VideoFragment();
               //  FragmentManager manager = getFragmentManager();
                // dialog.show(manager,"fdfd");

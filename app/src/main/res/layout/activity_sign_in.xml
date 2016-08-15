@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="7"
-    android:background="@drawable/background_blur"
+    android:background="@color/colorPrimary"
     tools:context="com.vizy.ignitar.activities.SignIn">
     <TextView
         android:layout_width="match_parent"
@@ -24,6 +24,7 @@
         android:fontFamily="sans-serif-thin"
         android:textStyle="bold"
         android:textSize="20sp"
+        android:textColor="@color/colorText"
         android:gravity="center_horizontal"
         android:text="Igniting the objects around you"
         android:layout_height="wrap_content" />
@@ -56,6 +57,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_marginTop="30dp"
+        android:textColor="@color/white"
         android:textStyle="bold"
         android:gravity="center"
         android:layout_marginBottom="30dp"
@@ -66,7 +68,7 @@
             android:id="@+id/mobile_number_login"
             android:layout_width="match_parent"
             android:fontFamily="sans-serif"
-            android:background="#11000000"
+            android:background="#44000000"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:layout_gravity="center_horizontal"

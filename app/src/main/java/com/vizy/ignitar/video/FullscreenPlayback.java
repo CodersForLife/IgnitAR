@@ -164,7 +164,8 @@ public class FullscreenPlayback extends Activity implements
             if(!mMediaPlayer.isPlaying()){
                 Log.e("sr","sgr");
                 prepareForTermination();
-                startActivity(new Intent(FullscreenPlayback.this, HomeActivity.class));
+                Intent i=getIntent();
+                startActivity(new Intent(FullscreenPlayback.this, HomeActivity.class).putExtra("videoname",i.getStringExtra("videoname")));
                 finish();
             }
             else

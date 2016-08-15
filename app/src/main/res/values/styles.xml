@@ -40,11 +40,12 @@
     </style>
     <style name="Toolbar" parent="Widget.AppCompat.Light.ActionBar">
         <item name="android:background">@color/colorPrimary</item>
-        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorPrimary">#c7c6c6</item>
     </style>
     <style name="Tabs" parent="Widget.AppCompat.Light.ActionBar">
         <item name="android:background">@color/colorPrimary</item>
-        <item name="android:textColorPrimary">#ee7474</item>
+        <item name="android:textColorPrimary">@color/colorText</item>
+        <item name="android:colorAccent">@color/colorText</item>
         <item name="android:textColorSecondary">#c7c6c6</item>
     </style>
 </resources>

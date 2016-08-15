@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.vizy.ignitar.R;
@@ -25,6 +26,8 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         scan= (FloatingActionButton) findViewById(R.id.fab);
         initializeScreen();
+  //      Intent i=getIntent();
+//        Log.e("dd",i.getStringExtra("videoname"));
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
