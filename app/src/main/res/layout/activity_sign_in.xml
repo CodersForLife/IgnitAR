@@ -52,6 +52,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:paddingTop="10dp"
+            facebook:com_facebook_login_text="             Sign in with Facebook"
             android:paddingBottom="10dp"
             />
     <TextView

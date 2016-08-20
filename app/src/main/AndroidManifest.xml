@@ -83,8 +83,11 @@
             android:authorities="com.facebook.app.FacebookContentProvider1234"
             android:exported="true" />
 
-        <activity android:name=".activities.HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activities.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.Help"
+            android:theme="@style/Theme.Transparent"></activity>
     </application>
 
 </manifest>

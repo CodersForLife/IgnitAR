@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -112,10 +113,10 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
       /*  mGoogleApiClient=new GoogleApiClient.Builder(this).enableAutoManage(this,this).addApi(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .addScope(Scopes.PLUS_LOGIN).addScope(Scopes.PLUS_ME).build();*/
         SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
-        signInButton.setSize(SignInButton.SIZE_STANDARD);
+        signInButton.setSize(SignInButton.COLOR_LIGHT);
         signInButton.setScopes(gso.getScopeArray());
-
-
+      //  signInButton.set
+      //  setGooglePlusButtonText(signInButton,"Log in with Google");
         // Fb login starts from here
 
         mobileNumLogin= (Button) findViewById(R.id.mobile_number_login);
@@ -164,7 +165,7 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
                     }
                 });
 
-                startActivity(new Intent(SignIn.this,ScannerActivity.class));
+                startActivity(new Intent(SignIn.this,HomeActivity.class));
                 finish();
             }
 
@@ -214,7 +215,7 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
                 // and pass it to your server and exchange it for an access token.
 
                 // Success! Start your next activity...
-                startActivity(new Intent(SignIn.this,ScannerActivity.class));
+                startActivity(new Intent(SignIn.this,HomeActivity.class));
                 finish();
             }
 
@@ -245,7 +246,7 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
     private void updateUI(boolean b) {
         if(b){
             Log.e("Sucessfull","Login");
-            startActivity(new Intent(SignIn.this,ScannerActivity.class));
+            startActivity(new Intent(SignIn.this,HomeActivity.class));
             finish();
         }
         else {
@@ -278,5 +279,17 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
                 AccountKitActivity.ACCOUNT_KIT_ACTIVITY_CONFIGURATION,
                 configurationBuilder.build());
         startActivityForResult(intent, APP_REQUEST_CODE);
+    }
+    protected void setGooglePlusButtonText(SignInButton signInButton, String buttonText) {
+        // Find the TextView that is inside of the SignInButton and set its text
+        for (int i = 0; i < signInButton.getChildCount(); i++) {
+            View v = signInButton.getChildAt(i);
+
+            if (v instanceof TextView) {
+                TextView tv = (TextView) v;
+                tv.setText(buttonText);
+                return;
+            }
+        }
     }
 }

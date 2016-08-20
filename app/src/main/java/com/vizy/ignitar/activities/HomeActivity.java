@@ -1,6 +1,7 @@
 package com.vizy.ignitar.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -28,6 +29,13 @@ public class HomeActivity extends AppCompatActivity {
         initializeScreen();
   //      Intent i=getIntent();
 //        Log.e("dd",i.getStringExtra("videoname"));
+        final SharedPreferences sp=getSharedPreferences("ignitar",MODE_PRIVATE);
+        if(!sp.getBoolean("first",false)) {
+            startActivity(new Intent(HomeActivity.this, Help.class));
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putBoolean("first",true);
+            editor.apply();
+        }
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
