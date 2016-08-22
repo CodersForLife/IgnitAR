@@ -2,6 +2,9 @@ package com.vizy.ignitar.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.SurfaceTexture;
+import android.hardware.Camera;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -12,20 +15,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.vizy.ignitar.R;
 import com.vizy.ignitar.app.CloudRecognition.CloudReco;
 import com.vizy.ignitar.fragment.HistoryFragment;
 import com.vizy.ignitar.fragment.TrendingFragment;
 
+import java.io.IOException;
+
 public class HomeActivity extends AppCompatActivity {
     private FloatingActionButton scan;
+    private ImageView search;
+    private Button help;
+    private int i=0;
+    private Camera mCam;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        scan= (FloatingActionButton) findViewById(R.id.fab);
+
         initializeScreen();
   //      Intent i=getIntent();
 //        Log.e("dd",i.getStringExtra("videoname"));
@@ -36,9 +50,11 @@ public class HomeActivity extends AppCompatActivity {
             editor.putBoolean("first",true);
             editor.apply();
         }
-        scan.setOnClickListener(new View.OnClickListener() {
+
+        search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                view.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.image_click));
                 Intent intent = new Intent(HomeActivity.this, CloudReco.class);
                 intent.putExtra("ACTIVITY_TO_LAUNCH",
                         "app.CloudRecognition.CloudReco");
@@ -46,9 +62,17 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, Help.class));
+            }
+        });
     }
     public void initializeScreen() {
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        search= (ImageView) findViewById(R.id.search);
+        help= (Button) findViewById(R.id.help);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
@@ -120,4 +144,49 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        //noinspection SimplifiableIfStatement
+
+        switch (id) {
+            case R.id.help:
+                startActivity(new Intent(HomeActivity.this, Help.class));
+                return true;
+            case R.id.night_mode:
+                if(i==0) {
+                    mCam = Camera.open();
+                    Camera.Parameters p = mCam.getParameters();
+                    p.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                    mCam.setParameters(p);
+                    SurfaceTexture mPreviewTexture = new SurfaceTexture(0);
+                    try {
+                        mCam.setPreviewTexture(mPreviewTexture);
+                        i=1;
+                    } catch (IOException ex) {
+                        // Ignore
+                    }
+                }
+                else {
+                    mCam.startPreview();
+                    mCam.stopPreview();
+                    mCam.release();
+                    i=0;
+                    mCam = null;
+                }
+                return true;
+            case R.id.rate:
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

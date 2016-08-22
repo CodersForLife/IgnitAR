@@ -41,6 +41,8 @@
     <style name="Toolbar" parent="Widget.AppCompat.Light.ActionBar">
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColorPrimary">#c7c6c6</item>
+        <item name="android:textColorSecondary">#c7c6c6</item>
+        <item name="android:textColor">#c7c6c6</item>
     </style>
     <style name="Tabs" parent="Widget.AppCompat.Light.ActionBar">
         <item name="android:background">@color/colorPrimary</item>
@@ -55,6 +57,7 @@
             <item name="android:windowNoTitle">true</item>
             <item name="windowActionBar">false</item>
             <item name="windowNoTitle">true</item>
+
             <item name="android:backgroundDimEnabled">false</item>
         </style>
 

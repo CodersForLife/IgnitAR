@@ -208,6 +208,7 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
                     toastMessage = String.format(
                             "Success:%s...",
                             loginResult.getAuthorizationCode().substring(0,10));
+
                 }
 
                 // If you have an authorization code, retrieve it from
