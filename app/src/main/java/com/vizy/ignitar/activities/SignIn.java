@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import com.facebook.Profile;
 import com.facebook.accountkit.AccessToken;
 import com.facebook.accountkit.AccountKit;
 import com.facebook.accountkit.AccountKitLoginResult;
+import com.facebook.accountkit.PhoneNumber;
 import com.facebook.accountkit.ui.AccountKitActivity;
 import com.facebook.accountkit.ui.AccountKitConfiguration;
 import com.facebook.accountkit.ui.LoginType;
@@ -55,6 +57,8 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
     private Button mobileNumLogin;
     private SharedPreferences preferences;
     public static int APP_REQUEST_CODE = 99;
+
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -271,10 +275,14 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
     }
     public void onLoginPhone(final View view) {
         final Intent intent = new Intent(SignIn.this, AccountKitActivity.class);
+       // TelephonyManager tm = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
+        //String number = tm.getLine1Number();
+        //Log.e("nnu",number);
+//        PhoneNumber ph=new PhoneNumber(   tm.getNetworkCountryIso(),number);
         AccountKitConfiguration.AccountKitConfigurationBuilder configurationBuilder =
                 new AccountKitConfiguration.AccountKitConfigurationBuilder(
                         LoginType.PHONE,
-                        AccountKitActivity.ResponseType.CODE); // or .ResponseType.TOKEN
+                        AccountKitActivity.ResponseType.CODE)/*.setInitialPhoneNumber(ph)*/; // or .ResponseType.TOKEN
         // ... perform additional configuration ...
         intent.putExtra(
                 AccountKitActivity.ACCOUNT_KIT_ACTIVITY_CONFIGURATION,

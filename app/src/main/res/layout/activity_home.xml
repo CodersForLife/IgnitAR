@@ -24,8 +24,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabIndicatorColor="@color/colorText"
-            android:background="@android:color/white"
-            android:theme="@style/Tabs" />
+            app:tabSelectedTextColor="@color/colorText"
+            app:tabMode="fixed"
+
+            app:tabTextColor="#c7c6c6"/>
 
 
 
@@ -40,20 +42,34 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:text="\?"
-        android:visibility="gone"
+
         android:textSize="23sp"
-        android:background="#11000000"
+        android:background="@drawable/buutonshape"
         android:id="@+id/help"
         android:layout_gravity="right"
         />
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_gravity="bottom"
-        android:focusableInTouchMode="true"
-        android:scaleType="fitXY"
         android:id="@+id/search"
         android:layout_height="130dp"
-        android:src="@drawable/bottom_search_ignitar"/>
+        android:background="@drawable/button_search_ignitar">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/searchimage"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_search_black_24dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:layout_below="@+id/searchimage"
+            android:textColor="@color/colorText"
+            android:text="IGNITE YOUR OBJECTS"/>
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,5 +1,6 @@
 package com.vizy.ignitar.fragment;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.vizy.ignitar.R;
 
@@ -27,6 +30,7 @@ public class HistoryFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private ListView historyList;
 
     private OnFragmentInteractionListener mListener;
 
@@ -65,7 +69,11 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history, container, false);
+        View rootView= inflater.inflate(R.layout.fragment_history, container, false);
+        historyList= (ListView) rootView.findViewById(R.id.history_list);
+        HistoryAdapter historyAdapter=new HistoryAdapter(getActivity(),R.layout.list_hitory);
+        historyList.setAdapter(historyAdapter);
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -74,7 +82,27 @@ public class HistoryFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+    class HistoryAdapter extends ArrayAdapter{
 
+        public HistoryAdapter(Context context, int resource) {
+            super(context, resource);
+        }
+
+        @Override
+        public int getCount() {
+            return 11;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View v = convertView;
+            if (v==null){
+                v=LayoutInflater.from(getContext()).inflate(R.layout.list_hitory,null);
+            }
+            return v;
+        }
+
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

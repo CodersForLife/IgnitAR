@@ -5,9 +5,12 @@
     tools:context="com.vizy.ignitar.fragment.HistoryFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
+    <ListView
+        android:layout_width="match_parent"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/history_list"
+        android:layout_gravity="center" />
 </FrameLayout>

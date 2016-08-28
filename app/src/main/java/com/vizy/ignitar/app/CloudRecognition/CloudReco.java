@@ -523,6 +523,7 @@ public class CloudReco extends Activity implements SampleApplicationControl,
             TargetFinder targetFinder = objectTracker.getTargetFinder();
             
             targetFinder.stop();
+            targetFinder.stop();
         }
     }
     
@@ -681,7 +682,7 @@ public class CloudReco extends Activity implements SampleApplicationControl,
                 String videoName="Video name 1";
                 //String filename="http://techslides.com/demos/sample-videos/small.mp4";
                // String filename="https://firebasestorage.googleapis.com/v0/b/firebase-ignitar.appspot.com/o/VID-20160221-WA0011.mp4?alt=media&token=ad49e222-3961-4ed9-81d7-cdc1c2dbccf5";
-                  String filename="https://firebasestorage.googleapis.com/v0/b/firebase-ignitar.appspot.com/o/NEW%20Technology%20documentary%20Renewable%20Energy%20NEW%20Science%20Documentary%2035.mp4?alt=media&token=4ab73115-cd58-4b61-a3fa-53d34527f4b1";
+                  String filename="https://firebasestorage.googleapis.com/v0/b/firebase-ignitar.appspot.com/o/Facebook%20video%20%23229008844128339.mp4?alt=media&token=eea38c9f-52ee-4ac6-b1be-07e96f38c317";
                 mVideoPlayerHelper.load(filename,videoName, VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN,true,-1);
                 //playVideo("");
                 mVideoPlayerHelper.play(true, -1);

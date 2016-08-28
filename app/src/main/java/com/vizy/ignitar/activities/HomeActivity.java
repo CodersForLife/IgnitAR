@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.vizy.ignitar.R;
 import com.vizy.ignitar.app.CloudRecognition.CloudReco;
@@ -31,7 +32,7 @@ import java.io.IOException;
 
 public class HomeActivity extends AppCompatActivity {
     private FloatingActionButton scan;
-    private ImageView search;
+    private RelativeLayout search;
     private Button help;
     private int i=0;
     private Camera mCam;
@@ -71,7 +72,7 @@ public class HomeActivity extends AppCompatActivity {
     }
     public void initializeScreen() {
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        search= (ImageView) findViewById(R.id.search);
+        search= (RelativeLayout) findViewById(R.id.search);
         help= (Button) findViewById(R.id.help);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
@@ -86,6 +87,7 @@ public class HomeActivity extends AppCompatActivity {
          * Setup the mTabLayout with view pager
          */
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
     }
     public class SectionPagerAdapter extends FragmentStatePagerAdapter {
