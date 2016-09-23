@@ -6,7 +6,7 @@
     <uses-feature android:name="android.hardware.camera" />
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -87,8 +87,13 @@
         <activity
             android:name=".activities.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.Help"
-            android:theme="@style/Theme.Transparent"></activity>
+        <activity
+            android:name=".activities.Help"
+            android:theme="@style/Theme.Transparent" />
+        <activity
+            android:name=".activities.CompanyPageActivity"
+            android:label="@string/title_activity_company_page"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

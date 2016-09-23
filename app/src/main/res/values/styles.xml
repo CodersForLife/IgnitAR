@@ -16,6 +16,7 @@
         <item name="colorControlActivated">@color/colorAccent</item>
         <item name="colorControlHighlight">@color/colorAccent</item>
     </style>
+
     <style name="LoginThemeYellow" parent="Theme.AccountKit">
         <item name="com_accountkit_primary_color">#f4bf56</item>
         <item name="com_accountkit_primary_text_color">@android:color/white</item>
@@ -25,40 +26,49 @@
         <item name="com_accountkit_input_accent_color">?attr/com_accountkit_primary_color</item>
         <item name="com_accountkit_input_border_color">?attr/com_accountkit_primary_color</item>
     </style>
+
     <style name="AppTheme.NoActionBar">
-    <item name="windowActionBar">false</item>
-    <item name="windowNoTitle">true</item>
-    <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style name="AnimationTheme.Window" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/slide_right_to_left</item>
         <item name="android:activityOpenExitAnimation">@anim/static_anim</item>
         <item name="android:activityCloseEnterAnimation">@anim/static_anim</item>
         <item name="android:activityCloseExitAnimation">@anim/slide_left_to_right</item>
     </style>
+
     <style name="Toolbar" parent="Widget.AppCompat.Light.ActionBar">
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColorPrimary">#c7c6c6</item>
         <item name="android:textColorSecondary">#c7c6c6</item>
         <item name="android:textColor">#c7c6c6</item>
     </style>
+
     <style name="Tabs" parent="Widget.AppCompat.Light.ActionBar">
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColorPrimary">@color/colorText</item>
         <item name="android:colorAccent">@color/colorText</item>
         <item name="android:textColorSecondary">#c7c6c6</item>
     </style>
-        <style name="Theme.Transparent" parent="android:Theme">
-            <item name="android:windowIsTranslucent">true</item>
-            <item name="android:windowBackground">@android:color/transparent</item>
-            <item name="android:windowContentOverlay">@null</item>
-            <item name="android:windowNoTitle">true</item>
-            <item name="windowActionBar">false</item>
-            <item name="windowNoTitle">true</item>
 
-            <item name="android:backgroundDimEnabled">false</item>
-        </style>
+    <style name="Theme.Transparent" parent="android:Theme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
