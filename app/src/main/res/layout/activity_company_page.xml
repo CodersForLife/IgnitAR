@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_blue"
+    android:background="@drawable/company_back"
     android:fitsSystemWindows="true"
     tools:context="com.vizy.ignitar.activities.CompanyPageActivity">
 
@@ -15,18 +15,18 @@
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            android:theme="@style/AppTheme.AppBarOverlay"
+            android:id="@+id/appBarLayout">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:visibility="gone"
                 android:background="@color/light_blue"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         </android.support.design.widget.AppBarLayout>
-
-        <include layout="@layout/content_company_page" />
 
         <RelativeLayout
             android:layout_width="@dimen/dimen_140dp"
@@ -40,9 +40,10 @@
                 android:id="@+id/facebook_icon"
                 android:layout_width="@dimen/dimen_48dp"
                 android:layout_height="@dimen/dimen_48dp"
+
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
-                app:srcCompat="@android:drawable/ic_dialog_email" />
+                android:src="@drawable/facebook" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/twitter_icon"
@@ -52,6 +53,11 @@
                 android:layout_alignParentEnd="true"
                 app:srcCompat="@android:drawable/ic_dialog_email" />
         </RelativeLayout>
+
+        <include layout="@layout/content_company_page"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

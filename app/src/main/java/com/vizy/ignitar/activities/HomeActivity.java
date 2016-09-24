@@ -1,15 +1,19 @@
 package com.vizy.ignitar.activities;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -55,12 +59,22 @@ public class HomeActivity extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                view.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.image_click));
-                Intent intent = new Intent(HomeActivity.this, CloudReco.class);
-                intent.putExtra("ACTIVITY_TO_LAUNCH",
-                        "app.CloudRecognition.CloudReco");
-                intent.putExtra("ABOUT_TEXT", "CloudReco/CR_about.html");
-                startActivity(intent);
+                if(ContextCompat.checkSelfPermission(HomeActivity.this,
+                        Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED) {
+                    view.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.image_click));
+                    Intent intent = new Intent(HomeActivity.this, CloudReco.class);
+                    intent.putExtra("ACTIVITY_TO_LAUNCH",
+                            "app.CloudRecognition.CloudReco");
+                    intent.putExtra("ABOUT_TEXT", "CloudReco/CR_about.html");
+                    startActivity(intent);
+                }
+                else{
+
+                    ActivityCompat.requestPermissions(HomeActivity.this,
+                            new String[]{Manifest.permission.CAMERA},
+                            0);
+
+                }
             }
         });
         help.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +83,56 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(HomeActivity.this, Help.class));
             }
         });
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 0: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    Intent intent = new Intent(HomeActivity.this, CloudReco.class);
+                    intent.putExtra("ACTIVITY_TO_LAUNCH",
+                            "app.CloudRecognition.CloudReco");
+                    intent.putExtra("ABOUT_TEXT", "CloudReco/CR_about.html");
+                    startActivity(intent);
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return ;
+            }
+            case 1:{
+                if (i == 0) {
+                    mCam = Camera.open();
+                    Camera.Parameters p = mCam.getParameters();
+                    p.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                    mCam.setParameters(p);
+                    SurfaceTexture mPreviewTexture = new SurfaceTexture(0);
+                    try {
+                        mCam.setPreviewTexture(mPreviewTexture);
+                        i = 1;
+                    } catch (IOException ex) {
+                        // Ignore
+                    }
+                } else {
+                    mCam.startPreview();
+                    mCam.stopPreview();
+                    mCam.release();
+                    i = 0;
+                    mCam = null;
+                }
+            }
+            return;
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
     public void initializeScreen() {
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
@@ -164,25 +228,34 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(HomeActivity.this, Help.class));
                 return true;
             case R.id.night_mode:
-                if(i==0) {
-                    mCam = Camera.open();
-                    Camera.Parameters p = mCam.getParameters();
-                    p.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-                    mCam.setParameters(p);
-                    SurfaceTexture mPreviewTexture = new SurfaceTexture(0);
-                    try {
-                        mCam.setPreviewTexture(mPreviewTexture);
-                        i=1;
-                    } catch (IOException ex) {
-                        // Ignore
+                if(ContextCompat.checkSelfPermission(HomeActivity.this,
+                        Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED) {
+                    if (i == 0) {
+                        mCam = Camera.open();
+                        Camera.Parameters p = mCam.getParameters();
+                        p.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                        mCam.setParameters(p);
+                        SurfaceTexture mPreviewTexture = new SurfaceTexture(0);
+                        try {
+                            mCam.setPreviewTexture(mPreviewTexture);
+                            i = 1;
+                        } catch (IOException ex) {
+                            // Ignore
+                        }
+                    } else {
+                        mCam.startPreview();
+                        mCam.stopPreview();
+                        mCam.release();
+                        i = 0;
+                        mCam = null;
                     }
                 }
-                else {
-                    mCam.startPreview();
-                    mCam.stopPreview();
-                    mCam.release();
-                    i=0;
-                    mCam = null;
+                else{
+
+                    ActivityCompat.requestPermissions(HomeActivity.this,
+                            new String[]{Manifest.permission.CAMERA},
+                            1);
+
                 }
                 return true;
             case R.id.rate:

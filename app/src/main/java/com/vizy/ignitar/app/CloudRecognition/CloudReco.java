@@ -13,9 +13,11 @@ package com.vizy.ignitar.app.CloudRecognition;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.transition.Slide;
@@ -32,6 +34,7 @@ import com.vizy.ignitar.R;
 import com.vizy.ignitar.SampleApplicationControl;
 import com.vizy.ignitar.SampleApplicationException;
 import com.vizy.ignitar.SampleApplicationSession;
+import com.vizy.ignitar.activities.CompanyPageActivity;
 import com.vizy.ignitar.ui.SampleAppMenu.SampleAppMenu;
 import com.vizy.ignitar.ui.SampleAppMenu.SampleAppMenuGroup;
 import com.vizy.ignitar.ui.SampleAppMenu.SampleAppMenuInterface;
@@ -48,6 +51,9 @@ import com.vuforia.Trackable;
 import com.vuforia.Tracker;
 import com.vuforia.TrackerManager;
 import com.vuforia.Vuforia;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Vector;
 
@@ -602,15 +608,32 @@ public class CloudReco extends Activity implements SampleApplicationControl,
             // Process new search results
             if (finder.getResultCount() > 0) {
                 TargetSearchResult result = finder.getResult(0);
-                String data = result.getMetaData();
-                String videoName = "Video name 1";
-                //String filename="http://techslides.com/demos/sample-videos/small.mp4";
-                // String filename="https://firebasestorage.googleapis.com/v0/b/firebase-ignitar.appspot.com/o/VID-20160221-WA0011.mp4?alt=media&token=ad49e222-3961-4ed9-81d7-cdc1c2dbccf5";
-                String filename = "https://firebasestorage.googleapis.com/v0/b/firebase-ignitar.appspot.com/o/Facebook%20video%20%23229008844128339.mp4?alt=media&token=eea38c9f-52ee-4ac6-b1be-07e96f38c317";
-                mVideoPlayerHelper.load(filename, videoName, VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN, true, -1);
-                //playVideo("");
-                mVideoPlayerHelper.play(true, -1);
+                String data = result.getMetaData(),type = new String(),link=new String();
+                try {
+                    JSONObject metaData = new JSONObject(data);
+                    type=metaData.getString("type");
+                    link=metaData.getString("link");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if(type.equalsIgnoreCase("video")) {
+                    String videoName = "Video name 1";
+                    //String filename="http://techslides.com/demos/sample-videos/small.mp4";
+                    // String filename="https://firebasestorage.googleapis.com/v0/b/firebase-ignitar.appspot.com/o/VID-20160221-WA0011.mp4?alt=media&token=ad49e222-3961-4ed9-81d7-cdc1c2dbccf5";
 
+                    mVideoPlayerHelper.load(link, videoName, VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN, true, -1);
+                    //playVideo("");
+                    mVideoPlayerHelper.play(true, -1);
+                }
+                else if(type.equalsIgnoreCase("browserlink")) {
+                    Uri uri = Uri.parse(link); // missing 'http://' will cause crashed
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
+                else{
+                    startActivity(new Intent(CloudReco.this, CompanyPageActivity.class));
+                    //finish();
+                }
                 // Check if this target is tr for tracking:
                 //playvideo(filename);
                 //VideoFragment dialog=new VideoFragment();

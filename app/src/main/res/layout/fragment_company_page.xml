@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:id="@+id/content_company_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,6 +17,7 @@
         android:id="@+id/company_name_heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:gravity="center"
         android:maxLines="1"
         android:text="Chai Thela"
@@ -26,20 +28,13 @@
         android:id="@+id/underscore_line"
         android:layout_width="@dimen/dimen_100dp"
         android:layout_height="@dimen/dimen_4dp"
+        android:visibility="gone"
         android:layout_below="@+id/company_name_heading"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dimen_10dp"
         android:background="@color/white"
         android:gravity="center" />
-
-    <ImageView
-        android:id="@+id/company_image"
-        android:layout_width="@dimen/dimen_100dp"
-        android:layout_height="@dimen/dimen_240dp"
-        android:layout_below="@+id/underscore_line"
-        android:layout_marginTop="@dimen/dimen_10dp"
-        android:src="@mipmap/ic_launcher" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/view_ad"
@@ -48,7 +43,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/underscore_line"
-        android:layout_marginTop="@dimen/dimen_10dp"
+        android:layout_marginTop="120dp"
         android:padding="@dimen/dimen_8dp"
         app:cardCornerRadius="@dimen/dimen_6dp"
         app:cardElevation="@dimen/dimen_4dp">
@@ -157,6 +152,7 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/view_play_game"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="@dimen/dimen_200dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -235,14 +231,15 @@
         android:id="@+id/company_specification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/company_image"
+        android:layout_below="@+id/view_review_on_zomato"
         android:layout_centerInParent="true"
-        android:layout_marginTop="@dimen/dimen_10dp"
+        android:layout_marginTop="15dp"
         >
 
         <ImageView
             android:id="@+id/company_logo"
             android:layout_width="@dimen/dimen_80dp"
+
             android:layout_height="@dimen/dimen_80dp"
             android:src="@mipmap/ic_launcher"
             android:layout_centerHorizontal="true"
@@ -252,8 +249,10 @@
             android:id="@+id/underscore_line_2"
             android:layout_width="@dimen/dimen_100dp"
             android:layout_height="@dimen/dimen_2dp"
+            android:layout_marginTop="@dimen/dimen_10dp"
             android:layout_below="@+id/company_logo"
             android:background="@color/white"
+            android:visibility="gone"
             android:layout_centerHorizontal="true"
             />
 
@@ -267,5 +266,17 @@
             android:maxLines="1"
             />
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/company_image"
+        android:layout_width="@dimen/dimen_100dp"
+        android:layout_height="@dimen/dimen_240dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/cup"
+        android:layout_alignTop="@+id/view_ad"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/view_ad"
+        android:layout_toStartOf="@+id/view_ad" />
 
 </RelativeLayout>
