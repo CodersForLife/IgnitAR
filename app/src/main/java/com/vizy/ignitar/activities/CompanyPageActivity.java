@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.vizy.ignitar.R;
@@ -65,7 +66,9 @@ public class CompanyPageActivity extends AppCompatActivity {
         viewReviewOnZomato.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Uri uri = Uri.parse("https://www.zomato.com/ncr/chai-thela-sector-62-noida/menu"); // missing 'http://' will cause crashed
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
             }
         });
 
@@ -77,7 +80,7 @@ public class CompanyPageActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.facebook_icon);
+        ImageView fab = (ImageView) findViewById(R.id.facebook_icon);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,6 +89,15 @@ public class CompanyPageActivity extends AppCompatActivity {
                 startActivity(intent);
           }
        });
+        ImageView fab2 = (ImageView) findViewById(R.id.twitter_icon);
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse("https://twitter.com/chaithela"); // missing 'http://' will cause crashed
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
     }
 
 }

@@ -38,14 +38,15 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/view_ad"
-        android:layout_width="@dimen/dimen_200dp"
+        android:layout_width="@dimen/dimen_150dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/underscore_line"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="158dp"
         android:padding="@dimen/dimen_8dp"
         app:cardCornerRadius="@dimen/dimen_6dp"
+        app:cardBackgroundColor="#22ffffff"
         app:cardElevation="@dimen/dimen_4dp">
 
         <RelativeLayout
@@ -56,8 +57,8 @@
                 android:id="@+id/action_image"
                 android:layout_width="@dimen/dimen_40dp"
                 android:layout_height="@dimen/dimen_40dp"
-                android:padding="@dimen/dimen_4dp"
-                android:src="@mipmap/ic_launcher" />
+                android:padding="@dimen/dimen_8dp"
+                android:src="@drawable/white_play_button" />
 
             <TextView
                 android:id="@+id/action_text"
@@ -67,7 +68,8 @@
                 android:layout_toEndOf="@+id/action_image"
                 android:layout_toRightOf="@+id/action_image"
                 android:text="@string/view_ad_text"
-                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textColor="@color/white"
                 android:textSize="@dimen/dimen_16sp" />
 
         </RelativeLayout>
@@ -76,13 +78,14 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/view_give_feedback"
-        android:layout_width="200dp"
+        android:layout_width="@dimen/dimen_150dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/view_ad"
         android:layout_marginTop="@dimen/dimen_10dp"
         android:padding="@dimen/dimen_8dp"
+        app:cardBackgroundColor="#22ffffff"
         app:cardCornerRadius="@dimen/dimen_6dp"
         app:cardElevation="@dimen/dimen_4dp">
 
@@ -94,8 +97,8 @@
                 android:id="@+id/view_give_feedback_action_image"
                 android:layout_width="@dimen/dimen_40dp"
                 android:layout_height="@dimen/dimen_40dp"
-                android:padding="@dimen/dimen_4dp"
-                android:src="@mipmap/ic_launcher" />
+                android:padding="@dimen/dimen_8dp"
+                android:src="@drawable/feedback" />
 
             <TextView
                 android:id="@+id/view_give_feedback_action_text"
@@ -105,7 +108,8 @@
                 android:layout_toEndOf="@+id/view_give_feedback_action_image"
                 android:layout_toRightOf="@+id/view_give_feedback_action_image"
                 android:text="@string/give_feedback_text"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:textSize="@dimen/dimen_16sp" />
 
         </RelativeLayout>
@@ -114,13 +118,14 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/view_my_action_meter"
-        android:layout_width="@dimen/dimen_200dp"
+        android:layout_width="@dimen/dimen_150dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/view_give_feedback"
         android:layout_marginTop="@dimen/dimen_10dp"
         android:padding="@dimen/dimen_8dp"
+        app:cardBackgroundColor="#22ffffff"
         app:cardCornerRadius="@dimen/dimen_6dp"
         app:cardElevation="@dimen/dimen_4dp">
 
@@ -132,8 +137,8 @@
                 android:id="@+id/view_my_chai_meter_action_image"
                 android:layout_width="@dimen/dimen_40dp"
                 android:layout_height="@dimen/dimen_40dp"
-                android:padding="@dimen/dimen_4dp"
-                android:src="@mipmap/ic_launcher" />
+                android:padding="@dimen/dimen_8dp"
+                android:src="@drawable/white_speed_meter" />
 
             <TextView
                 android:id="@+id/view_my_chai_meter_action_text"
@@ -143,7 +148,8 @@
                 android:layout_toEndOf="@+id/view_my_chai_meter_action_image"
                 android:layout_toRightOf="@+id/view_my_chai_meter_action_image"
                 android:text="@string/my_chai_meter_text"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:textSize="@dimen/dimen_16sp" />
 
         </RelativeLayout>
@@ -153,9 +159,10 @@
     <android.support.v7.widget.CardView
         android:id="@+id/view_play_game"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_width="@dimen/dimen_200dp"
+        android:layout_width="@dimen/dimen_150dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        app:cardBackgroundColor="#22ffffff"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/view_my_action_meter"
         android:layout_marginTop="@dimen/dimen_10dp"
@@ -171,8 +178,8 @@
                 android:id="@+id/view_play_game_action_image"
                 android:layout_width="@dimen/dimen_40dp"
                 android:layout_height="@dimen/dimen_40dp"
-                android:padding="@dimen/dimen_4dp"
-                android:src="@mipmap/ic_launcher" />
+                android:padding="@dimen/dimen_8dp"
+                android:src="@drawable/white_game_button" />
 
             <TextView
                 android:id="@+id/view_play_game_action_text"
@@ -182,7 +189,8 @@
                 android:layout_toEndOf="@+id/view_play_game_action_image"
                 android:layout_toRightOf="@+id/view_play_game_action_image"
                 android:text="@string/play_game_text"
-                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textColor="@color/white"
                 android:textSize="@dimen/dimen_16sp" />
 
         </RelativeLayout>
@@ -191,13 +199,14 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/view_review_on_zomato"
-        android:layout_width="@dimen/dimen_200dp"
+        android:layout_width="@dimen/dimen_150dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/view_play_game"
         android:layout_marginTop="@dimen/dimen_10dp"
         android:padding="@dimen/dimen_8dp"
+        app:cardBackgroundColor="#22ffffff"
         app:cardCornerRadius="@dimen/dimen_6dp"
         app:cardElevation="@dimen/dimen_4dp">
 
@@ -209,8 +218,8 @@
                 android:id="@+id/view_review_on_zomato_action_image"
                 android:layout_width="@dimen/dimen_40dp"
                 android:layout_height="@dimen/dimen_40dp"
-                android:padding="@dimen/dimen_4dp"
-                android:src="@mipmap/ic_launcher" />
+                android:padding="@dimen/dimen_8dp"
+                android:src="@drawable/white_user_review" />
 
             <TextView
                 android:id="@+id/view_review_on_zomato_action_text"
@@ -220,7 +229,8 @@
                 android:layout_toEndOf="@+id/view_review_on_zomato_action_image"
                 android:layout_toRightOf="@+id/view_review_on_zomato_action_image"
                 android:text="@string/review_us_zaomato_text"
-                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textColor="@color/white"
                 android:textSize="@dimen/dimen_16sp" />
 
         </RelativeLayout>
@@ -233,17 +243,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/view_review_on_zomato"
         android:layout_centerInParent="true"
-        android:layout_marginTop="15dp"
+
         >
-
-        <ImageView
-            android:id="@+id/company_logo"
-            android:layout_width="@dimen/dimen_80dp"
-
-            android:layout_height="@dimen/dimen_80dp"
-            android:src="@mipmap/ic_launcher"
-            android:layout_centerHorizontal="true"
-            />
 
         <TextView
             android:id="@+id/underscore_line_2"
@@ -258,25 +259,35 @@
 
         <TextView
             android:id="@+id/company_web_url"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:gravity="center"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/underscore_line_2"
             android:textColor="@color/white"
-            android:text="www.company_image"
+            android:layout_below="@+id/company_logo"
+            android:text="www.chaithela.com"
             android:maxLines="1"
             />
+
+        <ImageView
+            android:id="@+id/company_logo"
+            android:layout_width="@dimen/dimen_80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="@dimen/dimen_80dp"
+            android:src="@drawable/chailogo"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/underscore_line_2"
+            android:layout_toEndOf="@+id/underscore_line_2" />
     </RelativeLayout>
 
     <ImageView
         android:id="@+id/company_image"
         android:layout_width="@dimen/dimen_100dp"
-        android:layout_height="@dimen/dimen_240dp"
-        android:scaleType="fitXY"
+        android:layout_height="@dimen/dimen_300dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/cup"
         android:layout_alignTop="@+id/view_ad"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/view_ad"
         android:layout_toStartOf="@+id/view_ad" />
 
 </RelativeLayout>
