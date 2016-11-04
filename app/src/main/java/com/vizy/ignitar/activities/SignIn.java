@@ -164,8 +164,6 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
                     }
                 });
 

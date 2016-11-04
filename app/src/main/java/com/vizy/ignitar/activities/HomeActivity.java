@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
-import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -16,15 +16,12 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.vizy.ignitar.R;
@@ -38,37 +35,37 @@ public class HomeActivity extends AppCompatActivity {
     private FloatingActionButton scan;
     private RelativeLayout search;
     private Button help;
-    private int i=0;
+    private int i = 0;
     private Camera mCam;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
         initializeScreen();
-  //      Intent i=getIntent();
+        //      Intent i=getIntent();
 //        Log.e("dd",i.getStringExtra("videoname"));
-        final SharedPreferences sp=getSharedPreferences("ignitar",MODE_PRIVATE);
-        if(!sp.getBoolean("first",false)) {
+        final SharedPreferences sp = getSharedPreferences("ignitar", MODE_PRIVATE);
+        if (!sp.getBoolean("first", false)) {
             startActivity(new Intent(HomeActivity.this, Help.class));
             SharedPreferences.Editor editor = sp.edit();
-            editor.putBoolean("first",true);
+            editor.putBoolean("first", true);
             editor.apply();
         }
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(ContextCompat.checkSelfPermission(HomeActivity.this,
-                        Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(HomeActivity.this,
+                        Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                     view.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.image_click));
                     Intent intent = new Intent(HomeActivity.this, CloudReco.class);
                     intent.putExtra("ACTIVITY_TO_LAUNCH",
                             "app.CloudRecognition.CloudReco");
                     intent.putExtra("ABOUT_TEXT", "CloudReco/CR_about.html");
                     startActivity(intent);
-                }
-                else{
+                } else {
 
                     ActivityCompat.requestPermissions(HomeActivity.this,
                             new String[]{Manifest.permission.CAMERA},
@@ -84,6 +81,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -106,9 +104,9 @@ public class HomeActivity extends AppCompatActivity {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
                 }
-                return ;
+                return;
             }
-            case 1:{
+            case 1: {
                 if (i == 0) {
                     mCam = Camera.open();
                     Camera.Parameters p = mCam.getParameters();
@@ -134,10 +132,11 @@ public class HomeActivity extends AppCompatActivity {
             // permissions this app might request
         }
     }
+
     public void initializeScreen() {
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        search= (RelativeLayout) findViewById(R.id.search);
-        help= (Button) findViewById(R.id.help);
+        search = (RelativeLayout) findViewById(R.id.search);
+        help = (Button) findViewById(R.id.help);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
@@ -154,6 +153,7 @@ public class HomeActivity extends AppCompatActivity {
         tabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
     }
+
     public class SectionPagerAdapter extends FragmentStatePagerAdapter {
 
         public SectionPagerAdapter(FragmentManager fm) {
@@ -168,23 +168,21 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
 
-            Fragment fragment = null;
-
+            Fragment fragment;
             /**
              * Set fragment to different fragments depending on position in ViewPager
              */
             switch (position) {
                 case 0:
-                    fragment = TrendingFragment.newInstance(null,null);
+                    fragment = TrendingFragment.newInstance(null, null);
                     break;
                 case 1:
-                    fragment = HistoryFragment.newInstance(null,null);
+                    fragment = HistoryFragment.newInstance(null, null);
                     break;
                 default:
-                    fragment = TrendingFragment.newInstance(null,null);
+                    fragment = TrendingFragment.newInstance(null, null);
                     break;
             }
-
             return fragment;
         }
 
@@ -210,6 +208,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -228,8 +227,8 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(HomeActivity.this, Help.class));
                 return true;
             case R.id.night_mode:
-                if(ContextCompat.checkSelfPermission(HomeActivity.this,
-                        Manifest.permission.CAMERA)== PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(HomeActivity.this,
+                        Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                     if (i == 0) {
                         mCam = Camera.open();
                         Camera.Parameters p = mCam.getParameters();
@@ -249,8 +248,7 @@ public class HomeActivity extends AppCompatActivity {
                         i = 0;
                         mCam = null;
                     }
-                }
-                else{
+                } else {
 
                     ActivityCompat.requestPermissions(HomeActivity.this,
                             new String[]{Manifest.permission.CAMERA},

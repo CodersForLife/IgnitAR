@@ -32,14 +32,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug_config
         }
-        shrunk {
-            minifyEnabled true
-            shrinkResources true
-        }
-        big{
-            minifyEnabled false
-            shrinkResources false
-        }
+//        shrunk {
+//            minifyEnabled true
+//            shrinkResources true
+//        }
+//        big{
+//            minifyEnabled false
+//            shrinkResources false
+//        }
     }
     packagingOptions {
         exclude 'META-INF/LICENSE'
