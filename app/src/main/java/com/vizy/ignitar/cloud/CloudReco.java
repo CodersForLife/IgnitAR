@@ -130,8 +130,7 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
         mTextures = new Vector<Texture>();
         loadTextures();
 
-        mIsDroidDevice = android.os.Build.MODEL.toLowerCase().startsWith(
-                "droid");
+        mIsDroidDevice = android.os.Build.MODEL.toLowerCase().startsWith("droid");
         mVideoPlayerHelper.init();
         mVideoPlayerHelper.setActivity(this);
     }

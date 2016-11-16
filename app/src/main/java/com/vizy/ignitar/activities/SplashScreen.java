@@ -7,22 +7,26 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import com.vizy.ignitar.R;
+import com.vizy.ignitar.constants.IgnitarConstants;
 import com.vizy.ignitar.network.InternetConnection;
+import com.vizy.ignitar.preferences.IgnitarStore;
 
 public class SplashScreen extends AppCompatActivity {
+
+    private IgnitarStore ignitarStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        final SharedPreferences sp=getSharedPreferences("ignitar",MODE_PRIVATE);
+        ignitarStore=new IgnitarStore(SplashScreen.this);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 if(InternetConnection.isConnected(SplashScreen.this)) {
-                    if (!sp.getBoolean("signin",false)) {
+                    if (!ignitarStore.getTourTaken()) {
                         Intent i = new Intent(SplashScreen.this, SignIn.class);
                         startActivity(i);
                         finish();
@@ -36,6 +40,6 @@ public class SplashScreen extends AppCompatActivity {
                      startActivity(new Intent(SplashScreen.this,NoConnection.class));
                 }
             }
-        },2000);
+        }, IgnitarConstants.DEFAULT_LOADING_TIME);
     }
 }

@@ -62,16 +62,30 @@ public class IgnitarStore {
         editor.apply();
     }
 
-
-    public void getDeviceId(@NonNull String deviceId) {
+    public void saveUserName(@NonNull String userName) {
         editor = sharedPreferences.edit();
-        editor.putString(IgnitarConstants.IgnitarStoreConstants.deviceId, deviceId);
+        editor.putString(IgnitarConstants.IgnitarStoreConstants.userName, userName);
         editor.apply();
     }
 
-    public String getImeiNumber(@NonNull String imeiNumber) {
+    public void saveUserEmail(@NonNull String userEmail) {
         editor = sharedPreferences.edit();
-        return sharedPreferences.getString(IgnitarConstants.IgnitarStoreConstants.imeiNumber, imeiNumber);
+        editor.putString(IgnitarConstants.IgnitarStoreConstants.userEmail, userEmail);
+        editor.apply();
+    }
+
+    public void saveUserMobile(@NonNull String userMobile) {
+        editor = sharedPreferences.edit();
+        editor.putString(IgnitarConstants.IgnitarStoreConstants.userMobile, userMobile);
+        editor.apply();
+    }
+
+    public String getDeviceId() {
+        return sharedPreferences.getString(IgnitarConstants.IgnitarStoreConstants.deviceId, IgnitarConstants.EMPTY_STRING);
+    }
+
+    public String getImeiNumber() {
+        return sharedPreferences.getString(IgnitarConstants.IgnitarStoreConstants.imeiNumber, IgnitarConstants.EMPTY_STRING);
     }
 
     public String getDeviceName() {
@@ -84,6 +98,18 @@ public class IgnitarStore {
 
     public boolean getTourTaken() {
         return sharedPreferences.getBoolean(IgnitarConstants.IgnitarStoreConstants.isTourTaken, IgnitarConstants.EMPTY_BOOLEAN);
+    }
+
+    public String getUserName() {
+        return sharedPreferences.getString(IgnitarConstants.IgnitarStoreConstants.userName, IgnitarConstants.EMPTY_STRING);
+    }
+
+    public String getUserEmail() {
+        return sharedPreferences.getString(IgnitarConstants.IgnitarStoreConstants.userEmail, IgnitarConstants.EMPTY_STRING);
+    }
+
+    public String getUserMobile() {
+        return sharedPreferences.getString(IgnitarConstants.IgnitarStoreConstants.userMobile, IgnitarConstants.EMPTY_STRING);
     }
 
     public void clearIgnitarStore() {

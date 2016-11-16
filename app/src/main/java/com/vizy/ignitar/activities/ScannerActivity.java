@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
@@ -13,20 +14,23 @@ import android.widget.Button;
 
 import com.vizy.ignitar.R;
 import com.vizy.ignitar.cloud.CloudReco;
+import com.vizy.ignitar.constants.IgnitarConstants;
+import com.vizy.ignitar.utils.StringUtils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class ScannerActivity extends AppCompatActivity {
 
-    private Button startScan,toHomeActivity;
+    private final String TAG = this.getClass().getSimpleName();
+    private Button startScan, toHomeActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
 
-        startScan=(Button) findViewById(R.id.start_scan);
+        startScan = (Button) findViewById(R.id.start_scan);
         startScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -37,27 +41,28 @@ public class ScannerActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        toHomeActivity= (Button) findViewById(R.id.home);
+        toHomeActivity = (Button) findViewById(R.id.home);
         toHomeActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ScannerActivity.this,HomeActivity.class));
+                startActivity(new Intent(ScannerActivity.this, HomeActivity.class));
                 finish();
             }
         });
         try {
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    "com.facebook.samples.hellofacebook",
+            PackageInfo info = getPackageManager().getPackageInfo("com.facebook.samples.hellofacebook",
                     PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
                 Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
             }
-        } catch (PackageManager.NameNotFoundException e) {
-
-        } catch (NoSuchAlgorithmException e) {
-
+        } catch (@NonNull PackageManager.NameNotFoundException e) {
+            Log.d(TAG, StringUtils.isNullOrEmpty(e.getMessage()) ? IgnitarConstants.Exceptions.NAME_NOT_FOUND_EXCEPTION
+                    : e.getMessage());
+        } catch (@NonNull NoSuchAlgorithmException e) {
+            Log.d(TAG, StringUtils.isNullOrEmpty(e.getMessage()) ? IgnitarConstants.Exceptions.NO_SUCH_ALGORITHM_EXCEPTION
+                    : e.getMessage());
         }
     }
 }

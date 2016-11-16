@@ -8,7 +8,9 @@ import android.widget.RelativeLayout;
 import com.vizy.ignitar.R;
 
 public class Help extends AppCompatActivity {
+
     private RelativeLayout hint;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

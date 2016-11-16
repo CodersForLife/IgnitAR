@@ -9,7 +9,9 @@ import android.widget.Button;
 import com.vizy.ignitar.R;
 
 public class NoConnection extends AppCompatActivity {
+
     Button setting,tryAgain;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

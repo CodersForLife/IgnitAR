@@ -43,7 +43,9 @@
                 android:layout_marginLeft="@dimen/dimen_10dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
-                android:src="@drawable/facebook" />
+                android:src="@drawable/facebook"
+                tools:ignore="ContentDescription,RtlHardcoded"
+                android:contentDescription="" />
 
             <ImageView
                 android:id="@+id/twitter_icon"
@@ -53,13 +55,16 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/twitter"
-                android:layout_marginRight="@dimen/dimen_10dp" />
+                android:layout_marginRight="@dimen/dimen_10dp"
+                tools:ignore="ContentDescription" />
         </RelativeLayout>
 
         <include layout="@layout/content_company_page"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"/>
 
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

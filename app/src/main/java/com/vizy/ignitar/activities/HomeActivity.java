@@ -31,6 +31,7 @@ import com.vizy.ignitar.cloud.CloudReco;
 import java.io.IOException;
 
 public class HomeActivity extends AppCompatActivity {
+
     private FloatingActionButton scan;
     private RelativeLayout search;
     private Button help;
@@ -65,11 +66,7 @@ public class HomeActivity extends AppCompatActivity {
                     intent.putExtra("ABOUT_TEXT", "CloudReco/CR_about.html");
                     startActivity(intent);
                 } else {
-
-                    ActivityCompat.requestPermissions(HomeActivity.this,
-                            new String[]{Manifest.permission.CAMERA},
-                            0);
-
+                    ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.CAMERA}, 0);
                 }
             }
         });
@@ -82,14 +79,11 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case 0: {
                 // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
+                if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     Intent intent = new Intent(HomeActivity.this, CloudReco.class);
                     intent.putExtra("ACTIVITY_TO_LAUNCH",
                             "app.CloudRecognition.CloudReco");
@@ -97,9 +91,7 @@ public class HomeActivity extends AppCompatActivity {
                     startActivity(intent);
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
-
                 } else {
-
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
                 }
