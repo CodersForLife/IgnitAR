@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.vizy.ignitar.R;
-import com.vizy.ignitar.app.cloud.CloudReco;
+import com.vizy.ignitar.cloud.CloudReco;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

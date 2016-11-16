@@ -1,4 +1,4 @@
-package com.vizy.ignitar;
+package com.vizy.ignitar.base;
 
 import android.app.Application;
 import android.support.multidex.MultiDex;

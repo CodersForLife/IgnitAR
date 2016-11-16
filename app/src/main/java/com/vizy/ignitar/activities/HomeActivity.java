@@ -25,10 +25,9 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.vizy.ignitar.R;
-import com.vizy.ignitar.app.cloud.CloudReco;
 import com.vizy.ignitar.fragment.HistoryFragment;
 import com.vizy.ignitar.fragment.TrendingFragment;
-
+import com.vizy.ignitar.cloud.CloudReco;
 import java.io.IOException;
 
 public class HomeActivity extends AppCompatActivity {

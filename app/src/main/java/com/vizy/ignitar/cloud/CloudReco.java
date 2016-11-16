@@ -1,14 +1,4 @@
-/*===============================================================================
-Copyright (c) 2016 PTC Inc. All Rights Reserved.
-
-
-Copyright (c) 2012-2014 Qualcomm Connected Experiences, Inc. All Rights Reserved.
-
-Vuforia is a trademark of PTC Inc., registered in the United States and other 
-countries.
-===============================================================================*/
-
-package com.vizy.ignitar.app.cloud;
+package com.vizy.ignitar.cloud;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,8 +10,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.transition.Slide;
-import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -31,10 +19,10 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.RelativeLayout;
 
 import com.vizy.ignitar.R;
-import com.vizy.ignitar.SampleApplicationControl;
-import com.vizy.ignitar.SampleApplicationException;
-import com.vizy.ignitar.SampleApplicationSession;
 import com.vizy.ignitar.activities.CompanyPageActivity;
+import com.vizy.ignitar.base.SampleApplicationControl;
+import com.vizy.ignitar.base.SampleApplicationException;
+import com.vizy.ignitar.base.SampleApplicationSession;
 import com.vizy.ignitar.ui.menu.SampleAppMenu;
 import com.vizy.ignitar.ui.menu.SampleAppMenuGroup;
 import com.vizy.ignitar.ui.menu.SampleAppMenuInterface;
@@ -57,11 +45,9 @@ import org.json.JSONObject;
 
 import java.util.Vector;
 
-// The main activity for the CloudReco sample. 
-public class CloudReco extends Activity implements SampleApplicationControl,
-        SampleAppMenuInterface {
-    private static final String LOGTAG = "CloudReco";
+public class CloudReco extends Activity implements SampleApplicationControl, SampleAppMenuInterface {
 
+    private static final String LOGTAG = "CloudReco";
     SampleApplicationSession vuforiaAppSession;
 
     // These codes match the ones defined in TargetFinder in Vuforia.jar
@@ -608,15 +594,15 @@ public class CloudReco extends Activity implements SampleApplicationControl,
             // Process new search results
             if (finder.getResultCount() > 0) {
                 TargetSearchResult result = finder.getResult(0);
-                String data = result.getMetaData(),type = new String(),link=new String();
+                String data = result.getMetaData(), type = new String(), link = new String();
                 try {
                     JSONObject metaData = new JSONObject(data);
-                    type=metaData.getString("type");
-                    link=metaData.getString("link");
+                    type = metaData.getString("type");
+                    link = metaData.getString("link");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                if(type.equalsIgnoreCase("video")) {
+                if (type.equalsIgnoreCase("video")) {
                     String videoName = "Video name 1";
                     //String filename="http://techslides.com/demos/sample-videos/small.mp4";
                     // String filename="https://firebasestorage.googleapis.com/v0/b/firebase-ignitar.appspot.com/o/VID-20160221-WA0011.mp4?alt=media&token=ad49e222-3961-4ed9-81d7-cdc1c2dbccf5";
@@ -624,13 +610,11 @@ public class CloudReco extends Activity implements SampleApplicationControl,
                     mVideoPlayerHelper.load(link, videoName, VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN, true, -1);
                     //playVideo("");
                     mVideoPlayerHelper.play(true, -1);
-                }
-                else if(type.equalsIgnoreCase("browserlink")) {
+                } else if (type.equalsIgnoreCase("browserlink")) {
                     Uri uri = Uri.parse(link); // missing 'http://' will cause crashed
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent);
-                }
-                else{
+                } else {
                     startActivity(new Intent(CloudReco.this, CompanyPageActivity.class));
                     //finish();
                 }
@@ -759,11 +743,6 @@ public class CloudReco extends Activity implements SampleApplicationControl,
                 CMD_EXTENDED_TRACKING, false);
 
         mSampleAppMenu.attachMenu();
-    }
-
-    private void setupWindowAnimations() {
-        Slide slide = (Slide) TransitionInflater.from(this).inflateTransition(R.transition.activity_slide);
-        getWindow().setExitTransition(slide);
     }
 
     @Override
