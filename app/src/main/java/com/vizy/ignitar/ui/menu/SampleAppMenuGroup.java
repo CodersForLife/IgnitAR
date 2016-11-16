@@ -8,7 +8,7 @@ countries.
 ===============================================================================*/
 
 
-package com.vizy.ignitar.ui.SampleAppMenu;
+package com.vizy.ignitar.ui.menu;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

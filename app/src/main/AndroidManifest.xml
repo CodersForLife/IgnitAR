@@ -54,7 +54,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".app.CloudRecognition.CloudReco"
+            android:name=".app.cloud.CloudReco"
             android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize"
             android:launchMode="singleTask" />
         <activity

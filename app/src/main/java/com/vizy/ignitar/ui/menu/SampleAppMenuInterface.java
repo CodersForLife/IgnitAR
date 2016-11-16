@@ -7,7 +7,7 @@ Vuforia is a trademark of PTC Inc., registered in the United States and other
 countries.
 ===============================================================================*/
 
-package com.vizy.ignitar.ui.SampleAppMenu;
+package com.vizy.ignitar.ui.menu;
 
 // To be implemented in the activities to handle any desired function 
 // previously set for a SampleAppMenu instance

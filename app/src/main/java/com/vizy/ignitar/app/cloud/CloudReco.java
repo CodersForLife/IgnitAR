@@ -8,7 +8,7 @@ Vuforia is a trademark of PTC Inc., registered in the United States and other
 countries.
 ===============================================================================*/
 
-package com.vizy.ignitar.app.CloudRecognition;
+package com.vizy.ignitar.app.cloud;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -35,9 +35,9 @@ import com.vizy.ignitar.SampleApplicationControl;
 import com.vizy.ignitar.SampleApplicationException;
 import com.vizy.ignitar.SampleApplicationSession;
 import com.vizy.ignitar.activities.CompanyPageActivity;
-import com.vizy.ignitar.ui.SampleAppMenu.SampleAppMenu;
-import com.vizy.ignitar.ui.SampleAppMenu.SampleAppMenuGroup;
-import com.vizy.ignitar.ui.SampleAppMenu.SampleAppMenuInterface;
+import com.vizy.ignitar.ui.menu.SampleAppMenu;
+import com.vizy.ignitar.ui.menu.SampleAppMenuGroup;
+import com.vizy.ignitar.ui.menu.SampleAppMenuInterface;
 import com.vizy.ignitar.utils.LoadingDialogHandler;
 import com.vizy.ignitar.utils.SampleApplicationGLView;
 import com.vizy.ignitar.utils.Texture;
