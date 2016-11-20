@@ -104,6 +104,25 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".activities.MeterActivity">
         </activity>
+
+        <activity android:name=".base.video.VideoPlayback"
+            android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize"
+            android:theme="@style/SampleAppsTheme"
+            android:launchMode="singleTask"
+            ></activity>
+
+        <activity
+            android:label="@string/app_name"
+            android:name=".base.video.FullscreenPlayback"
+            android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+
+        </activity>
     </application>
 
 </manifest>

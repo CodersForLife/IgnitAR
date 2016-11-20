@@ -54,6 +54,11 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
     private static final String TAG = "CloudReco";
     private IgnitarStore ignitarStore;
     private SampleApplicationSession vuforiaAppSession;
+    private boolean mPlayFullscreenVideo = false;
+    // Movie for the Targets:
+    public static final int NUM_TARGETS = 2;
+    public static final int FIVE_HUNDREAD = 0;
+    public static final int TWO_THOUSAND = 1;
     // These codes match the ones defined in TargetFinder in Vuforia.jar
     static final int INIT_SUCCESS = 2;
     static final int INIT_ERROR_NO_NETWORK_CONNECTION = -1;
@@ -76,9 +81,10 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
     private boolean mExtendedTracking = false;
     boolean mFinderStarted = false;
     boolean mStopFinderIfStarted = false;
-    VideoPlayerHelper mVideoPlayerHelper = new VideoPlayerHelper();
-    private int mSeekPosition = 0;
-    private String mMovieName = null;
+    public VideoPlayerHelper mVideoPlayerHelper[] = new VideoPlayerHelper[]{};
+    private int mSeekPosition []= null;
+    private boolean mWasPlaying[] = null;
+    private String mMovieName []= null;
     // The textures we will use for rendering:
     private Vector<Texture> mTextures;
     //    private static final String kAccessKey = "869a299f9911cd84f189d69fe8d5f79f35304372";
@@ -114,8 +120,25 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
         mTextures = new Vector<Texture>();
         loadTextures();
         mIsDroidDevice = android.os.Build.MODEL.toLowerCase().startsWith("droid");
-        mVideoPlayerHelper.init();
-        mVideoPlayerHelper.setActivity(this);
+
+//        mVideoPlayerHelper.init();
+//        mVideoPlayerHelper.setActivity(this);
+
+        mVideoPlayerHelper = new VideoPlayerHelper[NUM_TARGETS];
+        mSeekPosition = new int[NUM_TARGETS];
+        mWasPlaying = new boolean[NUM_TARGETS];
+        mMovieName = new String[NUM_TARGETS];
+
+        // Create the video player helper that handles the playback of the movie
+        // for the targets:
+        for (int i = 0; i < NUM_TARGETS; i++) {
+            mVideoPlayerHelper[i] = new VideoPlayerHelper();
+            mVideoPlayerHelper[i].init();
+            mVideoPlayerHelper[i].setActivity(this);
+        }
+
+        mMovieName[FIVE_HUNDREAD] = "VideoPlayback/VuforiaSizzleReel_1.mp4";
+        mMovieName[TWO_THOUSAND] = "VideoPlayback/VuforiaSizzleReel_2.mp4";
     }
 
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {
@@ -525,9 +548,9 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
                     String videoName = "Video name 1";
                     //String filename="http://techslides.com/demos/sample-videos/small.mp4";
                     // String filename="https://firebasestorage.googleapis.com/v0/b/firebase-ignitar.appspot.com/o/VID-20160221-WA0011.mp4?alt=media&token=ad49e222-3961-4ed9-81d7-cdc1c2dbccf5";
-                    mVideoPlayerHelper.load(link, videoName, VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN, true, -1);
+                    mVideoPlayerHelper[0].load(link, videoName, VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN, true, -1);
                     //playVideo("");
-                    mVideoPlayerHelper.play(true, -1);
+                    mVideoPlayerHelper[0].play(true, -1);
                 } else if (type.equalsIgnoreCase("browserlink")) {
                     Uri uri = Uri.parse(link); // missing 'http://' will cause crashed
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
@@ -620,6 +643,7 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
 
     final public static int CMD_BACK = -1;
     final public static int CMD_EXTENDED_TRACKING = 1;
+    final private static int CMD_FULLSCREEN_VIDEO = 2;
 
     // This method sets the menu's settings
     private void setSampleAppMenuSettings() {
@@ -666,6 +690,21 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
                 if (result)
                     mExtendedTracking = !mExtendedTracking;
                 break;
+
+            case CMD_FULLSCREEN_VIDEO:
+                mPlayFullscreenVideo = !mPlayFullscreenVideo;
+
+                for (int i = 0; i < mVideoPlayerHelper.length; i++) {
+                    if (mVideoPlayerHelper[i].getStatus() == VideoPlayerHelper.MEDIA_STATE.PLAYING) {
+                        // If it is playing then we pause it
+                        mVideoPlayerHelper[i].pause();
+
+                        mVideoPlayerHelper[i].play(true,
+                                mSeekPosition[i]);
+                    }
+                }
+                break;
+
         }
         return result;
     }

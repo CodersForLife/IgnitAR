@@ -276,7 +276,7 @@ public class VideoPlayerHelper implements OnPreparedListener,
     }
 
     /** Return the current status of the movie such as Playing, Paused or Not Ready */
-    MEDIA_STATE getStatus()
+    public MEDIA_STATE getStatus()
     {
         return mCurrentState;
     }

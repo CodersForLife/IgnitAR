@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.vizy.ignitar.R;
+import com.vizy.ignitar.base.video.VideoPlayback;
 import com.vizy.ignitar.fragment.HistoryFragment;
 import com.vizy.ignitar.fragment.TrendingFragment;
 import com.vizy.ignitar.cloud.CloudReco;
@@ -63,10 +64,15 @@ public class HomeActivity extends AppCompatActivity {
                         Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                     view.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.image_click));
                     Intent intent = new Intent(HomeActivity.this, CloudReco.class);
-                    intent.putExtra("ACTIVITY_TO_LAUNCH",
-                            "app.CloudRecognition.CloudReco");
+                    intent.putExtra("ACTIVITY_TO_LAUNCH", "app.CloudRecognition.CloudReco");
                     intent.putExtra("ABOUT_TEXT", "CloudReco/CR_about.html");
                     startActivity(intent);
+
+//                    Intent intent = new Intent(HomeActivity.this, VideoPlayback.class);
+//                    intent.putExtra("ACTIVITY_TO_LAUNCH", "app.VideoPlayback.VideoPlayback");
+//                    intent.putExtra("ABOUT_TEXT_TITLE", "Video Playback");
+//                    intent.putExtra("ABOUT_TEXT", "VideoPlayback/VP_about.html");
+//                    startActivity(intent);
                 } else {
                     ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.CAMERA}, 0);
                 }

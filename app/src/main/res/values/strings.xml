@@ -89,4 +89,6 @@
     <string name="blue">Blue</string>
     <string name="defaultColor">Default</string>
 
+    <string name="menu_playFullscreenVideo">Play Fullscreen</string>
+
 </resources>
