@@ -28,6 +28,8 @@ import com.vizy.ignitar.R;
 import com.vizy.ignitar.fragment.HistoryFragment;
 import com.vizy.ignitar.fragment.TrendingFragment;
 import com.vizy.ignitar.cloud.CloudReco;
+import com.vuforia.VirtualButton;
+
 import java.io.IOException;
 
 public class HomeActivity extends AppCompatActivity {
