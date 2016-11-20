@@ -10,6 +10,8 @@ public class User {
     private String userEmail;
     private String userName;
     private String userMobile;
+    private float productScan;
+    private int couponEarned;
 
     public String getDeviceId() {
         return deviceId;
@@ -73,5 +75,21 @@ public class User {
 
     public void setUserMobile(String userMobile) {
         this.userMobile = userMobile;
+    }
+
+    public float getProductScan() {
+        return productScan;
+    }
+
+    public void setProductScan(float productScan) {
+        this.productScan = productScan;
+    }
+
+    public int getCouponEarned() {
+        return couponEarned;
+    }
+
+    public void setCouponEarned(int couponEarned) {
+        this.couponEarned = couponEarned;
     }
 }

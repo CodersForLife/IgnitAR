@@ -10,8 +10,10 @@
     <dimen name="dimen_16dp">16dp</dimen>
     <dimen name="dimen_18dp">18dp</dimen>
     <dimen name="dimen_30dp">30dp</dimen>
+    <dimen name="dimen_36dp">36dp</dimen>
     <dimen name="dimen_40dp">40dp</dimen>
     <dimen name="dimen_48dp">48dp</dimen>
+    <dimen name="dimen_60dp">60dp</dimen>
     <dimen name="dimen_80dp">80dp</dimen>
     <dimen name="dimen_140dp">140dp</dimen>
     <dimen name="dimen_100dp">100dp</dimen>
@@ -35,4 +37,9 @@
     <dimen name="menu_entries_top_down_padding">15dp</dimen>
     <dimen name="menu_entries_top_down_radio_padding">7dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="text_16sp">16sp</dimen>
+    <dimen name="text_20sp">20sp</dimen>
+    <dimen name="text_24sp">24sp</dimen>
+
 </resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_meter"
+    android:background="@drawable/background_grey"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dimen_16dp"
+    tools:context="com.vizy.ignitar.activities.MeterActivity">
+
+    <TextView
+        android:id="@+id/number_of_coupons"
+        android:layout_width="@dimen/dimen_40dp"
+        android:layout_height="@dimen/dimen_40dp"
+        android:padding="@dimen/dimen_4dp"
+        android:text="0"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_24sp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        tools:ignore="HardcodedText" />
+
+    <ImageView
+        android:id="@+id/coupon_image"
+        android:src="@mipmap/ic_chai"
+        android:layout_width="@dimen/dimen_36dp"
+        android:layout_height="@dimen/dimen_36dp"
+        android:layout_toLeftOf="@+id/number_of_coupons"
+        android:layout_toStartOf="@+id/number_of_coupons"
+        />
+
+    <com.vizy.ignitar.ui.menu.animation.wave.WaveView
+        android:id="@+id/wave"
+        android:background="@color/transparent"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+
+
+</RelativeLayout>

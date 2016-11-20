@@ -68,7 +68,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_company_page">CompanyPage</string>
     <string name="action_settings">Settings</string>
-    
+
     <!--Chai Thela menu-->
     <string name="view_ad_text">VIEW AD</string>
     <string name="give_feedback_text">GIVE FEEDBACK  </string>
@@ -78,5 +78,15 @@
     <string name="rate_our_chai">RATE OUR CHAI</string>
     <string name="chai_thela_text">CHAI THELA</string>
 
+
+    <string name="border">Border</string>
+    <string name="shape">Shape</string>
+    <string name="circle">Circle</string>
+    <string name="square">Square</string>
+    <string name="color">Color</string>
+    <string name="red">Red</string>
+    <string name="green">Green</string>
+    <string name="blue">Blue</string>
+    <string name="defaultColor">Default</string>
 
 </resources>

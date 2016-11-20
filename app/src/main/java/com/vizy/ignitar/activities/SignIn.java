@@ -157,11 +157,9 @@ public class SignIn extends AppCompatActivity implements GoogleApiClient.OnConne
             // If the user has not previously signed in on this device or the sign-in has expired,
             // this asynchronous branch will attempt to sign in the user silently.  Cross-device
             // single sign-on will occur in this branch.
-            Utility.showProgressDialog(SignIn.this, progressDialog);
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override
                 public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
-                    Utility.hideProgressDialog(progressDialog);
                     handleSignInResult(googleSignInResult);
                 }
             });

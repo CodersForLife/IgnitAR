@@ -38,8 +38,8 @@
 
             <ImageView
                 android:id="@+id/facebook_icon"
-                android:layout_width="@dimen/dimen_48dp"
-                android:layout_height="@dimen/dimen_48dp"
+                android:layout_width="@dimen/dimen_40dp"
+                android:layout_height="@dimen/dimen_40dp"
                 android:layout_marginLeft="@dimen/dimen_10dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
@@ -49,9 +49,9 @@
 
             <ImageView
                 android:id="@+id/twitter_icon"
-                android:layout_width="@dimen/dimen_48dp"
+                android:layout_width="@dimen/dimen_40dp"
                 android:layout_marginEnd="@dimen/dimen_10dp"
-                android:layout_height="@dimen/dimen_48dp"
+                android:layout_height="@dimen/dimen_40dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/twitter"
@@ -60,11 +60,12 @@
         </RelativeLayout>
 
         <include layout="@layout/content_company_page"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_height="match_parent"
-            android:layout_width="match_parent"/>
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/dimen_60dp"
+            />
 
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

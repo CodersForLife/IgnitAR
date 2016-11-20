@@ -29,6 +29,7 @@ public class IgnitarStore {
         user.setUserName(sharedPreferences.getString(IgnitarConstants.IgnitarStoreConstants.userName, IgnitarConstants.EMPTY_STRING));
         user.setUserEmail(sharedPreferences.getString(IgnitarConstants.IgnitarStoreConstants.userEmail, IgnitarConstants.EMPTY_STRING));
         user.setUserMobile(sharedPreferences.getString(IgnitarConstants.IgnitarStoreConstants.userMobile, IgnitarConstants.EMPTY_STRING));
+        user.setProductScan(sharedPreferences.getInt(IgnitarConstants.IgnitarStoreConstants.productScan, IgnitarConstants.EMPTY_INT));
         return user;
     }
 
@@ -80,6 +81,18 @@ public class IgnitarStore {
         editor.apply();
     }
 
+    public void saveProductScan(@NonNull float productScan) {
+        editor = sharedPreferences.edit();
+        editor.putFloat(IgnitarConstants.IgnitarStoreConstants.productScan, productScan);
+        editor.apply();
+    }
+
+    public void saveCouponCount(@NonNull int couponCount) {
+        editor = sharedPreferences.edit();
+        editor.putInt(IgnitarConstants.IgnitarStoreConstants.productScan, couponCount);
+        editor.apply();
+    }
+
     public String getDeviceId() {
         return sharedPreferences.getString(IgnitarConstants.IgnitarStoreConstants.deviceId, IgnitarConstants.EMPTY_STRING);
     }
@@ -110,6 +123,14 @@ public class IgnitarStore {
 
     public String getUserMobile() {
         return sharedPreferences.getString(IgnitarConstants.IgnitarStoreConstants.userMobile, IgnitarConstants.EMPTY_STRING);
+    }
+
+    public float getProductScan() {
+        return sharedPreferences.getFloat(IgnitarConstants.IgnitarStoreConstants.productScan, IgnitarConstants.EMPTY_FLOAT);
+    }
+
+    public int getCouponCount() {
+        return sharedPreferences.getInt(IgnitarConstants.IgnitarStoreConstants.couponCount, IgnitarConstants.EMPTY_INT);
     }
 
     public void clearIgnitarStore() {

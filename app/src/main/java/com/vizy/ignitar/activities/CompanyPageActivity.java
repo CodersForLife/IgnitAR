@@ -3,7 +3,6 @@ package com.vizy.ignitar.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -30,7 +29,7 @@ public class CompanyPageActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        viewAd=(CardView)findViewById(R.id.view_ad);
+        viewAd = (CardView) findViewById(R.id.view_ad);
         viewAd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,7 +37,7 @@ public class CompanyPageActivity extends AppCompatActivity {
             }
         });
 
-        viewGiveFeedback=(CardView)findViewById(R.id.view_give_feedback);
+        viewGiveFeedback = (CardView) findViewById(R.id.view_give_feedback);
         viewGiveFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,15 +45,17 @@ public class CompanyPageActivity extends AppCompatActivity {
             }
         });
 
-        viewActionMeter=(CardView)findViewById(R.id.view_my_action_meter);
+        viewActionMeter = (CardView) findViewById(R.id.view_my_action_meter);
         viewActionMeter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(CompanyPageActivity.this, MeterActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
-        viewPlayGame=(CardView)findViewById(R.id.view_play_game);
+        viewPlayGame = (CardView) findViewById(R.id.view_play_game);
         viewPlayGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +63,7 @@ public class CompanyPageActivity extends AppCompatActivity {
             }
         });
 
-        viewReviewOnZomato=(CardView)findViewById(R.id.view_review_on_zomato);
+        viewReviewOnZomato = (CardView) findViewById(R.id.view_review_on_zomato);
         viewReviewOnZomato.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +73,7 @@ public class CompanyPageActivity extends AppCompatActivity {
             }
         });
 
-        viewCompanySpecification=(RelativeLayout)findViewById(R.id.company_specification);
+        viewCompanySpecification = (RelativeLayout) findViewById(R.id.company_specification);
         viewCompanySpecification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,8 +88,8 @@ public class CompanyPageActivity extends AppCompatActivity {
                 Uri uri = Uri.parse("https://www.facebook.com/chaithela/"); // missing 'http://' will cause crashed
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
-          }
-       });
+            }
+        });
         ImageView fab2 = (ImageView) findViewById(R.id.twitter_icon);
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
