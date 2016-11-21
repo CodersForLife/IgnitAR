@@ -24,16 +24,16 @@ import com.vizy.ignitar.activities.CompanyPageActivity;
 import com.vizy.ignitar.base.SampleApplicationControl;
 import com.vizy.ignitar.base.SampleApplicationException;
 import com.vizy.ignitar.base.SampleApplicationSession;
+import com.vizy.ignitar.base.utils.LoadingDialogHandler;
+import com.vizy.ignitar.base.utils.SampleApplicationGLView;
+import com.vizy.ignitar.base.utils.Texture;
+import com.vizy.ignitar.base.video.VideoPlayerHelper;
 import com.vizy.ignitar.constants.IgnitarConstants;
 import com.vizy.ignitar.preferences.IgnitarStore;
 import com.vizy.ignitar.ui.menu.SampleAppMenu;
 import com.vizy.ignitar.ui.menu.SampleAppMenuGroup;
 import com.vizy.ignitar.ui.menu.SampleAppMenuInterface;
-import com.vizy.ignitar.utils.LoadingDialogHandler;
-import com.vizy.ignitar.utils.SampleApplicationGLView;
 import com.vizy.ignitar.utils.StringUtils;
-import com.vizy.ignitar.utils.Texture;
-import com.vizy.ignitar.video.VideoPlayerHelper;
 import com.vuforia.CameraDevice;
 import com.vuforia.ObjectTracker;
 import com.vuforia.State;
@@ -137,7 +137,7 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
             mVideoPlayerHelper[i].setActivity(this);
         }
 
-        mMovieName[FIVE_HUNDREAD] = "VideoPlayback/VuforiaSizzleReel_1.mp4";
+        mMovieName[FIVE_HUNDREAD] = "VideoPlayback/VuforiaSizzleReel_2.mp4";
         mMovieName[TWO_THOUSAND] = "VideoPlayback/VuforiaSizzleReel_2.mp4";
     }
 

@@ -63,9 +63,10 @@ public class VideoPlayback extends Activity implements SampleApplicationControl,
     private SimpleOnGestureListener mSimpleListener = null;
 
     // Movie for the Targets:
-    public static final int NUM_TARGETS = 2;
+    public static final int NUM_TARGETS = 3;
     public static final int STONES = 0;
     public static final int CHIPS = 1;
+    public static final int CHAI = 2;
     public VideoPlayerHelper mVideoPlayerHelper[] = null;
     private int mSeekPosition[] = null;
     private boolean mWasPlaying[] = null;
@@ -135,8 +136,9 @@ public class VideoPlayback extends Activity implements SampleApplicationControl,
             mVideoPlayerHelper[i].setActivity(this);
         }
 
-        mMovieName[STONES] = "VideoPlayback/VuforiaSizzleReel_1.mp4";
+        mMovieName[STONES] = "VideoPlayback/VuforiaSizzleReel_2.mp4";
         mMovieName[CHIPS] = "VideoPlayback/VuforiaSizzleReel_2.mp4";
+        mMovieName[CHAI] = "VideoPlayback/VuforiaSizzleReel_2.mp4";
 
         // Set the double tap listener:
         mGestureDetector.setOnDoubleTapListener(new OnDoubleTapListener() {
@@ -210,9 +212,9 @@ public class VideoPlayback extends Activity implements SampleApplicationControl,
     // use for rendering.
     private void loadTextures() {
         mTextures.add(Texture.loadTextureFromApk(
-                "VideoPlayback/VuforiaSizzleReel_1.png", getAssets()));
+                "VideoPlayback/splash.jpg", getAssets()));
         mTextures.add(Texture.loadTextureFromApk(
-                "VideoPlayback/VuforiaSizzleReel_2.png", getAssets()));
+                "VideoPlayback/splash.jpg", getAssets()));
         mTextures.add(Texture.loadTextureFromApk("VideoPlayback/play.png",
                 getAssets()));
         mTextures.add(Texture.loadTextureFromApk("VideoPlayback/busy.png",
@@ -484,7 +486,7 @@ public class VideoPlayback extends Activity implements SampleApplicationControl,
         }
 
         // Load the data sets:
-        if (!dataSetStonesAndChips.load("StonesAndChips.xml",
+        if (!dataSetStonesAndChips.load("IGNITAR_DEVICE.xml",
                 STORAGE_TYPE.STORAGE_APPRESOURCE)) {
             Log.d(LOGTAG, "Failed to load data set.");
             return false;

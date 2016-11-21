@@ -62,17 +62,17 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(HomeActivity.this,
                         Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                    view.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.image_click));
-                    Intent intent = new Intent(HomeActivity.this, CloudReco.class);
-                    intent.putExtra("ACTIVITY_TO_LAUNCH", "app.CloudRecognition.CloudReco");
-                    intent.putExtra("ABOUT_TEXT", "CloudReco/CR_about.html");
-                    startActivity(intent);
-
-//                    Intent intent = new Intent(HomeActivity.this, VideoPlayback.class);
-//                    intent.putExtra("ACTIVITY_TO_LAUNCH", "app.VideoPlayback.VideoPlayback");
-//                    intent.putExtra("ABOUT_TEXT_TITLE", "Video Playback");
-//                    intent.putExtra("ABOUT_TEXT", "VideoPlayback/VP_about.html");
+//                    view.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.image_click));
+//                    Intent intent = new Intent(HomeActivity.this, CloudReco.class);
+//                    intent.putExtra("ACTIVITY_TO_LAUNCH", "app.CloudRecognition.CloudReco");
+//                    intent.putExtra("ABOUT_TEXT", "CloudReco/CR_about.html");
 //                    startActivity(intent);
+
+                    Intent intent = new Intent(HomeActivity.this, VideoPlayback.class);
+                    intent.putExtra("ACTIVITY_TO_LAUNCH", "app.VideoPlayback.VideoPlayback");
+                    intent.putExtra("ABOUT_TEXT_TITLE", "Video Playback");
+                    intent.putExtra("ABOUT_TEXT", "VideoPlayback/VP_about.html");
+                    startActivity(intent);
                 } else {
                     ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.CAMERA}, 0);
                 }

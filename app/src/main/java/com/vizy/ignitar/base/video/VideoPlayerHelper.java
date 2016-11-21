@@ -16,6 +16,8 @@ import android.os.Build;
 import android.util.Log;
 import android.view.Surface;
 
+import com.vuforia.ar.pl.DebugLog;
+
 import java.util.concurrent.locks.ReentrantLock;
 
 public class VideoPlayerHelper implements OnPreparedListener,
@@ -220,6 +222,107 @@ public class VideoPlayerHelper implements OnPreparedListener,
         return result;
     }
 
+    @SuppressLint("NewApi")
+    public boolean load(String filename,String videoName, VideoPlayerHelper.MEDIA_TYPE requestedType,
+                        boolean playOnTextureImmediately, int seekPosition)
+    {
+        // If the client requests that we should be able to play ON_TEXTURE,
+        // then we need to create a MediaPlayer:
+
+        boolean canBeOnTexture = false;
+        boolean canBeFullscreen = false;
+
+        boolean result = false;
+        mMediaPlayerLock.lock();
+        mSurfaceTextureLock.lock();
+
+        // If the media has already been loaded then exit.
+        // The client must first call unload() before calling load again:
+        if ((mCurrentState == VideoPlayerHelper.MEDIA_STATE.READY) || (mMediaPlayer != null))
+        {
+            DebugLog.LOGD(LOGTAG,"Already loaded");
+        }
+        else
+        {
+            if (((requestedType == VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE) ||                        // If the client requests on texture only
+                    (requestedType == VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN)) &&             // or on texture with full screen
+                    (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH))  // and this is an ICS device
+            {
+                if (mSurfaceTexture == null)
+                {
+                    DebugLog.LOGD(LOGTAG,"Can't load file to ON_TEXTURE because the Surface Texture is not ready");
+                }
+                else
+                {
+                    try
+                    {
+                        mMediaPlayer = new MediaPlayer();
+
+                        // This example shows how to load the movie from the assets folder of the app
+                        // However, if you would like to load the movie from the sdcard or from a network location
+                        // simply comment the three lines below
+                        //AssetFileDescriptor afd = mParentActivity.getAssets().openFd(filename);
+                        //mMediaPlayer.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
+                        //afd.close();
+
+                        // and uncomment this one
+                        //mMediaPlayer.setDataSource("http://www.nudedreams.net/mp4s/Giselle01.mp4");
+
+                        mMediaPlayer.setDataSource(filename);
+
+                        mMediaPlayer.prepareAsync();
+                        mMediaPlayer.setOnPreparedListener(this);
+                        mMediaPlayer.setOnBufferingUpdateListener(this);
+                        mMediaPlayer.setOnCompletionListener(this);
+                        mMediaPlayer.setOnErrorListener(this);
+                        mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                        mMediaPlayer.setSurface(new Surface(mSurfaceTexture));
+                        canBeOnTexture = true;
+                        mShouldPlayImmediately = playOnTextureImmediately;
+                    }
+                    catch (Exception e)
+                    {
+                        DebugLog.LOGE(LOGTAG,"Error while creating the MediaPlayer: " + e.toString());
+
+                        mCurrentState = VideoPlayerHelper.MEDIA_STATE.ERROR;
+                        mMediaPlayerLock.unlock();
+                        mSurfaceTextureLock.unlock();
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+            }
+
+            // If the client requests that we should be able to play FULLSCREEN
+            // then we need to create a FullscreenPlaybackActivity
+            if ((requestedType ==VideoPlayerHelper.MEDIA_TYPE.FULLSCREEN) || (requestedType == VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN))
+            {
+                mPlayerHelperActivityIntent = new Intent(mParentActivity, FullscreenPlayback.class);
+                mPlayerHelperActivityIntent.setAction(Intent.ACTION_VIEW);
+                mPlayerHelperActivityIntent.putExtra("videoname",videoName);
+                canBeFullscreen = true;
+            }
+
+            // We store the parameters for further use
+            mMovieName = filename;
+            mSeekPosition = seekPosition;
+
+            if (canBeFullscreen && canBeOnTexture)  mVideoType = VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN;
+            else if (canBeFullscreen) {             mVideoType = VideoPlayerHelper.MEDIA_TYPE.FULLSCREEN; mCurrentState = VideoPlayerHelper.MEDIA_STATE.READY; } // If it is pure fullscreen then we're ready otherwise we let the MediaPlayer load first
+            else if (canBeOnTexture)                mVideoType = VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE;
+            else                                    mVideoType = VideoPlayerHelper.MEDIA_TYPE.UNKNOWN;
+
+            result = true;
+        }
+
+        mSurfaceTextureLock.unlock();
+        mMediaPlayerLock.unlock();
+
+        return result;
+    }
+
 
     // Unloads the currently loaded movie
     // After this is called a new load() has to be invoked
@@ -266,7 +369,7 @@ public class VideoPlayerHelper implements OnPreparedListener,
 
     // Return the current status of the movie such as Playing, Paused or Not
     // Ready
-    MEDIA_STATE getStatus() {
+    public MEDIA_STATE getStatus() {
         return mCurrentState;
     }
 

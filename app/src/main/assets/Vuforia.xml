@@ -2,5 +2,6 @@
 <QCARConfig>
     <Tracking>
         <VuMark name="Vuforia" size="0.040 0.0193093423091" />
+        <ImageTarget name="chai" size="100.000000 100.000000" />
     </Tracking>
 </QCARConfig>

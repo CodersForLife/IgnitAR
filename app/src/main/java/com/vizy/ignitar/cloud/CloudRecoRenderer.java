@@ -5,10 +5,10 @@ import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 
 import com.vizy.ignitar.base.SampleApplicationSession;
-import com.vizy.ignitar.utils.CubeShaders;
-import com.vizy.ignitar.utils.SampleUtils;
-import com.vizy.ignitar.utils.Teapot;
-import com.vizy.ignitar.utils.Texture;
+import com.vizy.ignitar.base.utils.CubeShaders;
+import com.vizy.ignitar.base.utils.SampleUtils;
+import com.vizy.ignitar.base.utils.Teapot;
+import com.vizy.ignitar.base.utils.Texture;
 import com.vuforia.Matrix44F;
 import com.vuforia.Renderer;
 import com.vuforia.State;
