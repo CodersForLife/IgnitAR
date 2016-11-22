@@ -27,7 +27,7 @@ import com.vizy.ignitar.base.SampleApplicationSession;
 import com.vizy.ignitar.base.utils.LoadingDialogHandler;
 import com.vizy.ignitar.base.utils.SampleApplicationGLView;
 import com.vizy.ignitar.base.utils.Texture;
-import com.vizy.ignitar.base.video.VideoPlayerHelper;
+import com.vizy.ignitar.base.utils.video.VideoPlayerHelper;
 import com.vizy.ignitar.constants.IgnitarConstants;
 import com.vizy.ignitar.preferences.IgnitarStore;
 import com.vizy.ignitar.ui.menu.SampleAppMenu;
@@ -545,7 +545,7 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
                     String videoName = "Video name 1";
                     //String filename="http://techslides.com/demos/sample-videos/small.mp4";
                     // String filename="https://firebasestorage.googleapis.com/v0/b/firebase-ignitar.appspot.com/o/VID-20160221-WA0011.mp4?alt=media&token=ad49e222-3961-4ed9-81d7-cdc1c2dbccf5";
-                    mVideoPlayerHelper.load(link, VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN, true, -1);
+                    mVideoPlayerHelper.load(link,videoName ,VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN, true, -1);
 //                    playVideo("")
                     mVideoPlayerHelper.play(true, -1);
                 } else if (type.equalsIgnoreCase("browserlink")) {

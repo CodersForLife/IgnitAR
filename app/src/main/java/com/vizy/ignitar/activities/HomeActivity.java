@@ -25,7 +25,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.vizy.ignitar.R;
-import com.vizy.ignitar.base.video.VideoPlayback;
+import com.vizy.ignitar.base.utils.video.VideoPlayerHelper;
 import com.vizy.ignitar.fragment.HistoryFragment;
 import com.vizy.ignitar.fragment.TrendingFragment;
 import com.vizy.ignitar.cloud.CloudReco;
