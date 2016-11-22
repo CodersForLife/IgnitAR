@@ -114,6 +114,7 @@
             </intent-filter>
 
         </activity>
+        <receiver android:name=".base.video.FullscreenPlayback$LockedScreenReceiver"/>
     </application>
 
 </manifest>

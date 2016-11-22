@@ -81,10 +81,10 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
     private boolean mExtendedTracking = false;
     boolean mFinderStarted = false;
     boolean mStopFinderIfStarted = false;
-    public VideoPlayerHelper mVideoPlayerHelper[] = new VideoPlayerHelper[]{};
-    private int mSeekPosition []= null;
-    private boolean mWasPlaying[] = null;
-    private String mMovieName []= null;
+    public VideoPlayerHelper mVideoPlayerHelper=new VideoPlayerHelper();
+    private int mSeekPosition =0;
+    private boolean mWasPlaying;
+    private String mMovieName=null;
     // The textures we will use for rendering:
     private Vector<Texture> mTextures;
     //    private static final String kAccessKey = "869a299f9911cd84f189d69fe8d5f79f35304372";
@@ -121,24 +121,22 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
         loadTextures();
         mIsDroidDevice = android.os.Build.MODEL.toLowerCase().startsWith("droid");
 
-//        mVideoPlayerHelper.init();
-//        mVideoPlayerHelper.setActivity(this);
+        mVideoPlayerHelper.init();
+        mVideoPlayerHelper.setActivity(this);
 
-        mVideoPlayerHelper = new VideoPlayerHelper[NUM_TARGETS];
-        mSeekPosition = new int[NUM_TARGETS];
-        mWasPlaying = new boolean[NUM_TARGETS];
-        mMovieName = new String[NUM_TARGETS];
+//        mWasPlaying = new boolean[NUM_TARGETS];
+//        mMovieName = new String[NUM_TARGETS];
 
         // Create the video player helper that handles the playback of the movie
         // for the targets:
-        for (int i = 0; i < NUM_TARGETS; i++) {
-            mVideoPlayerHelper[i] = new VideoPlayerHelper();
-            mVideoPlayerHelper[i].init();
-            mVideoPlayerHelper[i].setActivity(this);
-        }
-
-        mMovieName[FIVE_HUNDREAD] = "VideoPlayback/VuforiaSizzleReel_2.mp4";
-        mMovieName[TWO_THOUSAND] = "VideoPlayback/VuforiaSizzleReel_2.mp4";
+//        for (int i = 0; i < NUM_TARGETS; i++) {
+//            mVideoPlayerHelper[i] = new VideoPlayerHelper();
+//            mVideoPlayerHelper[i].init();
+//            mVideoPlayerHelper[i].setActivity(this);
+//        }
+//
+//        mMovieName[FIVE_HUNDREAD] = "VideoPlayback/VuforiaSizzleReel_2.mp4";
+//        mMovieName[TWO_THOUSAND] = "VideoPlayback/VuforiaSizzleReel_2.mp4";
     }
 
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {
@@ -288,7 +286,6 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
         mGlView.setRenderer(mRenderer);
 
     }
-
 
     // Returns the error message for each error code
     private String getStatusDescString(int code) {
@@ -531,36 +528,36 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
                     Log.d(TAG, StringUtils.isNullOrEmpty(e.getMessage()) ? IgnitarConstants.Exceptions.JSON_EXCEPTION :
                             e.getMessage());
                 }
-                switch (result.getTargetName()) {
-                    case IgnitarConstants.CloudTargets.CHAI_THELA:
-                        if(ignitarStore.getProductScan()==1.0f){
-                            ignitarStore.saveCouponCount(ignitarStore.getCouponCount()+1);
-                            ignitarStore.saveProductScan(IgnitarConstants.EMPTY_FLOAT);
-                        }else {
-                            ignitarStore.saveProductScan(ignitarStore.getProductScan()+0.25f);
-                        }
-                        startActivity(new Intent(CloudReco.this, CompanyPageActivity.class));
-                        break;
-                    case IgnitarConstants.CloudTargets.PAMPLET:
-                        break;
-                }
+//                switch (result.getTargetName()) {
+//                    case IgnitarConstants.CloudTargets.CHAI_THELA:
+//                        if(ignitarStore.getProductScan()==1.0f){
+//                            ignitarStore.saveCouponCount(ignitarStore.getCouponCount()+1);
+//                            ignitarStore.saveProductScan(IgnitarConstants.EMPTY_FLOAT);
+//                        }else {
+//                            ignitarStore.saveProductScan(ignitarStore.getProductScan()+0.25f);
+//                        }
+//                        startActivity(new Intent(CloudReco.this, CompanyPageActivity.class));
+//                        break;
+//                    case IgnitarConstants.CloudTargets.PAMPLET:
+//                        break;
+//                }
                 if (type.equalsIgnoreCase("video")) {
                     String videoName = "Video name 1";
                     //String filename="http://techslides.com/demos/sample-videos/small.mp4";
                     // String filename="https://firebasestorage.googleapis.com/v0/b/firebase-ignitar.appspot.com/o/VID-20160221-WA0011.mp4?alt=media&token=ad49e222-3961-4ed9-81d7-cdc1c2dbccf5";
-                    mVideoPlayerHelper[0].load(link, videoName, VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN, true, -1);
-                    //playVideo("");
-                    mVideoPlayerHelper[0].play(true, -1);
+                    mVideoPlayerHelper.load(link, VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN, true, -1);
+//                    playVideo("")
+                    mVideoPlayerHelper.play(true, -1);
                 } else if (type.equalsIgnoreCase("browserlink")) {
                     Uri uri = Uri.parse(link); // missing 'http://' will cause crashed
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent);
                 }
-                if (result.getTrackingRating() > 0) {
-                    Trackable trackable = finder.enableTracking(result);
-                    if (mExtendedTracking)
-                        trackable.startExtendedTracking();
-                }
+//                if (result.getTrackingRating() > 0) {
+//                    Trackable trackable = finder.enableTracking(result);
+//                    if (mExtendedTracking)
+//                        trackable.startExtendedTracking();
+//                }
             }
         }
     }
@@ -693,16 +690,16 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
 
             case CMD_FULLSCREEN_VIDEO:
                 mPlayFullscreenVideo = !mPlayFullscreenVideo;
-
-                for (int i = 0; i < mVideoPlayerHelper.length; i++) {
-                    if (mVideoPlayerHelper[i].getStatus() == VideoPlayerHelper.MEDIA_STATE.PLAYING) {
-                        // If it is playing then we pause it
-                        mVideoPlayerHelper[i].pause();
-
-                        mVideoPlayerHelper[i].play(true,
-                                mSeekPosition[i]);
-                    }
-                }
+            mVideoPlayerHelper.play(true,mSeekPosition);
+//                for (int i = 0; i < mVideoPlayerHelper.length; i++) {
+//                    if (mVideoPlayerHelper[i].getStatus() == VideoPlayerHelper.MEDIA_STATE.PLAYING) {
+//                        // If it is playing then we pause it
+//                        mVideoPlayerHelper[i].pause();
+//
+//                        mVideoPlayerHelper[i].play(true,
+//                                mSeekPosition[i]);
+//                    }
+//                }
                 break;
 
         }

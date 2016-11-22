@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,39 +30,56 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.RelativeLayout;
 
 import com.vizy.ignitar.R;
+import com.vizy.ignitar.activities.CompanyPageActivity;
 import com.vizy.ignitar.base.SampleApplicationControl;
 import com.vizy.ignitar.base.SampleApplicationException;
 import com.vizy.ignitar.base.SampleApplicationSession;
 import com.vizy.ignitar.base.utils.LoadingDialogHandler;
 import com.vizy.ignitar.base.utils.SampleApplicationGLView;
 import com.vizy.ignitar.base.utils.Texture;
+import com.vizy.ignitar.cloud.CloudReco;
+import com.vizy.ignitar.constants.IgnitarConstants;
+import com.vizy.ignitar.preferences.IgnitarStore;
 import com.vizy.ignitar.ui.menu.SampleAppMenu;
 import com.vizy.ignitar.ui.menu.SampleAppMenuGroup;
 import com.vizy.ignitar.ui.menu.SampleAppMenuInterface;
+import com.vizy.ignitar.utils.StringUtils;
 import com.vuforia.CameraDevice;
 import com.vuforia.DataSet;
 import com.vuforia.HINT;
 import com.vuforia.ObjectTracker;
 import com.vuforia.STORAGE_TYPE;
 import com.vuforia.State;
+import com.vuforia.TargetFinder;
+import com.vuforia.TargetSearchResult;
+import com.vuforia.Trackable;
 import com.vuforia.Tracker;
 import com.vuforia.TrackerManager;
 import com.vuforia.Vuforia;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Vector;
+
+import static com.vuforia.TargetFinder.UPDATE_ERROR_AUTHORIZATION_FAILED;
+import static com.vuforia.TargetFinder.UPDATE_ERROR_BAD_FRAME_QUALITY;
+import static com.vuforia.TargetFinder.UPDATE_ERROR_NO_NETWORK_CONNECTION;
+import static com.vuforia.TargetFinder.UPDATE_ERROR_PROJECT_SUSPENDED;
+import static com.vuforia.TargetFinder.UPDATE_ERROR_REQUEST_TIMEOUT;
+import static com.vuforia.TargetFinder.UPDATE_ERROR_SERVICE_NOT_AVAILABLE;
+import static com.vuforia.TargetFinder.UPDATE_ERROR_TIMESTAMP_OUT_OF_RANGE;
+import static com.vuforia.TargetFinder.UPDATE_ERROR_UPDATE_SDK;
 
 // The AR activity for the VideoPlayback sample.
 public class VideoPlayback extends Activity implements SampleApplicationControl, SampleAppMenuInterface {
-    private static final String LOGTAG = "VideoPlayback";
+    private static final String TAG = "VideoPlayback";
 
     SampleApplicationSession vuforiaAppSession;
-
     Activity mActivity;
-
     // Helpers to detect events such as double tapping:
     private GestureDetector mGestureDetector = null;
     private SimpleOnGestureListener mSimpleListener = null;
-
     // Movie for the Targets:
     public static final int NUM_TARGETS = 3;
     public static final int STONES = 0;
@@ -71,41 +89,39 @@ public class VideoPlayback extends Activity implements SampleApplicationControl,
     private int mSeekPosition[] = null;
     private boolean mWasPlaying[] = null;
     private String mMovieName[] = null;
-
     // A boolean to indicate whether we come from full screen:
     private boolean mReturningFromFullScreen = false;
-
     // Our OpenGL view:
     private SampleApplicationGLView mGlView;
-
     // Our renderer:
     private VideoPlaybackRenderer mRenderer;
-
+    private boolean mExtendedTracking = false;
     // The textures we will use for rendering:
     private Vector<Texture> mTextures;
-
     DataSet dataSetStonesAndChips = null;
-
-    private RelativeLayout mUILayout;
-
     private boolean mPlayFullscreenVideo = false;
-
     private SampleAppMenu mSampleAppMenu;
-
     private LoadingDialogHandler loadingDialogHandler = new LoadingDialogHandler(this);
-
     // Alert Dialog used to display SDK errors
     private AlertDialog mErrorDialog;
-
     boolean mIsInitialized = false;
+    private double mLastErrorTime;
+    boolean mIsDroidDevice = false;
+    private IgnitarStore ignitarStore;
+    private RelativeLayout mUILayout;
+    // Error message handling:
+    private int mlastErrorCode = 0;
+    private int mInitErrorCode = 0;
+    private boolean mFinishActivityOnError;
 
 
     // Called when the activity first starts or the user navigates back
     // to an activity.
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(LOGTAG, "onCreate");
+        Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
 
+        ignitarStore=new IgnitarStore(VideoPlayback.this);
         vuforiaAppSession = new SampleApplicationSession(this);
 
         mActivity = this;
@@ -226,12 +242,12 @@ public class VideoPlayback extends Activity implements SampleApplicationControl,
 
     // Called when the activity will start interacting with the user.
     protected void onResume() {
-        Log.d(LOGTAG, "onResume");
+        Log.d(TAG, "onResume");
         super.onResume();
         try {
             vuforiaAppSession.resumeAR();
         } catch (SampleApplicationException e) {
-            Log.e(LOGTAG, e.getString());
+            Log.e(TAG, e.getString());
         }
 
         // Resume the GL view:
@@ -284,7 +300,7 @@ public class VideoPlayback extends Activity implements SampleApplicationControl,
 
 
     public void onConfigurationChanged(Configuration config) {
-        Log.d(LOGTAG, "onConfigurationChanged");
+        Log.d(TAG, "onConfigurationChanged");
         super.onConfigurationChanged(config);
 
         vuforiaAppSession.onConfigurationChanged();
@@ -293,7 +309,7 @@ public class VideoPlayback extends Activity implements SampleApplicationControl,
 
     // Called when the system is about to start resuming a previous activity.
     protected void onPause() {
-        Log.d(LOGTAG, "onPause");
+        Log.d(TAG, "onPause");
         super.onPause();
 
         if (mGlView != null) {
@@ -322,14 +338,14 @@ public class VideoPlayback extends Activity implements SampleApplicationControl,
         try {
             vuforiaAppSession.pauseAR();
         } catch (SampleApplicationException e) {
-            Log.e(LOGTAG, e.getString());
+            Log.e(TAG, e.getString());
         }
     }
 
 
     // The final call you receive before your activity is destroyed.
     protected void onDestroy() {
-        Log.d(LOGTAG, "onDestroy");
+        Log.d(TAG, "onDestroy");
         super.onDestroy();
 
         for (int i = 0; i < NUM_TARGETS; i++) {
@@ -342,7 +358,7 @@ public class VideoPlayback extends Activity implements SampleApplicationControl,
         try {
             vuforiaAppSession.stopAR();
         } catch (SampleApplicationException e) {
-            Log.e(LOGTAG, e.getString());
+            Log.e(TAG, e.getString());
         }
 
         // Unload texture:
@@ -457,7 +473,7 @@ public class VideoPlayback extends Activity implements SampleApplicationControl,
         Tracker tracker = trackerManager.initTracker(ObjectTracker
                 .getClassType());
         if (tracker == null) {
-            Log.d(LOGTAG, "Failed to initialize ObjectTracker.");
+            Log.d(TAG, "Failed to initialize ObjectTracker.");
             result = false;
         }
 
@@ -473,7 +489,7 @@ public class VideoPlayback extends Activity implements SampleApplicationControl,
                 .getTracker(ObjectTracker.getClassType());
         if (objectTracker == null) {
             Log.d(
-                    LOGTAG,
+                    TAG,
                     "Failed to load tracking data set because the ObjectTracker has not been initialized.");
             return false;
         }
@@ -481,24 +497,24 @@ public class VideoPlayback extends Activity implements SampleApplicationControl,
         // Create the data sets:
         dataSetStonesAndChips = objectTracker.createDataSet();
         if (dataSetStonesAndChips == null) {
-            Log.d(LOGTAG, "Failed to create a new tracking data.");
+            Log.d(TAG, "Failed to create a new tracking data.");
             return false;
         }
 
         // Load the data sets:
         if (!dataSetStonesAndChips.load("IGNITAR_DEVICE.xml",
                 STORAGE_TYPE.STORAGE_APPRESOURCE)) {
-            Log.d(LOGTAG, "Failed to load data set.");
+            Log.d(TAG, "Failed to load data set.");
             return false;
         }
 
         // Activate the data set:
         if (!objectTracker.activateDataSet(dataSetStonesAndChips)) {
-            Log.d(LOGTAG, "Failed to activate data set.");
+            Log.d(TAG, "Failed to activate data set.");
             return false;
         }
 
-        Log.d(LOGTAG, "Successfully loaded and activated data set.");
+        Log.d(TAG, "Successfully loaded and activated data set.");
         return true;
     }
 
@@ -547,7 +563,7 @@ public class VideoPlayback extends Activity implements SampleApplicationControl,
                 .getTracker(ObjectTracker.getClassType());
         if (objectTracker == null) {
             Log.d(
-                    LOGTAG,
+                    TAG,
                     "Failed to destroy the tracking data set because the ObjectTracker has not been initialized.");
             return false;
         }
@@ -556,11 +572,11 @@ public class VideoPlayback extends Activity implements SampleApplicationControl,
             if (objectTracker.getActiveDataSet() == dataSetStonesAndChips
                     && !objectTracker.deactivateDataSet(dataSetStonesAndChips)) {
                 Log.d(
-                        LOGTAG,
+                        TAG,
                         "Failed to destroy the tracking data set StonesAndChips because the data set could not be deactivated.");
                 result = false;
             } else if (!objectTracker.destroyDataSet(dataSetStonesAndChips)) {
-                Log.d(LOGTAG,
+                Log.d(TAG,
                         "Failed to destroy the tracking data set StonesAndChips.");
                 result = false;
             }
@@ -613,14 +629,14 @@ public class VideoPlayback extends Activity implements SampleApplicationControl,
             try {
                 vuforiaAppSession.startAR(CameraDevice.CAMERA_DIRECTION.CAMERA_DIRECTION_DEFAULT);
             } catch (SampleApplicationException e) {
-                Log.e(LOGTAG, e.getString());
+                Log.e(TAG, e.getString());
             }
 
             boolean result = CameraDevice.getInstance().setFocusMode(
                     CameraDevice.FOCUS_MODE.FOCUS_MODE_CONTINUOUSAUTO);
 
             if (!result)
-                Log.e(LOGTAG, "Unable to enable continuous autofocus");
+                Log.e(TAG, "Unable to enable continuous autofocus");
 
             mSampleAppMenu = new SampleAppMenu(this, this, "Video Playback",
                     mGlView, mUILayout, null);
@@ -629,7 +645,7 @@ public class VideoPlayback extends Activity implements SampleApplicationControl,
             mIsInitialized = true;
 
         } else {
-            Log.e(LOGTAG, exception.getString());
+            Log.e(TAG, exception.getString());
             showInitializationErrorMessage(exception.getString());
         }
 
@@ -669,6 +685,64 @@ public class VideoPlayback extends Activity implements SampleApplicationControl,
 
     @Override
     public void onVuforiaUpdate(State state) {
+        // Get the tracker manager:
+        TrackerManager trackerManager = TrackerManager.getInstance();
+        // Get the object tracker:
+        ObjectTracker objectTracker = (ObjectTracker) trackerManager.getTracker(ObjectTracker.getClassType());
+        // Get the target finder:
+        TargetFinder finder = objectTracker.getTargetFinder();
+        // Check if there are new results available:
+        final int statusCode = finder.updateSearchResults();
+        // Show a message if we encountered an error:
+        if (statusCode < 0) {
+            boolean closeAppAfterError = (statusCode == UPDATE_ERROR_NO_NETWORK_CONNECTION ||
+                    statusCode == UPDATE_ERROR_SERVICE_NOT_AVAILABLE);
+            showErrorMessage(statusCode, state.getFrame().getTimeStamp(), closeAppAfterError);
+        } else if (statusCode == TargetFinder.UPDATE_RESULTS_AVAILABLE) {
+            // Process new search results
+            if (finder.getResultCount() > 0) {
+                TargetSearchResult result = finder.getResult(0);
+                String data = result.getMetaData(), type = new String(), link = new String();
+                try {
+                    JSONObject metaData = new JSONObject(data);
+                    type = metaData.getString("type");
+                    link = metaData.getString("link");
+                } catch (JSONException e) {
+                    Log.d(TAG, StringUtils.isNullOrEmpty(e.getMessage()) ? IgnitarConstants.Exceptions.JSON_EXCEPTION :
+                            e.getMessage());
+                }
+//                switch (result.getTargetName()) {
+//                    case IgnitarConstants.CloudTargets.CHAI_THELA:
+//                        if(ignitarStore.getProductScan()==1.0f){
+//                            ignitarStore.saveCouponCount(ignitarStore.getCouponCount()+1);
+//                            ignitarStore.saveProductScan(IgnitarConstants.EMPTY_FLOAT);
+//                        }else {
+//                            ignitarStore.saveProductScan(ignitarStore.getProductScan()+0.25f);
+//                        }
+//                        startActivity(new Intent(VideoPlayback.this, CompanyPageActivity.class));
+//                        break;
+//                    case IgnitarConstants.CloudTargets.PAMPLET:
+//                        break;
+//                }
+                if (type.equalsIgnoreCase("video")) {
+                    String videoName = "Video name 1";
+                    //String filename="http://techslides.com/demos/sample-videos/small.mp4";
+                    // String filename="https://firebasestorage.googleapis.com/v0/b/firebase-ignitar.appspot.com/o/VID-20160221-WA0011.mp4?alt=media&token=ad49e222-3961-4ed9-81d7-cdc1c2dbccf5";
+                    mVideoPlayerHelper[0].load(link, videoName, VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN, true, -1);
+                    //playVideo("");
+                    mVideoPlayerHelper[0].play(true, -1);
+                } else if (type.equalsIgnoreCase("browserlink")) {
+                    Uri uri = Uri.parse(link); // missing 'http://' will cause crashed
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
+                if (result.getTrackingRating() > 0) {
+                    Trackable trackable = finder.enableTracking(result);
+                    if (mExtendedTracking)
+                        trackable.startExtendedTracking();
+                }
+            }
+        }
     }
 
     final private static int CMD_BACK = -1;
@@ -719,6 +793,83 @@ public class VideoPlayback extends Activity implements SampleApplicationControl,
         }
 
         return result;
+    }
+
+    // Shows error messages as System dialogs
+    public void showErrorMessage(int errorCode, double errorTime, boolean finishActivityOnError) {
+        if (errorTime < (mLastErrorTime + 5.0) || errorCode == mlastErrorCode)
+            return;
+        mlastErrorCode = errorCode;
+        mFinishActivityOnError = finishActivityOnError;
+        runOnUiThread(new Runnable() {
+            public void run() {
+                if (mErrorDialog != null) {
+                    mErrorDialog.dismiss();
+                }
+                // Generates an Alert Dialog to show the error message
+                AlertDialog.Builder builder = new AlertDialog.Builder(VideoPlayback.this);
+                builder.setMessage(getStatusDescString(VideoPlayback.this.mlastErrorCode))
+                        .setTitle(getStatusTitleString(VideoPlayback.this.mlastErrorCode))
+                        .setCancelable(false).setIcon(0)
+                        .setPositiveButton(getString(R.string.button_OK), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                if (mFinishActivityOnError) {
+                                    finish();
+                                } else {
+                                    dialog.dismiss();
+                                }
+                            }
+                        });
+                mErrorDialog = builder.create();
+                mErrorDialog.show();
+            }
+        });
+    }
+
+    // Returns the error message for each error code
+    private String getStatusTitleString(int code) {
+        if (code == UPDATE_ERROR_AUTHORIZATION_FAILED)
+            return getString(R.string.UPDATE_ERROR_AUTHORIZATION_FAILED_TITLE);
+        if (code == UPDATE_ERROR_PROJECT_SUSPENDED)
+            return getString(R.string.UPDATE_ERROR_PROJECT_SUSPENDED_TITLE);
+        if (code == UPDATE_ERROR_NO_NETWORK_CONNECTION)
+            return getString(R.string.UPDATE_ERROR_NO_NETWORK_CONNECTION_TITLE);
+        if (code == UPDATE_ERROR_SERVICE_NOT_AVAILABLE)
+            return getString(R.string.UPDATE_ERROR_SERVICE_NOT_AVAILABLE_TITLE);
+        if (code == UPDATE_ERROR_UPDATE_SDK)
+            return getString(R.string.UPDATE_ERROR_UPDATE_SDK_TITLE);
+        if (code == UPDATE_ERROR_TIMESTAMP_OUT_OF_RANGE)
+            return getString(R.string.UPDATE_ERROR_TIMESTAMP_OUT_OF_RANGE_TITLE);
+        if (code == UPDATE_ERROR_REQUEST_TIMEOUT)
+            return getString(R.string.UPDATE_ERROR_REQUEST_TIMEOUT_TITLE);
+        if (code == UPDATE_ERROR_BAD_FRAME_QUALITY)
+            return getString(R.string.UPDATE_ERROR_BAD_FRAME_QUALITY_TITLE);
+        else {
+            return getString(R.string.UPDATE_ERROR_UNKNOWN_TITLE);
+        }
+    }
+
+    // Returns the error message for each error code
+    private String getStatusDescString(int code) {
+        if (code == UPDATE_ERROR_AUTHORIZATION_FAILED)
+            return getString(R.string.UPDATE_ERROR_AUTHORIZATION_FAILED_DESC);
+        if (code == UPDATE_ERROR_PROJECT_SUSPENDED)
+            return getString(R.string.UPDATE_ERROR_PROJECT_SUSPENDED_DESC);
+        if (code == UPDATE_ERROR_NO_NETWORK_CONNECTION)
+            return getString(R.string.UPDATE_ERROR_NO_NETWORK_CONNECTION_DESC);
+        if (code == UPDATE_ERROR_SERVICE_NOT_AVAILABLE)
+            return getString(R.string.UPDATE_ERROR_SERVICE_NOT_AVAILABLE_DESC);
+        if (code == UPDATE_ERROR_UPDATE_SDK)
+            return getString(R.string.UPDATE_ERROR_UPDATE_SDK_DESC);
+        if (code == UPDATE_ERROR_TIMESTAMP_OUT_OF_RANGE)
+            return getString(R.string.UPDATE_ERROR_TIMESTAMP_OUT_OF_RANGE_DESC);
+        if (code == UPDATE_ERROR_REQUEST_TIMEOUT)
+            return getString(R.string.UPDATE_ERROR_REQUEST_TIMEOUT_DESC);
+        if (code == UPDATE_ERROR_BAD_FRAME_QUALITY)
+            return getString(R.string.UPDATE_ERROR_BAD_FRAME_QUALITY_DESC);
+        else {
+            return getString(R.string.UPDATE_ERROR_UNKNOWN_DESC);
+        }
     }
 
 }

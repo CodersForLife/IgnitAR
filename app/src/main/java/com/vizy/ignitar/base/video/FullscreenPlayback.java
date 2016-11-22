@@ -29,7 +29,6 @@ import com.vizy.ignitar.R;
 
 import java.util.concurrent.locks.ReentrantLock;
 
-
 public class FullscreenPlayback extends Activity implements OnPreparedListener,
         SurfaceHolder.Callback, OnVideoSizeChangedListener, OnErrorListener,
         OnCompletionListener {
@@ -69,6 +68,9 @@ public class FullscreenPlayback extends Activity implements OnPreparedListener,
 
         setContentView(R.layout.fullscreen_layout);
 
+        IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+        mLockedScreenReceiver = new LockedScreenReceiver();
+        registerReceiver(mLockedScreenReceiver, filter);
         // Create the locks:
         mMediaControllerLock = new ReentrantLock();
         mMediaPlayerLock = new ReentrantLock();
@@ -79,8 +81,7 @@ public class FullscreenPlayback extends Activity implements OnPreparedListener,
         // Collect all of the data passed by the launching activity:
         mSeekPosition = getIntent().getIntExtra("currentSeekPosition", 0);
         mMovieName = getIntent().getStringExtra("movieName");
-        mRequestedOrientation = getIntent().getIntExtra("requestedOrientation",
-                0);
+        mRequestedOrientation = getIntent().getIntExtra("requestedOrientation", 0);
         mShouldPlayImmediately = getIntent().getBooleanExtra(
                 "shouldPlayImmediately", false);
 
@@ -118,10 +119,6 @@ public class FullscreenPlayback extends Activity implements OnPreparedListener,
                 return result;
             }
         });
-
-        IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
-        mLockedScreenReceiver = new LockedScreenReceiver();
-        registerReceiver(mLockedScreenReceiver, filter);
 
     }
 
@@ -186,7 +183,7 @@ public class FullscreenPlayback extends Activity implements OnPreparedListener,
     // This is a callback we receive when the media player is ready to start
     // playing
     public void onPrepared(MediaPlayer mediaplayer) {
-        // Log.d( LOGTAG, "Fullscreen.onPrepared");
+        Log.d(LOGTAG, "Fullscreen.onPrepared");
 
         mMediaControllerLock.lock();
         mMediaPlayerLock.lock();
@@ -272,44 +269,33 @@ public class FullscreenPlayback extends Activity implements OnPreparedListener,
 
     // Called when the app is destroyed
     protected void onDestroy() {
-        // Log.d( LOGTAG, "Fullscreen.onDestroy");
-
         // Prepare the media player for termination:
         prepareForTermination();
-
         super.onDestroy();
-
         // Release the resources of the media player:
         destroyMediaPlayer();
-
         mMediaPlayerLock = null;
         mMediaControllerLock = null;
     }
 
     // Called when the app is resumed
     protected void onResume() {
-        // Log.d( LOGTAG, "Fullscreen.onResume");
+         Log.d( LOGTAG, "Fullscreen.onResume");
         super.onResume();
-
         // Prepare a view that the media player can use:
         prepareViewForMediaPlayer();
-
         if (mLockedScreenReceiver.wasLocked()) {
             createMediaPlayer();
-
             if (mMediaController != null)
                 mMediaController.show();
-
             mLockedScreenReceiver.setLocked(false);
         }
     }
-
 
     // Called when the activity configuration has changed
     public void onConfigurationChanged(Configuration config) {
         super.onConfigurationChanged(config);
     }
-
 
     // This is called when we should prepare the media player and the
     // activity for termination
@@ -365,6 +351,8 @@ public class FullscreenPlayback extends Activity implements OnPreparedListener,
 
         // We first prepare for termination:
         prepareForTermination();
+
+        unregisterReceiver(mLockedScreenReceiver);
 
         // Request the release of resource of the media player:
         destroyMediaPlayer();
@@ -553,7 +541,7 @@ public class FullscreenPlayback extends Activity implements OnPreparedListener,
         finish();
     }
 
-    class LockedScreenReceiver extends BroadcastReceiver {
+    public class LockedScreenReceiver extends BroadcastReceiver {
 
         boolean wasLocked = false;
 

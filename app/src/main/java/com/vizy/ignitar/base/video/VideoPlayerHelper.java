@@ -223,9 +223,8 @@ public class VideoPlayerHelper implements OnPreparedListener,
     }
 
     @SuppressLint("NewApi")
-    public boolean load(String filename,String videoName, VideoPlayerHelper.MEDIA_TYPE requestedType,
-                        boolean playOnTextureImmediately, int seekPosition)
-    {
+    public boolean load(String filename, String videoName, VideoPlayerHelper.MEDIA_TYPE requestedType,
+                        boolean playOnTextureImmediately, int seekPosition) {
         // If the client requests that we should be able to play ON_TEXTURE,
         // then we need to create a MediaPlayer:
 
@@ -238,24 +237,17 @@ public class VideoPlayerHelper implements OnPreparedListener,
 
         // If the media has already been loaded then exit.
         // The client must first call unload() before calling load again:
-        if ((mCurrentState == VideoPlayerHelper.MEDIA_STATE.READY) || (mMediaPlayer != null))
-        {
-            DebugLog.LOGD(LOGTAG,"Already loaded");
-        }
-        else
-        {
+        if ((mCurrentState == VideoPlayerHelper.MEDIA_STATE.READY) || (mMediaPlayer != null)) {
+            DebugLog.LOGD(LOGTAG, "Already loaded");
+        } else {
             if (((requestedType == VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE) ||                        // If the client requests on texture only
                     (requestedType == VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN)) &&             // or on texture with full screen
                     (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH))  // and this is an ICS device
             {
-                if (mSurfaceTexture == null)
-                {
-                    DebugLog.LOGD(LOGTAG,"Can't load file to ON_TEXTURE because the Surface Texture is not ready");
-                }
-                else
-                {
-                    try
-                    {
+                if (mSurfaceTexture == null) {
+                    DebugLog.LOGD(LOGTAG, "Can't load file to ON_TEXTURE because the Surface Texture is not ready");
+                } else {
+                    try {
                         mMediaPlayer = new MediaPlayer();
 
                         // This example shows how to load the movie from the assets folder of the app
@@ -279,10 +271,8 @@ public class VideoPlayerHelper implements OnPreparedListener,
                         mMediaPlayer.setSurface(new Surface(mSurfaceTexture));
                         canBeOnTexture = true;
                         mShouldPlayImmediately = playOnTextureImmediately;
-                    }
-                    catch (Exception e)
-                    {
-                        DebugLog.LOGE(LOGTAG,"Error while creating the MediaPlayer: " + e.toString());
+                    } catch (Exception e) {
+                        DebugLog.LOGE(LOGTAG, "Error while creating the MediaPlayer: " + e.toString());
 
                         mCurrentState = VideoPlayerHelper.MEDIA_STATE.ERROR;
                         mMediaPlayerLock.unlock();
@@ -290,18 +280,15 @@ public class VideoPlayerHelper implements OnPreparedListener,
                         return false;
                     }
                 }
-            }
-            else
-            {
+            } else {
             }
 
             // If the client requests that we should be able to play FULLSCREEN
             // then we need to create a FullscreenPlaybackActivity
-            if ((requestedType ==VideoPlayerHelper.MEDIA_TYPE.FULLSCREEN) || (requestedType == VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN))
-            {
+            if ((requestedType == VideoPlayerHelper.MEDIA_TYPE.FULLSCREEN) || (requestedType == VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN)) {
                 mPlayerHelperActivityIntent = new Intent(mParentActivity, FullscreenPlayback.class);
                 mPlayerHelperActivityIntent.setAction(Intent.ACTION_VIEW);
-                mPlayerHelperActivityIntent.putExtra("videoname",videoName);
+                mPlayerHelperActivityIntent.putExtra("videoname", videoName);
                 canBeFullscreen = true;
             }
 
@@ -309,10 +296,16 @@ public class VideoPlayerHelper implements OnPreparedListener,
             mMovieName = filename;
             mSeekPosition = seekPosition;
 
-            if (canBeFullscreen && canBeOnTexture)  mVideoType = VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN;
-            else if (canBeFullscreen) {             mVideoType = VideoPlayerHelper.MEDIA_TYPE.FULLSCREEN; mCurrentState = VideoPlayerHelper.MEDIA_STATE.READY; } // If it is pure fullscreen then we're ready otherwise we let the MediaPlayer load first
-            else if (canBeOnTexture)                mVideoType = VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE;
-            else                                    mVideoType = VideoPlayerHelper.MEDIA_TYPE.UNKNOWN;
+            if (canBeFullscreen && canBeOnTexture)
+                mVideoType = VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN;
+            else if (canBeFullscreen) {
+                mVideoType = VideoPlayerHelper.MEDIA_TYPE.FULLSCREEN;
+                mCurrentState = VideoPlayerHelper.MEDIA_STATE.READY;
+            } // If it is pure fullscreen then we're ready otherwise we let the MediaPlayer load first
+            else if (canBeOnTexture)
+                mVideoType = VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE;
+            else
+                mVideoType = VideoPlayerHelper.MEDIA_TYPE.UNKNOWN;
 
             result = true;
         }
