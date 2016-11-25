@@ -23,7 +23,6 @@ import com.vuforia.VideoMode;
 import com.vuforia.Vuforia;
 import com.vuforia.Vuforia.UpdateCallbackInterface;
 
-
 public class SampleApplicationSession implements UpdateCallbackInterface {
 
     private static final String LOGTAG = "ApplicationSession";

@@ -96,12 +96,12 @@
         <activity android:name=".activities.MeterActivity">
         </activity>
 
-
-
         <activity
             android:name="com.vizy.ignitar.base.utils.video.FullscreenPlayback"
             android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"
             android:exported="true"
+            android:screenOrientation="landscape"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

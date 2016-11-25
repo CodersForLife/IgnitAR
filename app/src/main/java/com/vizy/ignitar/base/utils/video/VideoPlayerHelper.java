@@ -166,6 +166,7 @@ public class VideoPlayerHelper implements OnPreparedListener,
                         {
                             mMediaPlayer = new MediaPlayer();
 
+
                             // This example shows how to load the movie from the assets folder of the app
                             // However, if you would like to load the movie from the sdcard or from a network location
                             // simply comment the three lines below

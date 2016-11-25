@@ -25,11 +25,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.vizy.ignitar.R;
-import com.vizy.ignitar.base.utils.video.VideoPlayerHelper;
-import com.vizy.ignitar.fragment.HistoryFragment;
-import com.vizy.ignitar.fragment.TrendingFragment;
 import com.vizy.ignitar.cloud.CloudReco;
-import com.vuforia.VirtualButton;
+import com.vizy.ignitar.fragment.TrendingFragment;
 
 import java.io.IOException;
 
@@ -47,8 +44,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         initializeScreen();
-        //      Intent i=getIntent();
-//        Log.e("dd",i.getStringExtra("videoname"));
         final SharedPreferences sp = getSharedPreferences("ignitar", MODE_PRIVATE);
         if (!sp.getBoolean("first", false)) {
             startActivity(new Intent(HomeActivity.this, Help.class));
@@ -67,12 +62,6 @@ public class HomeActivity extends AppCompatActivity {
                     intent.putExtra("ACTIVITY_TO_LAUNCH", "app.CloudRecognition.CloudReco");
                     intent.putExtra("ABOUT_TEXT", "CloudReco/CR_about.html");
                     startActivity(intent);
-
-//                    Intent intent = new Intent(HomeActivity.this, VideoPlayback.class);
-//                    intent.putExtra("ACTIVITY_TO_LAUNCH", "app.VideoPlayback.VideoPlayback");
-//                    intent.putExtra("ABOUT_TEXT_TITLE", "Video Playback");
-//                    intent.putExtra("ABOUT_TEXT", "VideoPlayback/VP_about.html");
-//                    startActivity(intent);
                 } else {
                     ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.CAMERA}, 0);
                 }
@@ -143,11 +132,8 @@ public class HomeActivity extends AppCompatActivity {
          * Create SectionPagerAdapter, set it as adapter to viewPager with setOffscreenPageLimit(2)
          **/
         SectionPagerAdapter adapter = new SectionPagerAdapter(getSupportFragmentManager());
-        viewPager.setOffscreenPageLimit(2);
+        viewPager.setOffscreenPageLimit(1);
         viewPager.setAdapter(adapter);
-        /**
-         * Setup the mTabLayout with view pager
-         */
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
@@ -159,25 +145,16 @@ public class HomeActivity extends AppCompatActivity {
             super(fm);
         }
 
-        /**
-         * Use positions (0 and 1) to find and instantiate fragments with newInstance()
-         *
-         * @param position
-         */
         @Override
         public Fragment getItem(int position) {
-
             Fragment fragment;
-            /**
-             * Set fragment to different fragments depending on position in ViewPager
-             */
             switch (position) {
                 case 0:
                     fragment = TrendingFragment.newInstance(null, null);
                     break;
-                case 1:
-                    fragment = HistoryFragment.newInstance(null, null);
-                    break;
+//                case 1:
+//                    fragment = HistoryFragment.newInstance(null, null);
+//                    break;
                 default:
                     fragment = TrendingFragment.newInstance(null, null);
                     break;
@@ -185,17 +162,11 @@ public class HomeActivity extends AppCompatActivity {
             return fragment;
         }
 
-
         @Override
         public int getCount() {
-            return 2;
+            return 1;
         }
 
-        /**
-         * Set string resources as titles for each fragment by it's position
-         *
-         * @param position
-         */
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
@@ -215,12 +186,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-
         switch (id) {
             case R.id.help:
                 startActivity(new Intent(HomeActivity.this, Help.class));
@@ -248,15 +214,11 @@ public class HomeActivity extends AppCompatActivity {
                         mCam = null;
                     }
                 } else {
-
-                    ActivityCompat.requestPermissions(HomeActivity.this,
-                            new String[]{Manifest.permission.CAMERA},
-                            1);
-
+                    ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.CAMERA}, 1);
                 }
                 return true;
-            case R.id.rate:
-                return true;
+//            case R.id.rate:
+//                return true;
         }
         return super.onOptionsItemSelected(item);
     }

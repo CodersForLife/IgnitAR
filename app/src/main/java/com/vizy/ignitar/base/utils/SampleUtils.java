@@ -1,98 +1,69 @@
-/*===============================================================================
-Copyright (c) 2016 PTC Inc. All Rights Reserved.
-
-Copyright (c) 2012-2014 Qualcomm Connected Experiences, Inc. All Rights Reserved.
-
-Vuforia is a trademark of PTC Inc., registered in the United States and other 
-countries.
-===============================================================================*/
-
 package com.vizy.ignitar.base.utils;
 
 import android.opengl.GLES20;
 import android.util.Log;
 
+public class SampleUtils {
 
-public class SampleUtils
-{
-    
     private static final String LOGTAG = "SampleUtils";
-    
-    
-    static int initShader(int shaderType, String source)
-    {
+
+    static int initShader(int shaderType, String source) {
         int shader = GLES20.glCreateShader(shaderType);
-        if (shader != 0)
-        {
+        if (shader != 0) {
             GLES20.glShaderSource(shader, source);
             GLES20.glCompileShader(shader);
-            
-            int[] glStatusVar = { GLES20.GL_FALSE };
-            GLES20.glGetShaderiv(shader, GLES20.GL_COMPILE_STATUS, glStatusVar,
-                0);
-            if (glStatusVar[0] == GLES20.GL_FALSE)
-            {
-                Log.e(LOGTAG, "Could NOT compile shader " + shaderType + " : "
-                    + GLES20.glGetShaderInfoLog(shader));
+
+            int[] glStatusVar = {GLES20.GL_FALSE};
+            GLES20.glGetShaderiv(shader, GLES20.GL_COMPILE_STATUS, glStatusVar, 0);
+            if (glStatusVar[0] == GLES20.GL_FALSE) {
+                Log.e(LOGTAG, "Could NOT compile shader " + shaderType + " : " + GLES20.glGetShaderInfoLog(shader));
                 GLES20.glDeleteShader(shader);
                 shader = 0;
             }
-            
         }
-        
         return shader;
     }
-    
-    
-    public static int createProgramFromShaderSrc(String vertexShaderSrc,
-        String fragmentShaderSrc)
-    {
+
+
+    public static int createProgramFromShaderSrc(String vertexShaderSrc, String fragmentShaderSrc) {
+
         int vertShader = initShader(GLES20.GL_VERTEX_SHADER, vertexShaderSrc);
         int fragShader = initShader(GLES20.GL_FRAGMENT_SHADER,
-            fragmentShaderSrc);
-        
+                fragmentShaderSrc);
+
         if (vertShader == 0 || fragShader == 0)
             return 0;
-        
+
         int program = GLES20.glCreateProgram();
-        if (program != 0)
-        {
+        if (program != 0) {
             GLES20.glAttachShader(program, vertShader);
             checkGLError("glAttchShader(vert)");
-            
+
             GLES20.glAttachShader(program, fragShader);
             checkGLError("glAttchShader(frag)");
-            
             GLES20.glLinkProgram(program);
-            int[] glStatusVar = { GLES20.GL_FALSE };
-            GLES20.glGetProgramiv(program, GLES20.GL_LINK_STATUS, glStatusVar,
-                0);
-            if (glStatusVar[0] == GLES20.GL_FALSE)
-            {
-                Log.e(
-                    LOGTAG,
-                    "Could NOT link program : "
-                        + GLES20.glGetProgramInfoLog(program));
+            int[] glStatusVar = {GLES20.GL_FALSE};
+            GLES20.glGetProgramiv(program, GLES20.GL_LINK_STATUS, glStatusVar, 0);
+            if (glStatusVar[0] == GLES20.GL_FALSE) {
+                Log.e(LOGTAG, "Could NOT link program : " + GLES20.glGetProgramInfoLog(program));
                 GLES20.glDeleteProgram(program);
                 program = 0;
             }
         }
-        
         return program;
     }
-    
-    
-    public static void checkGLError(String op)
-    {
+
+
+    public static void checkGLError(String op) {
         for (int error = GLES20.glGetError(); error != 0; error = GLES20
-            .glGetError())
+                .glGetError())
             Log.e(
-                LOGTAG,
-                "After operation " + op + " got glError 0x"
-                    + Integer.toHexString(error));
+                    LOGTAG,
+                    "After operation " + op + " got glError 0x"
+                            + Integer.toHexString(error));
     }
-    
-    
+
+
     // Transforms a screen pixel to a pixel onto the camera image,
     // taking into account e.g. cropping of camera image to fit different aspect
     // ratio screen.
@@ -100,17 +71,16 @@ public class SampleUtils
     // (always landscape orientation)
     // Top left of screen/camera is origin
     public static void screenCoordToCameraCoord(int screenX, int screenY,
-        int screenDX, int screenDY, int screenWidth, int screenHeight,
-        int cameraWidth, int cameraHeight, int[] cameraX, int[] cameraY,
-        int[] cameraDX, int[] cameraDY, int displayRotation, int cameraRotation)
-    {
+                                                int screenDX, int screenDY, int screenWidth, int screenHeight,
+                                                int cameraWidth, int cameraHeight, int[] cameraX, int[] cameraY,
+                                                int[] cameraDX, int[] cameraDY, int displayRotation, int cameraRotation) {
         float videoWidth, videoHeight;
         videoWidth = (float) cameraWidth;
         videoHeight = (float) cameraHeight;
 
         // Compute the angle by which the camera image should be rotated clockwise so that it is
         // shown correctly on the display given its current orientation.
-        int correctedRotation = ((((displayRotation*90)-cameraRotation)+360)%360)/90;
+        int correctedRotation = ((((displayRotation * 90) - cameraRotation) + 360) % 360) / 90;
 
         switch (correctedRotation) {
 
@@ -154,64 +124,57 @@ public class SampleUtils
 
                 break;
         }
-        
+
         float videoAspectRatio = videoHeight / videoWidth;
         float screenAspectRatio = (float) screenHeight / (float) screenWidth;
-        
+
         float scaledUpX;
         float scaledUpY;
         float scaledUpVideoWidth;
         float scaledUpVideoHeight;
-        
-        if (videoAspectRatio < screenAspectRatio)
-        {
+
+        if (videoAspectRatio < screenAspectRatio) {
             // the video height will fit in the screen height
             scaledUpVideoWidth = (float) screenHeight / videoAspectRatio;
             scaledUpVideoHeight = screenHeight;
             scaledUpX = (float) screenX
-                + ((scaledUpVideoWidth - (float) screenWidth) / 2.0f);
+                    + ((scaledUpVideoWidth - (float) screenWidth) / 2.0f);
             scaledUpY = (float) screenY;
-        } else
-        {
+        } else {
             // the video width will fit in the screen width
             scaledUpVideoHeight = (float) screenWidth * videoAspectRatio;
             scaledUpVideoWidth = screenWidth;
             scaledUpY = (float) screenY
-                + ((scaledUpVideoHeight - (float) screenHeight) / 2.0f);
+                    + ((scaledUpVideoHeight - (float) screenHeight) / 2.0f);
             scaledUpX = (float) screenX;
         }
-        
-        if (cameraX != null && cameraX.length > 0)
-        {
+
+        if (cameraX != null && cameraX.length > 0) {
             cameraX[0] = (int) ((scaledUpX / (float) scaledUpVideoWidth) * videoWidth);
         }
-        
-        if (cameraY != null && cameraY.length > 0)
-        {
+
+        if (cameraY != null && cameraY.length > 0) {
             cameraY[0] = (int) ((scaledUpY / (float) scaledUpVideoHeight) * videoHeight);
         }
-        
-        if (cameraDX != null && cameraDX.length > 0)
-        {
+
+        if (cameraDX != null && cameraDX.length > 0) {
             cameraDX[0] = (int) (((float) screenDX / (float) scaledUpVideoWidth) * videoWidth);
         }
-        
-        if (cameraDY != null && cameraDY.length > 0)
-        {
+
+        if (cameraDY != null && cameraDY.length > 0) {
             cameraDY[0] = (int) (((float) screenDY / (float) scaledUpVideoHeight) * videoHeight);
         }
     }
-    
-    
+
+
     public static float[] getOrthoMatrix(float nLeft, float nRight,
-        float nBottom, float nTop, float nNear, float nFar)
-    {
+                                         float nBottom, float nTop, float nNear, float nFar) {
         float[] nProjMatrix = new float[16];
-        
+
         int i;
         for (i = 0; i < 16; i++)
             nProjMatrix[i] = 0.0f;
-        
+
         nProjMatrix[0] = 2.0f / (nRight - nLeft);
         nProjMatrix[5] = 2.0f / (nTop - nBottom);
         nProjMatrix[10] = 2.0f / (nNear - nFar);
@@ -219,8 +182,8 @@ public class SampleUtils
         nProjMatrix[13] = -(nTop + nBottom) / (nTop - nBottom);
         nProjMatrix[14] = (nFar + nNear) / (nFar - nNear);
         nProjMatrix[15] = 1.0f;
-        
+
         return nProjMatrix;
     }
-    
+
 }

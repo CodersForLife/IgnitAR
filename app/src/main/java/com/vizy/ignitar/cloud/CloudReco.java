@@ -26,7 +26,6 @@ import com.vizy.ignitar.base.SampleApplicationException;
 import com.vizy.ignitar.base.SampleApplicationSession;
 import com.vizy.ignitar.base.utils.LoadingDialogHandler;
 import com.vizy.ignitar.base.utils.SampleApplicationGLView;
-import com.vizy.ignitar.base.utils.Texture;
 import com.vizy.ignitar.base.utils.video.VideoPlayerHelper;
 import com.vizy.ignitar.constants.IgnitarConstants;
 import com.vizy.ignitar.preferences.IgnitarStore;
@@ -83,10 +82,7 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
     boolean mStopFinderIfStarted = false;
     public VideoPlayerHelper mVideoPlayerHelper=new VideoPlayerHelper();
     private int mSeekPosition =0;
-    private boolean mWasPlaying;
-    private String mMovieName=null;
     // The textures we will use for rendering:
-    private Vector<Texture> mTextures;
     //    private static final String kAccessKey = "869a299f9911cd84f189d69fe8d5f79f35304372";
 //    private static final String kSecretKey = "ad4a7110ad50100b22474f166d7ef4f5b3887a30";
     private static final String kAccessKey = "bd576667f8fce7e18e90e314ae4ea05d7e348d1d";
@@ -117,26 +113,11 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
         vuforiaAppSession.initAR(this, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         // Creates the GestureDetector listener for processing double tap
         mGestureDetector = new GestureDetector(this, new GestureListener());
-        mTextures = new Vector<Texture>();
-        loadTextures();
+
         mIsDroidDevice = android.os.Build.MODEL.toLowerCase().startsWith("droid");
 
         mVideoPlayerHelper.init();
         mVideoPlayerHelper.setActivity(this);
-
-//        mWasPlaying = new boolean[NUM_TARGETS];
-//        mMovieName = new String[NUM_TARGETS];
-
-        // Create the video player helper that handles the playback of the movie
-        // for the targets:
-//        for (int i = 0; i < NUM_TARGETS; i++) {
-//            mVideoPlayerHelper[i] = new VideoPlayerHelper();
-//            mVideoPlayerHelper[i].init();
-//            mVideoPlayerHelper[i].setActivity(this);
-//        }
-//
-//        mMovieName[FIVE_HUNDREAD] = "VideoPlayback/VuforiaSizzleReel_2.mp4";
-//        mMovieName[TWO_THOUSAND] = "VideoPlayback/VuforiaSizzleReel_2.mp4";
     }
 
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {
@@ -162,13 +143,6 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
             return true;
         }
     }
-
-    // We want to load specific textures from the APK, which we will later use
-    // for rendering.
-    private void loadTextures() {
-        mTextures.add(Texture.loadTextureFromApk("TextureTeapotRed.png", getAssets()));
-    }
-
 
     // Called when the activity will start interacting with the user.
     @Override
@@ -282,9 +256,7 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
 
         // Setups the Renderer of the GLView
         mRenderer = new CloudRecoRenderer(vuforiaAppSession, this);
-        mRenderer.setTextures(mTextures);
         mGlView.setRenderer(mRenderer);
-
     }
 
     // Returns the error message for each error code
@@ -545,7 +517,7 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
                     String videoName = "Video name 1";
                     //String filename="http://techslides.com/demos/sample-videos/small.mp4";
                     // String filename="https://firebasestorage.googleapis.com/v0/b/firebase-ignitar.appspot.com/o/VID-20160221-WA0011.mp4?alt=media&token=ad49e222-3961-4ed9-81d7-cdc1c2dbccf5";
-                    mVideoPlayerHelper.load(link,videoName ,VideoPlayerHelper.MEDIA_TYPE.ON_TEXTURE_FULLSCREEN, true, -1);
+                    mVideoPlayerHelper.load(link,videoName ,VideoPlayerHelper.MEDIA_TYPE.FULLSCREEN, true, -1);
 //                    playVideo("")
                     mVideoPlayerHelper.play(true, -1);
                 } else if (type.equalsIgnoreCase("browserlink")) {
