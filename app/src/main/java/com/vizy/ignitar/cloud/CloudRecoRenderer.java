@@ -3,8 +3,7 @@ package com.vizy.ignitar.cloud;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 
-import com.vizy.ignitar.base.SampleApplicationSession;
-import com.vizy.ignitar.base.utils.SampleUtils;
+import com.vizy.ignitar.appsession.base.SampleApplicationSession;
 import com.vuforia.Renderer;
 import com.vuforia.State;
 import com.vuforia.TrackableResult;

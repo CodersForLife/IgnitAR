@@ -7,8 +7,8 @@ import android.widget.TextView;
 
 import com.vizy.ignitar.R;
 import com.vizy.ignitar.preferences.IgnitarStore;
-import com.vizy.ignitar.ui.menu.animation.wave.WaveHelper;
-import com.vizy.ignitar.ui.menu.animation.wave.WaveView;
+import com.vizy.ignitar.ui.WaveHelper;
+import com.vizy.ignitar.ui.customviews.WaveView;
 
 public class MeterActivity extends AppCompatActivity {
 

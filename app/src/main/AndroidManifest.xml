@@ -20,7 +20,7 @@
     <uses-feature android:name="android.hardware.camera" />
 
     <application
-        android:name=".base.BaseApplication"
+        android:name=".appsession.base.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -97,7 +97,7 @@
         </activity>
 
         <activity
-            android:name="com.vizy.ignitar.base.utils.video.FullscreenPlayback"
+            android:name="com.vizy.ignitar.appsession.services.video.FullscreenPlayback"
             android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"
             android:exported="true"

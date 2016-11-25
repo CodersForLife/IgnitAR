@@ -1,4 +1,4 @@
-package com.vizy.ignitar.base;
+package com.vizy.ignitar.appsession.base;
 
 // Used to send back to the activity any error during vuforia processes
 public class SampleApplicationException extends Exception {

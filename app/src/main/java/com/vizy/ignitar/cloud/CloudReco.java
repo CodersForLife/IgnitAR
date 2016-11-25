@@ -20,25 +20,20 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.RelativeLayout;
 
 import com.vizy.ignitar.R;
-import com.vizy.ignitar.activities.CompanyPageActivity;
-import com.vizy.ignitar.base.SampleApplicationControl;
-import com.vizy.ignitar.base.SampleApplicationException;
-import com.vizy.ignitar.base.SampleApplicationSession;
-import com.vizy.ignitar.base.utils.LoadingDialogHandler;
-import com.vizy.ignitar.base.utils.SampleApplicationGLView;
-import com.vizy.ignitar.base.utils.video.VideoPlayerHelper;
+import com.vizy.ignitar.appsession.base.SampleApplicationControl;
+import com.vizy.ignitar.appsession.base.SampleApplicationException;
+import com.vizy.ignitar.appsession.base.SampleApplicationSession;
+import com.vizy.ignitar.appsession.services.LoadingDialogHandler;
+import com.vizy.ignitar.appsession.services.SampleApplicationGLView;
+import com.vizy.ignitar.appsession.services.video.VideoPlayerHelper;
 import com.vizy.ignitar.constants.IgnitarConstants;
 import com.vizy.ignitar.preferences.IgnitarStore;
-import com.vizy.ignitar.ui.menu.SampleAppMenu;
-import com.vizy.ignitar.ui.menu.SampleAppMenuGroup;
-import com.vizy.ignitar.ui.menu.SampleAppMenuInterface;
 import com.vizy.ignitar.utils.StringUtils;
 import com.vuforia.CameraDevice;
 import com.vuforia.ObjectTracker;
 import com.vuforia.State;
 import com.vuforia.TargetFinder;
 import com.vuforia.TargetSearchResult;
-import com.vuforia.Trackable;
 import com.vuforia.Tracker;
 import com.vuforia.TrackerManager;
 import com.vuforia.Vuforia;
@@ -46,18 +41,11 @@ import com.vuforia.Vuforia;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Vector;
-
-public class CloudReco extends Activity implements SampleApplicationControl, SampleAppMenuInterface {
+public class CloudReco extends Activity implements SampleApplicationControl {
 
     private static final String TAG = "CloudReco";
     private IgnitarStore ignitarStore;
     private SampleApplicationSession vuforiaAppSession;
-    private boolean mPlayFullscreenVideo = false;
-    // Movie for the Targets:
-    public static final int NUM_TARGETS = 2;
-    public static final int FIVE_HUNDREAD = 0;
-    public static final int TWO_THOUSAND = 1;
     // These codes match the ones defined in TargetFinder in Vuforia.jar
     static final int INIT_SUCCESS = 2;
     static final int INIT_ERROR_NO_NETWORK_CONNECTION = -1;
@@ -76,7 +64,6 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
     private SampleApplicationGLView mGlView;
     // Our renderer:
     private CloudRecoRenderer mRenderer;
-    private SampleAppMenu mSampleAppMenu;
     private boolean mExtendedTracking = false;
     boolean mFinderStarted = false;
     boolean mStopFinderIfStarted = false;
@@ -390,15 +377,11 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
         }
     }
 
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         // Process the Gestures
-        if (mSampleAppMenu != null && mSampleAppMenu.processEvent(event))
-            return true;
         return mGestureDetector.onTouchEvent(event);
     }
-
 
     @Override
     public boolean doLoadTrackersData() {
@@ -459,8 +442,6 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
             // Hides the Loading Dialog
             loadingDialogHandler.sendEmptyMessage(HIDE_LOADING_DIALOG);
             mUILayout.setBackgroundColor(Color.TRANSPARENT);
-            mSampleAppMenu = new SampleAppMenu(this, this, "Cloud Reco", mGlView, mUILayout, null);
-            setSampleAppMenuSettings();
         } else {
             Log.e(TAG, exception.getString());
             if (mInitErrorCode != 0) {
@@ -600,81 +581,12 @@ public class CloudReco extends Activity implements SampleApplicationControl, Sam
         return result;
     }
 
-
     @Override
     public boolean doDeinitTrackers() {
         // Indicate if the trackers were deinitialized correctly
         boolean result = true;
         TrackerManager tManager = TrackerManager.getInstance();
         tManager.deinitTracker(ObjectTracker.getClassType());
-        return result;
-    }
-
-    final public static int CMD_BACK = -1;
-    final public static int CMD_EXTENDED_TRACKING = 1;
-    final private static int CMD_FULLSCREEN_VIDEO = 2;
-
-    // This method sets the menu's settings
-    private void setSampleAppMenuSettings() {
-        SampleAppMenuGroup group;
-        group = mSampleAppMenu.addGroup("", false);
-        group.addTextItem(getString(R.string.menu_back), -1);
-        group = mSampleAppMenu.addGroup("", true);
-        group.addSelectionItem(getString(R.string.menu_extended_tracking), CMD_EXTENDED_TRACKING, false);
-        mSampleAppMenu.attachMenu();
-    }
-
-    @Override
-    public boolean menuProcess(int command) {
-        boolean result = true;
-        switch (command) {
-            case CMD_BACK:
-                finish();
-                break;
-            case CMD_EXTENDED_TRACKING:
-                TrackerManager trackerManager = TrackerManager.getInstance();
-                ObjectTracker objectTracker = (ObjectTracker) trackerManager.getTracker(ObjectTracker.getClassType());
-                TargetFinder targetFinder = objectTracker.getTargetFinder();
-                if (targetFinder.getNumImageTargets() == 0) {
-                    result = true;
-                }
-                for (int tIdx = 0; tIdx < targetFinder.getNumImageTargets(); tIdx++) {
-                    Trackable trackable = targetFinder.getImageTarget(tIdx);
-                    if (!mExtendedTracking) {
-                        if (!trackable.startExtendedTracking()) {
-                            Log.d(TAG, "Failed to start extended tracking target");
-                            result = false;
-                        } else {
-                            Log.d(TAG, "Successfully started extended tracking target");
-                        }
-                    } else {
-                        if (!trackable.stopExtendedTracking()) {
-                            Log.e(TAG, "Failed to stop extended tracking target");
-                            result = false;
-                        } else {
-                            Log.d(TAG, "Successfully started extended tracking target");
-                        }
-                    }
-                }
-                if (result)
-                    mExtendedTracking = !mExtendedTracking;
-                break;
-
-            case CMD_FULLSCREEN_VIDEO:
-                mPlayFullscreenVideo = !mPlayFullscreenVideo;
-            mVideoPlayerHelper.play(true,mSeekPosition);
-//                for (int i = 0; i < mVideoPlayerHelper.length; i++) {
-//                    if (mVideoPlayerHelper[i].getStatus() == VideoPlayerHelper.MEDIA_STATE.PLAYING) {
-//                        // If it is playing then we pause it
-//                        mVideoPlayerHelper[i].pause();
-//
-//                        mVideoPlayerHelper[i].play(true,
-//                                mSeekPosition[i]);
-//                    }
-//                }
-                break;
-
-        }
         return result;
     }
 

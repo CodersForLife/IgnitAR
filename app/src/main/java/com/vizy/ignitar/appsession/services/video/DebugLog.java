@@ -17,7 +17,7 @@ then you may not retain or use any of the Sample Code in any manner.
 
 ==============================================================================*/
 
-package com.vizy.ignitar.base.utils.video;
+package com.vizy.ignitar.appsession.services.video;
 
 import android.util.Log;
 

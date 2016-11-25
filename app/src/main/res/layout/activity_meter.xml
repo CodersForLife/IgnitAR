@@ -29,7 +29,7 @@
         android:layout_toStartOf="@+id/number_of_coupons"
         />
 
-    <com.vizy.ignitar.ui.menu.animation.wave.WaveView
+    <com.vizy.ignitar.ui.customviews.WaveView
         android:id="@+id/wave"
         android:background="@color/transparent"
         android:layout_width="200dp"

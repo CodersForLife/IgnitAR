@@ -1,4 +1,4 @@
-package com.vizy.ignitar.base;
+package com.vizy.ignitar.ui.customviews;
 
 import android.content.Context;
 import android.hardware.Camera;

@@ -1,4 +1,4 @@
-package com.vizy.ignitar.ui.menu.animation.wave;
+package com.vizy.ignitar.ui.customviews;
 
 import android.content.Context;
 import android.graphics.Bitmap;

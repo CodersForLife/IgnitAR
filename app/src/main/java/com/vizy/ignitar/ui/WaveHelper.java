@@ -1,4 +1,4 @@
-package com.vizy.ignitar.ui.menu.animation.wave;
+package com.vizy.ignitar.ui;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -7,6 +7,8 @@ import android.animation.ValueAnimator;
 import android.support.annotation.NonNull;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
+
+import com.vizy.ignitar.ui.customviews.WaveView;
 
 import java.util.ArrayList;
 import java.util.List;

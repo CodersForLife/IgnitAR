@@ -1,4 +1,4 @@
-package com.vizy.ignitar.base.utils;
+package com.vizy.ignitar.appsession.services;
 
 import android.content.Context;
 import android.graphics.PixelFormat;

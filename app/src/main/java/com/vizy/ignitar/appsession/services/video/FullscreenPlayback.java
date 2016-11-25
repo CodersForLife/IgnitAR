@@ -1,4 +1,4 @@
-package com.vizy.ignitar.base.utils.video;
+package com.vizy.ignitar.appsession.services.video;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -28,7 +28,7 @@ import android.widget.VideoView;
 
 import com.vizy.ignitar.R;
 import com.vizy.ignitar.activities.HomeActivity;
-import com.vizy.ignitar.base.CameraView;
+import com.vizy.ignitar.ui.customviews.CameraView;
 
 import java.util.concurrent.locks.ReentrantLock;
 

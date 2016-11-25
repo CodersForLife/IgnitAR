@@ -1,4 +1,4 @@
-package com.vizy.ignitar.base.utils;
+package com.vizy.ignitar.appsession.services;
 
 import android.app.Activity;
 import android.os.Handler;

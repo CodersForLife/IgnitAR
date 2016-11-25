@@ -1,4 +1,4 @@
-package com.vizy.ignitar.base;
+package com.vizy.ignitar.appsession.base;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;

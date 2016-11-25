@@ -1,4 +1,4 @@
-package com.vizy.ignitar.base.utils;
+package com.vizy.ignitar.appsession.services;
 
 import android.opengl.GLES20;
 import android.util.Log;
