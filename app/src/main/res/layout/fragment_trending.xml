@@ -46,7 +46,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:text="search currency of 500 and 2000"
+                    android:text="scan currency of 500 and 2000"
                     android:textColor="@color/white"
                     android:layout_marginTop="@dimen/dimen_10dp"
                     android:textSize="13sp"
