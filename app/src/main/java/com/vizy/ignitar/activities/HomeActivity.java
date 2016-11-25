@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.vizy.ignitar.R;
 import com.vizy.ignitar.cloud.CloudReco;
@@ -82,13 +83,13 @@ public class HomeActivity extends AppCompatActivity {
                 // If request is cancelled, the result arrays are empty.
                 if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     Intent intent = new Intent(HomeActivity.this, CloudReco.class);
-                    intent.putExtra("ACTIVITY_TO_LAUNCH",
-                            "app.CloudRecognition.CloudReco");
+                    intent.putExtra("ACTIVITY_TO_LAUNCH", "app.CloudRecognition.CloudReco");
                     intent.putExtra("ABOUT_TEXT", "CloudReco/CR_about.html");
                     startActivity(intent);
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
                 } else {
+                    Toast.makeText(HomeActivity.this,"You forgot to allow permission",Toast.LENGTH_LONG).show();
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
                 }

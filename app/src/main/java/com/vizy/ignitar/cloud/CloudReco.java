@@ -68,11 +68,8 @@ public class CloudReco extends Activity implements SampleApplicationControl {
     private boolean mExtendedTracking = false;
     boolean mFinderStarted = false;
     boolean mStopFinderIfStarted = false;
-    public VideoPlayerHelper mVideoPlayerHelper=new VideoPlayerHelper();
-    private int mSeekPosition =0;
-    // The textures we will use for rendering:
-    //    private static final String kAccessKey = "869a299f9911cd84f189d69fe8d5f79f35304372";
-//    private static final String kSecretKey = "ad4a7110ad50100b22474f166d7ef4f5b3887a30";
+    public VideoPlayerHelper mVideoPlayerHelper = new VideoPlayerHelper();
+    private int mSeekPosition = 0;
     private static final String kAccessKey = "bd576667f8fce7e18e90e314ae4ea05d7e348d1d";
     private static final String kSecretKey = "10cf3e480d8679a2d63709483bf230a286172af4";
     // View overlays to be displayed in the Augmented View
@@ -101,9 +98,7 @@ public class CloudReco extends Activity implements SampleApplicationControl {
         vuforiaAppSession.initAR(this, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         // Creates the GestureDetector listener for processing double tap
         mGestureDetector = new GestureDetector(this, new GestureListener());
-
         mIsDroidDevice = android.os.Build.MODEL.toLowerCase().startsWith("droid");
-
         mVideoPlayerHelper.init();
         mVideoPlayerHelper.setActivity(this);
     }
@@ -154,7 +149,6 @@ public class CloudReco extends Activity implements SampleApplicationControl {
         }
     }
 
-
     // Callback for configuration changes the activity handles itself
     @Override
     public void onConfigurationChanged(Configuration config) {
@@ -162,7 +156,6 @@ public class CloudReco extends Activity implements SampleApplicationControl {
         super.onConfigurationChanged(config);
         vuforiaAppSession.onConfigurationChanged();
     }
-
 
     // Called when the system is about to start resuming a previous activity.
     @Override
@@ -194,42 +187,31 @@ public class CloudReco extends Activity implements SampleApplicationControl {
         System.gc();
     }
 
-
     public void deinitCloudReco() {
         // Get the object tracker:
         TrackerManager trackerManager = TrackerManager.getInstance();
-        ObjectTracker objectTracker = (ObjectTracker) trackerManager
-                .getTracker(ObjectTracker.getClassType());
+        ObjectTracker objectTracker = (ObjectTracker) trackerManager.getTracker(ObjectTracker.getClassType());
         if (objectTracker == null) {
             Log.e(TAG, "Failed to destroy the tracking data set because the ObjectTracker has not"
                     + " been initialized.");
             return;
         }
-
         // Deinitialize target finder:
         TargetFinder finder = objectTracker.getTargetFinder();
         finder.deinit();
     }
 
-
     private void startLoadingAnimation() {
         // Inflates the Overlay Layout to be displayed above the Camera View
         LayoutInflater inflater = LayoutInflater.from(this);
-        mUILayout = (RelativeLayout) inflater.inflate(R.layout.camera_overlay,
-                null, false);
-
+        mUILayout = (RelativeLayout) inflater.inflate(R.layout.camera_overlay, null, false);
         mUILayout.setVisibility(View.VISIBLE);
         mUILayout.setBackgroundColor(Color.BLACK);
-
         // By default
         loadingDialogHandler.mLoadingDialogContainer = mUILayout.findViewById(R.id.loading_indicator);
         loadingDialogHandler.mLoadingDialogContainer.setVisibility(View.VISIBLE);
-
-        addContentView(mUILayout, new LayoutParams(LayoutParams.MATCH_PARENT,
-                LayoutParams.MATCH_PARENT));
-
+        addContentView(mUILayout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     }
-
 
     // Initializes AR application components.
     private void initApplicationAR() {
@@ -237,11 +219,9 @@ public class CloudReco extends Activity implements SampleApplicationControl {
         int depthSize = 16;
         int stencilSize = 0;
         boolean translucent = Vuforia.requiresAlpha();
-
         // Initialize the GLView with proper flags
         mGlView = new SampleApplicationGLView(this);
         mGlView.init(translucent, depthSize, stencilSize);
-
         // Setups the Renderer of the GLView
         mRenderer = new CloudRecoRenderer(vuforiaAppSession, this);
         mGlView.setRenderer(mRenderer);
@@ -269,7 +249,6 @@ public class CloudReco extends Activity implements SampleApplicationControl {
             return getString(R.string.UPDATE_ERROR_UNKNOWN_DESC);
         }
     }
-
 
     // Returns the error message for each error code
     private String getStatusTitleString(int code) {
@@ -309,22 +288,20 @@ public class CloudReco extends Activity implements SampleApplicationControl {
                 AlertDialog.Builder builder = new AlertDialog.Builder(CloudReco.this);
                 builder.setMessage(getStatusDescString(CloudReco.this.mlastErrorCode))
                         .setTitle(getStatusTitleString(CloudReco.this.mlastErrorCode))
-                        .setCancelable(false).setIcon(0)
-                        .setPositiveButton(getString(R.string.button_OK), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                if (mFinishActivityOnError) {
-                                    finish();
-                                } else {
-                                    dialog.dismiss();
-                                }
-                            }
-                        });
+                        .setCancelable(false).setIcon(0).setPositiveButton(getString(R.string.button_OK), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        if (mFinishActivityOnError) {
+                            finish();
+                        } else {
+                            dialog.dismiss();
+                        }
+                    }
+                });
                 mErrorDialog = builder.create();
                 mErrorDialog.show();
             }
         });
     }
-
 
     // Shows initialization error messages as System dialogs
     public void showInitializationErrorMessage(String message) {
@@ -335,21 +312,18 @@ public class CloudReco extends Activity implements SampleApplicationControl {
                     mErrorDialog.dismiss();
                 }
                 // Generates an Alert Dialog to show the error message
-                AlertDialog.Builder builder = new AlertDialog.Builder(
-                        CloudReco.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(CloudReco.this);
                 builder.setMessage(errorMessage).setTitle(getString(R.string.INIT_ERROR))
-                        .setCancelable(false).setIcon(0)
-                        .setPositiveButton(getString(R.string.button_OK), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                finish();
-                            }
-                        });
+                        .setCancelable(false).setIcon(0).setPositiveButton(getString(R.string.button_OK), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                });
                 mErrorDialog = builder.create();
                 mErrorDialog.show();
             }
         });
     }
-
 
     public void startFinderIfStopped() {
         if (!mFinderStarted) {
@@ -367,7 +341,6 @@ public class CloudReco extends Activity implements SampleApplicationControl {
     public void stopFinderIfStarted() {
         if (mFinderStarted) {
             mFinderStarted = false;
-
             // Get the object tracker:
             TrackerManager trackerManager = TrackerManager.getInstance();
             ObjectTracker objectTracker = (ObjectTracker) trackerManager.getTracker(ObjectTracker.getClassType());
@@ -406,20 +379,13 @@ public class CloudReco extends Activity implements SampleApplicationControl {
             Log.e(TAG, "Failed to initialize target finder.");
             return false;
         }
-        // Use the following calls if you would like to customize the color of
-        // the UI
-        // targetFinder->setUIScanlineColor(1.0, 0.0, 0.0);
-        // targetFinder->setUIPointColor(0.0, 0.0, 1.0);
-
         return true;
     }
-
 
     @Override
     public boolean doUnloadTrackersData() {
         return true;
     }
-
 
     @Override
     public void onInitARDone(SampleApplicationException exception) {
@@ -484,49 +450,23 @@ public class CloudReco extends Activity implements SampleApplicationControl {
                 }
                 switch (result.getTargetName()) {
                     case IgnitarConstants.CloudTargets.CHAI_THELA:
-                        if(ignitarStore.getProductScan()==1.0f){
-                            ignitarStore.saveCouponCount(ignitarStore.getCouponCount()+1);
+                        if (ignitarStore.getProductScan() == 1.0f) {
+                            ignitarStore.saveCouponCount(ignitarStore.getCouponCount() + 1);
                             ignitarStore.saveProductScan(IgnitarConstants.EMPTY_FLOAT);
-                        }else {
-                            ignitarStore.saveProductScan(ignitarStore.getProductScan()+0.25f);
+                        } else {
+                            ignitarStore.saveProductScan(ignitarStore.getProductScan() + 0.25f);
                         }
                         startActivity(new Intent(CloudReco.this, CompanyPageActivity.class));
                         break;
                     case IgnitarConstants.CloudTargets.PAMPLET:
+                        doAction(type, link);
+                        break;
+                    default:
+                        doAction(type, link);
                         break;
                 }
-                if (type.equalsIgnoreCase("video")) {
-                    String videoName = "Video name 1";
-                    //String filename="http://techslides.com/demos/sample-videos/small.mp4";
-                    // String filename="https://firebasestorage.googleapis.com/v0/b/firebase-ignitar.appspot.com/o/VID-20160221-WA0011.mp4?alt=media&token=ad49e222-3961-4ed9-81d7-cdc1c2dbccf5";
-                    mVideoPlayerHelper.load(link,videoName ,VideoPlayerHelper.MEDIA_TYPE.FULLSCREEN, true, -1);
-//                    playVideo("")
-                    mVideoPlayerHelper.play(true, -1);
-                } else if (type.equalsIgnoreCase("browserlink")) {
-                    Uri uri = Uri.parse(link); // missing 'http://' will cause crashed
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
-                }
-//                if (result.getTrackingRating() > 0) {
-//                    Trackable trackable = finder.enableTracking(result);
-//                    if (mExtendedTracking)
-//                        trackable.startExtendedTracking();
-//                }
             }
         }
-    }
-
-
-    public void playVideo(final String text) {
-        // We use a handler because this thread cannot change the UI
-        this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-
-                // The following opens a pre-defined URL based on the name of
-                // trackable detected
-            }
-        });
     }
 
     @Override
@@ -545,7 +485,6 @@ public class CloudReco extends Activity implements SampleApplicationControl {
         return result;
     }
 
-
     @Override
     public boolean doStartTrackers() {
         // Indicate if the trackers were started correctly
@@ -560,7 +499,6 @@ public class CloudReco extends Activity implements SampleApplicationControl {
         mFinderStarted = true;
         return result;
     }
-
 
     @Override
     public boolean doStopTrackers() {
@@ -591,4 +529,20 @@ public class CloudReco extends Activity implements SampleApplicationControl {
         return result;
     }
 
+    public void doAction(@NonNull String type, @NonNull String link) {
+        if (((!StringUtils.isNullOrEmpty(type))) && (!StringUtils.isNullOrEmpty(link))) {
+            switch (type) {
+                case IgnitarConstants.CloudAction.BROWSER:
+                    Uri uri = Uri.parse(link);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                    break;
+                case IgnitarConstants.CloudAction.VIDEO:
+                    String videoName = "video_name_1";
+                    mVideoPlayerHelper.load(link, videoName, VideoPlayerHelper.MEDIA_TYPE.FULLSCREEN, true, -1);
+                    mVideoPlayerHelper.play(true, -1);
+                    break;
+            }
+        }
+    }
 }

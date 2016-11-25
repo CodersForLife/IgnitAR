@@ -45,9 +45,15 @@ public class IgnitarConstants {
 
     }
 
-    public class CloudTargets{
-        public static final String CHAI_THELA="chai_thela";
-        public static final String PAMPLET="pamplet";
-        public static final String FIVE_HUNDREAD_SWACH_BHARAT="500_swach_bharat";
+    public class CloudTargets {
+        public static final String CHAI_THELA = "chai_thela";
+        public static final String PAMPLET = "pamplet";
+        public static final String FIVE_HUNDREAD_SWACH_BHARAT = "500_swach_bharat";
     }
+
+    public class CloudAction {
+        public static final String VIDEO = "video";
+        public static final String BROWSER = "browserlink";
+    }
+
 }

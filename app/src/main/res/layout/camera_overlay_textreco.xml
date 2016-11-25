@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/topMargin"
@@ -69,5 +70,22 @@
         android:layout_below="@+id/loupeLayout"
         android:orientation="vertical" >
     </RelativeLayout>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60dp"
+        android:layout_alignParentBottom="true"
+        app:cardBackgroundColor="@color/white"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="IgnitAR"
+            android:textSize="@dimen/dimen_20sp"
+            android:layout_gravity="center"
+            android:textColor="@color/green"
+            android:textAlignment="center"
+            />
+    </android.support.v7.widget.CardView>
 
 </RelativeLayout>

@@ -60,17 +60,6 @@ public class FullscreenPlayback extends Activity implements OnPreparedListener, 
         mHolder.addCallback(this);
     }
 
-    public static Camera getCameraInstance(){
-        Camera c = null;
-        try {
-            c = Camera.open(); // attempt to get a Camera instance
-        }
-        catch (Exception e){
-            // Camera is not available (in use or does not exist)
-        }
-        return c; // returns null if camera is unavailable
-    }
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fullscreen_layout);
@@ -126,7 +115,7 @@ public class FullscreenPlayback extends Activity implements OnPreparedListener, 
 
         @Override
         public void run() {
-            if (!mMediaPlayer.isPlaying()) {
+            if ((mMediaPlayer!=null)&&(!mMediaPlayer.isPlaying())) {
                 Log.e("sr", "sgr");
                 prepareForTermination();
                 Intent i = getIntent();
@@ -167,11 +156,6 @@ public class FullscreenPlayback extends Activity implements OnPreparedListener, 
         }
         mMediaControllerLock.unlock();
         mMediaPlayerLock.unlock();
-    }
-
-    private void setupWindowAnimations() {
-        Fade fade = (Fade) TransitionInflater.from(this).inflateTransition(R.transition.activity_fade);
-        getWindow().setEnterTransition(fade);
     }
 
     public boolean onTouchEvent(MotionEvent event) {
