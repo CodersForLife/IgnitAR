@@ -11,5 +11,5 @@
     android:layout_height="match_parent"
     android:src="@drawable/hinttransparent"
     android:scaleType="fitXY"
-    />
+    tools:ignore="ContentDescription" />
 </RelativeLayout>

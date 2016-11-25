@@ -47,7 +47,7 @@
         android:background="@drawable/buutonshape"
         android:id="@+id/help"
         android:layout_gravity="right"
-        />
+        tools:ignore="HardcodedText,RtlHardcoded" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -61,7 +61,8 @@
             android:layout_gravity="center"
             android:id="@+id/searchimage"
             android:layout_centerInParent="true"
-            android:src="@drawable/ic_search_black_24dp"/>
+            android:src="@drawable/ic_search_black_24dp"
+            tools:ignore="ContentDescription" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,7 +70,8 @@
             android:textSize="20sp"
             android:layout_below="@+id/searchimage"
             android:textColor="@color/colorText"
-            android:text="IGNITE YOUR OBJECTS"/>
+            android:text="IGNITE YOUR OBJECTS"
+            tools:ignore="HardcodedText" />
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

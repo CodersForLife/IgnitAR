@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="5dp"
     android:layout_marginTop="2dp"
     android:orientation="horizontal"
-    android:weightSum="7">
+    android:weightSum="7"
+    android:baselineAligned="false">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,7 +21,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="2dp"
             android:background="#ee7474"
-            android:src="@drawable/ic_location_city_black_24dp" />
+            android:src="@drawable/ic_location_city_black_24dp"
+            android:contentDescription=""
+            tools:ignore="ContentDescription" />
 
         <View
             android:layout_width="2dp"
@@ -40,21 +44,22 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Company One - EBC Meeting"
+            android:text="@string/company_one_ebc_meeting"
             android:textColor="#578CB7" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="Let's get together to review the theatre's layout"
+            android:text="@string/let_s_get_together_to_review_the_theatre_s_layout"
             android:textSize="12sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:weightSum="2"
+            android:baselineAligned="false">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -66,20 +71,21 @@
                     android:layout_width="wrap_content"
                     android:textSize="12sp"
                     android:layout_height="wrap_content"
-                    android:text="Time: " />
+                    android:text="@string/time" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@+id/time"
-                    android:text="Feb 23, 2015"
+                    android:text="@string/feb_23_2015"
                     android:textColor="#578CB7"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:ignore="RtlHardcoded" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="11:00am-12:00pm"
+                    android:text="@string/elevent_to_twelve"
                     android:textColor="#578CB7"
                     android:textSize="12sp"
                     android:layout_below="@+id/time"/>
@@ -96,20 +102,21 @@
                     android:layout_width="wrap_content"
                     android:textSize="12sp"
                     android:layout_height="wrap_content"
-                    android:text="Offer: " />
+                    android:text="@string/offer" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@+id/offer"
-                    android:text="Rs 100 "
+                    android:text="@string/rs_100"
                     android:textColor="#578CB7"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:ignore="RtlHardcoded" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cashback available"
+                    android:text="@string/cashback_available"
                     android:textColor="#578CB7"
                     android:textSize="12sp"
                     android:layout_below="@+id/offer"/>
@@ -128,7 +135,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Feb 24"
+            android:text="@string/feb_24"
             android:textSize="12sp" />
     </LinearLayout>
 </LinearLayout>

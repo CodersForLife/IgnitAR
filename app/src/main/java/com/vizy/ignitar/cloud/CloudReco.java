@@ -20,6 +20,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.RelativeLayout;
 
 import com.vizy.ignitar.R;
+import com.vizy.ignitar.activities.CompanyPageActivity;
 import com.vizy.ignitar.appsession.base.SampleApplicationControl;
 import com.vizy.ignitar.appsession.base.SampleApplicationException;
 import com.vizy.ignitar.appsession.base.SampleApplicationSession;
@@ -481,19 +482,19 @@ public class CloudReco extends Activity implements SampleApplicationControl {
                     Log.d(TAG, StringUtils.isNullOrEmpty(e.getMessage()) ? IgnitarConstants.Exceptions.JSON_EXCEPTION :
                             e.getMessage());
                 }
-//                switch (result.getTargetName()) {
-//                    case IgnitarConstants.CloudTargets.CHAI_THELA:
-//                        if(ignitarStore.getProductScan()==1.0f){
-//                            ignitarStore.saveCouponCount(ignitarStore.getCouponCount()+1);
-//                            ignitarStore.saveProductScan(IgnitarConstants.EMPTY_FLOAT);
-//                        }else {
-//                            ignitarStore.saveProductScan(ignitarStore.getProductScan()+0.25f);
-//                        }
-//                        startActivity(new Intent(CloudReco.this, CompanyPageActivity.class));
-//                        break;
-//                    case IgnitarConstants.CloudTargets.PAMPLET:
-//                        break;
-//                }
+                switch (result.getTargetName()) {
+                    case IgnitarConstants.CloudTargets.CHAI_THELA:
+                        if(ignitarStore.getProductScan()==1.0f){
+                            ignitarStore.saveCouponCount(ignitarStore.getCouponCount()+1);
+                            ignitarStore.saveProductScan(IgnitarConstants.EMPTY_FLOAT);
+                        }else {
+                            ignitarStore.saveProductScan(ignitarStore.getProductScan()+0.25f);
+                        }
+                        startActivity(new Intent(CloudReco.this, CompanyPageActivity.class));
+                        break;
+                    case IgnitarConstants.CloudTargets.PAMPLET:
+                        break;
+                }
                 if (type.equalsIgnoreCase("video")) {
                     String videoName = "Video name 1";
                     //String filename="http://techslides.com/demos/sample-videos/small.mp4";

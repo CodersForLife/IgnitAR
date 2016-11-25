@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    >
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/topMargin"
@@ -11,7 +11,9 @@
         android:layout_alignParentTop="true"
         android:scaleType="fitXY"
         android:visibility="invisible"
-        android:src="@drawable/bg70" />
+        android:src="@drawable/bg70"
+        android:contentDescription=""
+        tools:ignore="ContentDescription" />
 
     <ProgressBar
         style="@android:style/Widget.ProgressBar"
@@ -36,7 +38,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:scaleType="fitXY"
-            android:src="@drawable/bg70" />
+            android:src="@drawable/bg70"
+            tools:ignore="ContentDescription,RtlHardcoded" />
 
         <ImageView
             android:id="@+id/loupe"
@@ -45,7 +48,8 @@
             android:layout_toRightOf="@+id/leftMargin"
             android:layout_alignParentTop="true"
             android:scaleType="fitXY"
-            android:src="@drawable/bg00" />
+            android:src="@drawable/bg00"
+            tools:ignore="ContentDescription,RtlHardcoded" />
 
         <ImageView
             android:id="@+id/rightMargin"
@@ -54,7 +58,8 @@
             android:layout_toRightOf="@+id/loupe"
             android:layout_alignParentTop="true"
             android:scaleType="fitXY"
-            android:src="@drawable/bg70" />
+            android:src="@drawable/bg70"
+            tools:ignore="ContentDescription,RtlHardcoded" />
     </RelativeLayout>
 
     <RelativeLayout

@@ -27,7 +27,7 @@
         android:layout_height="@dimen/dimen_36dp"
         android:layout_toLeftOf="@+id/number_of_coupons"
         android:layout_toStartOf="@+id/number_of_coupons"
-        />
+        tools:ignore="ContentDescription" />
 
     <com.vizy.ignitar.ui.customviews.WaveView
         android:id="@+id/wave"

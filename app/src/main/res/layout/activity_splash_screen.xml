@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/imageView"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Creating an experience\n     that you will love"
+        android:text="@string/creating_an_experience_n_that_you_will_love"
         android:id="@+id/textView7"
         />
 
@@ -23,5 +23,5 @@
         android:id="@+id/imageView"
         android:layout_centerInParent="true"
         android:src="@drawable/logo"
-        />
+        android:contentDescription="" />
 </RelativeLayout>

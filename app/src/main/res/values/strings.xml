@@ -90,5 +90,25 @@
     <string name="defaultColor">Default</string>
 
     <string name="menu_playFullscreenVideo">Play Fullscreen</string>
+    <string name="know_your_currency">Know your currency</string>
+    <string name="turn_on_your_connection">turn on your connection !</string>
+    <string name="go_to_home_screen">Go to home screen</string>
+    <string name="identify_the_target_image">Identify the target image.</string>
+    <string name="open_the_scanner_in_your_phone">Open the Scanner in your Phone.</string>
+    <string name="scan_the_target_image_and_watch_the_whole_video_to_earn_benefits">Scan the Target Image and watch the whole video to earn benefits.</string>
+    <string name="start_scanning_now">Start scanning now</string>
+    <string name="step_1">Step 1</string>
+    <string name="step_2">Step 2</string>
+    <string name="step_3">Step 3</string>
+    <string name="creating_an_experience_n_that_you_will_love">Creating an experience\n that you will love</string>
+    <string name="elevent_to_twelve">11:00am-12:00pm</string>
+    <string name="cashback_available">Cashback available</string>
+    <string name="company_one_ebc_meeting">Company One - EBC Meeting</string>
+    <string name="feb_23_2015">Feb 23, 2015</string>
+    <string name="feb_24">Feb 24</string>
+    <string name="let_s_get_together_to_review_the_theatre_s_layout">Let\'s get together to review the theatre\'s layout</string>
+    <string name="offer">Offer:</string>
+    <string name="rs_100">Rs 100</string>
+    <string name="time">Time:</string>
 
 </resources>
