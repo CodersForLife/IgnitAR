@@ -111,4 +111,8 @@
     <string name="rs_100">Rs 100</string>
     <string name="time">Time:</string>
 
+    <string name="title_activity_company_brand">CompanyBrand</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
 </resources>

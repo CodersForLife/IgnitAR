@@ -704,4 +704,5 @@ public class VideoPlayerHelper implements OnPreparedListener, OnBufferingUpdateL
 
         return false;
     }
+
 }

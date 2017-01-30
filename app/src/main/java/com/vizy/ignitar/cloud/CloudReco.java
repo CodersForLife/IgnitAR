@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 
 import com.vizy.ignitar.R;
 import com.vizy.ignitar.activities.CompanyPageActivity;
+import com.vizy.ignitar.activities.branding.CompanyBrand;
 import com.vizy.ignitar.appsession.base.SampleApplicationControl;
 import com.vizy.ignitar.appsession.base.SampleApplicationException;
 import com.vizy.ignitar.appsession.base.SampleApplicationSession;
@@ -456,7 +457,8 @@ public class CloudReco extends Activity implements SampleApplicationControl {
                         } else {
                             ignitarStore.saveProductScan(ignitarStore.getProductScan() + 0.25f);
                         }
-                        startActivity(new Intent(CloudReco.this, CompanyPageActivity.class));
+//                        startActivity(new Intent(CloudReco.this, CompanyPageActivity.class));
+                        startActivity(new Intent(CloudReco.this, CompanyBrand.class));
                         break;
                     case IgnitarConstants.CloudTargets.PAMPLET:
                         doAction(type, link);

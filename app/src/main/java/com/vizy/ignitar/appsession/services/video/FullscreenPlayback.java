@@ -12,6 +12,7 @@ import android.media.MediaPlayer.OnPreparedListener;
 import android.media.MediaPlayer.OnVideoSizeChangedListener;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.transition.Fade;
 import android.transition.TransitionInflater;
 import android.util.Log;
@@ -35,9 +36,9 @@ import java.util.concurrent.locks.ReentrantLock;
 public class FullscreenPlayback extends Activity implements OnPreparedListener, SurfaceHolder.Callback,
         OnVideoSizeChangedListener, OnErrorListener {
 
+    private final String TAG=this.getClass().getSimpleName();
     private Camera camera;
     private CameraView cameraView;
-
     private VideoView mVideoView = null;
     private MediaPlayer mMediaPlayer = null;
     private SurfaceHolder mHolder = null;
@@ -415,5 +416,17 @@ public class FullscreenPlayback extends Activity implements OnPreparedListener, 
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Object onRetainNonConfigurationInstance() {
+        Log.d(TAG,"RetainNonConfigurationInstance");
+        return super.onRetainNonConfigurationInstance();
+    }
+
+    @Override
+    public Object getLastNonConfigurationInstance() {
+        Log.d(TAG,"LastNonConfigurationInstance");
+        return super.getLastNonConfigurationInstance();
     }
 }

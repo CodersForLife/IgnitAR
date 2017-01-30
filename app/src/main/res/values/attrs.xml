@@ -2,19 +2,28 @@
 <resources>
     <declare-styleable name="RippleView">
         <attr name="rv_alpha" format="integer" />
-        <attr name="rv_framerate" format="integer"/>
-        <attr name="rv_rippleDuration" format="integer"/>
+        <attr name="rv_framerate" format="integer" />
+        <attr name="rv_rippleDuration" format="integer" />
         <attr name="rv_zoomDuration" format="integer" />
         <attr name="rv_color" format="color" />
         <attr name="rv_centered" format="boolean" />
         <attr name="rv_type" format="enum">
-            <enum name="simpleRipple" value="0"/>
-            <enum name="doubleRipple" value="1"/>
+            <enum name="simpleRipple" value="0" />
+            <enum name="doubleRipple" value="1" />
             <enum name="rectangle" value="2" />
         </attr>
         <attr name="rv_ripplePadding" format="dimension" />
         <attr name="rv_zoom" format="boolean" />
         <attr name="rv_zoomScale" format="float" />
 
+    </declare-styleable>
+
+    <!-- Declare custom theme attributes that allow changing which styles are
+         used for button bars depending on the API level.
+         ?android:attr/buttonBarStyle is new as of API 11 so this is
+         necessary to support previous API levels. -->
+    <declare-styleable name="ButtonBarContainerTheme">
+        <attr name="metaButtonBarStyle" format="reference" />
+        <attr name="metaButtonBarButtonStyle" format="reference" />
     </declare-styleable>
 </resources>
