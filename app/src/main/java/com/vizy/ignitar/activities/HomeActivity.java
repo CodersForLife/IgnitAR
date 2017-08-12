@@ -31,6 +31,8 @@ import com.vizy.ignitar.fragment.TrendingFragment;
 
 import java.io.IOException;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class HomeActivity extends AppCompatActivity {
 
     private FloatingActionButton scan;
