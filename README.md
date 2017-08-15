@@ -1,3 +1,3 @@
 # IgnitAR
 
-![](Untitled.gif)
+![](ezgif.com-resize.gif)
