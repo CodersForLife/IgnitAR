@@ -1,3 +1,3 @@
 # IgnitAR
 
-!()[Untitled.gif]
+![](Untitled.gif)
